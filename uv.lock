@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 2
 requires-python = ">=3.11"
 resolution-markers = [
     "python_full_version >= '3.13'",
@@ -4015,6 +4015,12 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/d7/3f/435a5b3d10ae242a9d6c2b33175551173c3c61fe637dc893be05c4ed0aaf/mcp-1.10.1-py3-none-any.whl", hash = "sha256:4d08301aefe906dce0fa482289db55ce1db831e3e67212e65b5e23ad8454b3c5", size = 150878, upload-time = "2025-06-27T12:03:07.328Z" },
 ]
 
+[package.optional-dependencies]
+cli = [
+    { name = "python-dotenv" },
+    { name = "typer" },
+]
+
 [[package]]
 name = "mdurl"
 version = "0.1.2"
@@ -5894,6 +5900,7 @@ dependencies = [
     { name = "langflow" },
     { name = "loguru" },
     { name = "lxml" },
+    { name = "mcp", extra = ["cli"] },
     { name = "pandas" },
     { name = "requests" },
     { name = "requests-cache" },
@@ -5907,6 +5914,7 @@ requires-dist = [
     { name = "langflow", specifier = ">=1.5.0.post2" },
     { name = "loguru", specifier = ">=0.7.0" },
     { name = "lxml", specifier = ">=5.0.0" },
+    { name = "mcp", extras = ["cli"], specifier = ">=1.10.1" },
     { name = "pandas", specifier = ">=2.2.0" },
     { name = "requests", specifier = ">=2.32.0" },
     { name = "requests-cache", specifier = ">=1.1.0" },
