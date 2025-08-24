@@ -1,8 +1,11 @@
 entrypoint = "main.py"
 modules = ["python-3.11"]
+run = ["uv", "run", "langflow", "run"]
+
 
 [nix]
 channel = "stable-25_05"
+packages = ["glibcLocales", "xcodebuild", "zlib"]
 
 [unitTest]
 language = "python3"
@@ -13,3 +16,8 @@ requiredFiles = [".replit", "replit.nix"]
 [deployment]
 run = ["python3", "main.py"]
 deploymentTarget = "cloudrun"
+
+[[ports]]
+localPort = 7860
+externalPort = 80
+exposeLocalhost = true
