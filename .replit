@@ -1,11 +1,11 @@
-entrypoint = "main.py"
-modules = ["python-3.11"]
-run = ["sh", "-c", "PYTHONPATH=$PWD uv run langflow run"]
+entrypoint = "langgraph-agent/session4_handson.ipynb"
 
+modules = ["python-3.11"]
+
+run = "uv run jupyter lab langgraph-agent/session4_handson.ipynb --ip=0.0.0.0 --port=8888 --no-browser --allow-root --ServerApp.token= --ServerApp.password= --ServerApp.root_dir=. --ServerApp.default_url=/lab/tree/langgraph-agent/session4_handson.ipynb"
 
 [nix]
 channel = "stable-25_05"
-packages = ["glibcLocales", "xcodebuild", "zlib"]
 
 [unitTest]
 language = "python3"
@@ -13,11 +13,11 @@ language = "python3"
 [gitHubImport]
 requiredFiles = [".replit", "replit.nix"]
 
+# 클라우드 런 배포 설정 (옵션)
 [deployment]
 run = ["python3", "main.py"]
 deploymentTarget = "cloudrun"
 
 [[ports]]
-localPort = 7860
+localPort = 8888
 externalPort = 80
-exposeLocalhost = true

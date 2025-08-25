@@ -27,9 +27,9 @@ logging.basicConfig(
 logger = logging.getLogger("mcp-news-server")
 
 # Import our core services
-from core_services.gdelt_service import GDELTService
-from core_services.google_news_service import GoogleNewsService
-from core_services.content_extractor_service import ContentExtractorService
+from langflow.core_services import GDELTService
+from langflow.core_services import GoogleNewsService
+from langflow.core_services import ContentExtractorService
 
 # Initialize FastMCP server
 mcp = FastMCP(

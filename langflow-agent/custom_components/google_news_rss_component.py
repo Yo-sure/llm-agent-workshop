@@ -1,9 +1,7 @@
-from typing import Optional
-
 import pandas as pd
 
 from langflow.custom import Component
-from core_services.google_news_service import GoogleNewsService
+from langflow.core_services.google_news_service import GoogleNewsService
 from langflow.io import IntInput, MessageTextInput, Output
 from langflow.schema import DataFrame
 

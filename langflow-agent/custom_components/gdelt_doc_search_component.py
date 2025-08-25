@@ -1,9 +1,7 @@
-from typing import Any, Dict, List, Optional
-
 import pandas as pd
 
 from langflow.custom import Component
-from core_services.gdelt_service import GDELTService
+from langflow.core_services.gdelt_service import GDELTService
 from langflow.io import (
     MessageTextInput,
     IntInput,

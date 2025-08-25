@@ -6,12 +6,8 @@ A specialized component that extracts clean article content from news websites,
 removing navigation, ads, and other unwanted elements.
 """
 
-from typing import List
-
-import pandas as pd
-
 from langflow.custom import Component
-from core_services.content_extractor_service import ContentExtractorService
+from langflow.core_services.content_extractor_service import ContentExtractorService
 from langflow.io import (
     MessageTextInput,
     IntInput,
