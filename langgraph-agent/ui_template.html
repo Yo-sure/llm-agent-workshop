@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trading Bot - Human Approval Interface</title>
+    <meta charset="utf-8">
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            padding: 20px; 
+            background-color: #f5f5f5; 
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: white; 
+            border-radius: 10px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+        }
+        .header { 
+            background: #2c3e50; 
+            color: white; 
+            padding: 20px; 
+            border-radius: 10px 10px 0 0; 
+            text-align: center; 
+        }
+        .chat-container { 
+            height: 400px; 
+            overflow-y: auto; 
+            padding: 20px; 
+            border-bottom: 1px solid #eee; 
+        }
+        .message { 
+            margin: 10px 0; 
+            padding: 10px; 
+            border-radius: 8px; 
+        }
+        .system-message { 
+            background: #ecf0f1; 
+            color: #2c3e50; 
+            border-left: 4px solid #3498db; 
+        }
+        .approval-request { 
+            background: #fff3cd; 
+            border: 2px solid #ffc107; 
+            color: #856404; 
+        }
+        .approval-actions { 
+            margin-top: 10px; 
+            text-align: center; 
+        }
+        .btn { 
+            padding: 8px 16px; 
+            margin: 0 5px; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-weight: bold; 
+        }
+        .btn-approve { 
+            background: #28a745; 
+            color: white; 
+        }
+        .btn-reject { 
+            background: #dc3545; 
+            color: white; 
+        }
+        .btn:hover { 
+            opacity: 0.8; 
+        }
+        .status { 
+            padding: 10px 20px; 
+            background: #e8f5e8; 
+            color: #155724; 
+            text-align: center; 
+        }
+        .input-section {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            background: #f8f9fa;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .input-field {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .btn-primary {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .btn-primary:hover {
+            background: #0056b3;
+        }
+        .btn-primary:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        .dropdown-container {
+            position: relative;
+            flex: 1;
+        }
+        .dropdown-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+        }
+        .dropdown-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            max-height: 200px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            z-index: 1000;
+            display: none;
+        }
+        .dropdown-item {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .dropdown-item:hover {
+            background: #f8f9fa;
+        }
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+        .ticker-code {
+            font-weight: bold;
+            color: #007bff;
+        }
+        .company-name {
+            color: #666;
+            font-size: 12px;
+        }
+        .category-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            background: #e9ecef;
+            color: #495057;
+            border-radius: 3px;
+            font-size: 10px;
+            margin-left: 5px;
+        }
+        .ticker { 
+            font-weight: bold; 
+            color: #007bff; 
+        }
+        .action-buy { 
+            color: #28a745; 
+            font-weight: bold; 
+        }
+        .action-sell { 
+            color: #dc3545; 
+            font-weight: bold; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Trading Bot</h1>
+            <p>Human-in-the-Loop Approval Interface</p>
+        </div>
+        <div class="status" id="status">
+            📡 연결 대기 중...
+        </div>
+        <div class="input-section">
+            <h3 style="text-align: center; margin-bottom: 15px;">📊 거래 분석 요청</h3>
+            <div class="input-group">
+                <div class="dropdown-container">
+                    <input type="text" id="stockSearch" class="dropdown-input" placeholder="종목명 또는 티커 검색 (예: Apple, NVDA)" readonly onclick="toggleDropdown()">
+                    <div id="stockDropdown" class="dropdown-list">
+                        <!-- 주식 목록이 여기에 동적으로 로드됩니다 -->
+                    </div>
+                </div>
+                <button id="analyzeBtn" class="btn-primary" onclick="requestTradeAnalysis()" disabled>분석 요청</button>
+            </div>
+            <div style="text-align: center; margin-top: 10px; font-size: 12px; color: #666;">
+                <strong>💡 팁:</strong> 검색창을 클릭하여 종목을 선택하세요
+            </div>
+        </div>
+        <div class="chat-container" id="chatContainer">
+            <div class="message system-message">
+                <strong>시스템:</strong> 거래 승인 인터페이스가 준비되었습니다. 
+                에이전트가 BUY/SELL 결정을 내리면 여기서 승인할 수 있습니다.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let ws = null;
+        let reconnectInterval = null;
+        function wsUrl(path) {
+            const proto = (location.protocol === 'https:') ? 'wss' : 'ws';
+            return `${proto}://${location.host}${path}`;
+        }
+
+        function connect() {
+            ws = new WebSocket(wsUrl('/ws'));
+            
+            ws.onopen = function(event) {
+                console.log('WebSocket connected');
+                document.getElementById('status').innerHTML = '✅ 연결됨 - 승인 요청을 기다리는 중...';
+                document.getElementById('status').style.background = '#d4edda';
+                
+                if (reconnectInterval) {
+                    clearInterval(reconnectInterval);
+                    reconnectInterval = null;
+                }
+            };
+            
+            ws.onmessage = function(event) {
+                const message = JSON.parse(event.data);
+                handleMessage(message);
+            };
+            
+            ws.onclose = function(event) {
+                console.log('WebSocket disconnected');
+                document.getElementById('status').innerHTML = '❌ 연결 끊어짐 - 재연결 시도 중...';
+                document.getElementById('status').style.background = '#f8d7da';
+                
+                // Auto-reconnect
+                if (!reconnectInterval) {
+                    reconnectInterval = setInterval(connect, 3000);
+                }
+            };
+            
+            ws.onerror = function(error) {
+                console.error('WebSocket error:', error);
+            };
+        }
+
+        function handleMessage(message) {
+            const chatContainer = document.getElementById('chatContainer');
+            
+            if (message.type === 'approval_request') {
+                const request = message.data;
+                addApprovalRequest(request);
+            } else if (message.type === 'approval_processed') {
+                document.getElementById('status').innerHTML = '✅ 승인 처리 완료 - 다음 요청을 기다리는 중...';
+            }
+        }
+
+        function addApprovalRequest(request) {
+            const chatContainer = document.getElementById('chatContainer');
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message approval-request';
+            messageDiv.id = `request-${request.request_id}`;
+            
+            const actionClass = request.action === 'BUY' ? 'action-buy' : 'action-sell';
+            
+            messageDiv.innerHTML = `
+                <div><strong>🔔 거래 승인 요청</strong></div>
+                <div style="margin: 10px 0;">
+                    <div><strong>종목:</strong> <span class="ticker">${request.ticker}</span></div>
+                    <div><strong>액션:</strong> <span class="${actionClass}">${request.action}</span></div>
+                    <div><strong>근거:</strong> ${request.reason}</div>
+                    <div><strong>시간:</strong> ${new Date(request.timestamp * 1000).toLocaleString()}</div>
+                </div>
+                <div class="approval-actions">
+                    <button class="btn btn-approve" onclick="processApproval('${request.request_id}', true)">
+                        ✅ 승인
+                    </button>
+                    <button class="btn btn-reject" onclick="processApproval('${request.request_id}', false)">
+                        ❌ 거부
+                    </button>
+                </div>
+            `;
+            
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            document.getElementById('status').innerHTML = `🔔 승인 요청: ${request.ticker} ${request.action}`;
+            document.getElementById('status').style.background = '#fff3cd';
+        }
+
+        function processApproval(requestId, approved) {
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                const response = {
+                    type: 'approval_response',
+                    request_id: requestId,
+                    approved: approved,
+                    timestamp: Date.now() / 1000
+                };
+                
+                ws.send(JSON.stringify(response));
+                
+                // Update UI
+                const requestDiv = document.getElementById(`request-${requestId}`);
+                if (requestDiv) {
+                    const result = approved ? '✅ 승인됨' : '❌ 거부됨';
+                    const resultClass = approved ? 'btn-approve' : 'btn-reject';
+                    
+                    requestDiv.querySelector('.approval-actions').innerHTML = 
+                        `<span class="btn ${resultClass}" style="cursor: default;">${result}</span>`;
+                }
+                
+                document.getElementById('status').innerHTML = '⏳ 거래 처리 중...';
+                document.getElementById('status').style.background = '#cce5ff';
+            }
+        }
+
+        // Global variables
+        let stockList = [];
+        let selectedStock = null;
+
+        // Connect when page loads
+        connect();
+        loadStockList();
+
+        // Load stock list from API
+        async function loadStockList() {
+            try {
+                // const response = await fetch('/api/stocks-by-mcp');
+                const response = await fetch('/api/stocks');
+
+                const data = await response.json();
+                stockList = data.stocks;
+                populateDropdown(stockList);
+            } catch (error) {
+                console.error('주식 목록 로드 실패:', error);
+            }
+        }
+
+        // Populate dropdown with stock list
+        function populateDropdown(stocks) {
+            const dropdown = document.getElementById('stockDropdown');
+            dropdown.innerHTML = '';
+            
+            stocks.forEach(stock => {
+                const item = document.createElement('div');
+                item.className = 'dropdown-item';
+                item.onclick = () => selectStock(stock);
+                
+                item.innerHTML = `
+                    <div>
+                        <span class="ticker-code">${stock.ticker}</span>
+                        <span class="category-badge">${stock.category}</span>
+                    </div>
+                    <div class="company-name">${stock.name}</div>
+                `;
+                
+                dropdown.appendChild(item);
+            });
+        }
+
+        // Toggle dropdown visibility
+        function toggleDropdown() {
+            const dropdown = document.getElementById('stockDropdown');
+            const isVisible = dropdown.style.display === 'block';
+            dropdown.style.display = isVisible ? 'none' : 'block';
+            
+            if (!isVisible) {
+                populateDropdown(stockList); // Show all stocks when opening
+            }
+        }
+
+        // Select a stock from dropdown
+        function selectStock(stock) {
+            selectedStock = stock;
+            const searchInput = document.getElementById('stockSearch');
+            const analyzeBtn = document.getElementById('analyzeBtn');
+            const dropdown = document.getElementById('stockDropdown');
+            
+            searchInput.value = `${stock.ticker} - ${stock.name}`;
+            analyzeBtn.disabled = false;
+            dropdown.style.display = 'none';
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const container = document.querySelector('.dropdown-container');
+            if (!container.contains(event.target)) {
+                document.getElementById('stockDropdown').style.display = 'none';
+            }
+        });
+
+        // Trade analysis request function
+        async function requestTradeAnalysis() {
+            if (!selectedStock) {
+                alert('종목을 선택해주세요.');
+                return;
+            }
+            
+            const analyzeBtn = document.getElementById('analyzeBtn');
+            const ticker = selectedStock.ticker;
+            
+            // Disable button and show loading
+            analyzeBtn.disabled = true;
+            analyzeBtn.textContent = '분석 중...';
+            document.getElementById('status').innerHTML = `📊 ${ticker} 분석 중...`;
+            document.getElementById('status').style.background = '#cce5ff';
+            
+            // Add analysis request message to chat
+            const chatContainer = document.getElementById('chatContainer');
+            const requestDiv = document.createElement('div');
+            requestDiv.className = 'message system-message';
+            requestDiv.innerHTML = `<strong>📊 분석 요청:</strong> ${selectedStock.name} (${ticker}) 종목의 거래 분석을 시작합니다...`;
+            chatContainer.appendChild(requestDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            try {
+                const response = await fetch('/api/trade', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ ticker: ticker })
+                });
+                
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    // Add success message
+                    const successDiv = document.createElement('div');
+                    successDiv.className = 'message system-message';
+                    successDiv.innerHTML = `<strong>✅ 분석 완료:</strong> ${result.response}`;
+                    chatContainer.appendChild(successDiv);
+                    
+                    document.getElementById('status').innerHTML = '✅ 분석 완료 - 다음 요청을 기다리는 중...';
+                    document.getElementById('status').style.background = '#d4edda';
+                } else {
+                    // Add error message
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'message system-message';
+                    errorDiv.style.background = '#f8d7da';
+                    errorDiv.style.color = '#721c24';
+                    errorDiv.innerHTML = `<strong>❌ 분석 실패:</strong> ${result.error}`;
+                    chatContainer.appendChild(errorDiv);
+                    
+                    document.getElementById('status').innerHTML = '❌ 분석 실패';
+                    document.getElementById('status').style.background = '#f8d7da';
+                }
+                
+            } catch (error) {
+                console.error('분석 요청 오류:', error);
+                
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'message system-message';
+                errorDiv.style.background = '#f8d7da';
+                errorDiv.style.color = '#721c24';
+                errorDiv.innerHTML = `<strong>❌ 네트워크 오류:</strong> ${error.message}`;
+                chatContainer.appendChild(errorDiv);
+                
+                document.getElementById('status').innerHTML = '❌ 네트워크 오류';
+                document.getElementById('status').style.background = '#f8d7da';
+            } finally {
+                // Re-enable button and reset selection
+                analyzeBtn.disabled = true; // Keep disabled until new stock is selected
+                analyzeBtn.textContent = '분석 요청';
+                selectedStock = null;
+                document.getElementById('stockSearch').value = '';
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+        }
+    </script>
+</body>
+</html>

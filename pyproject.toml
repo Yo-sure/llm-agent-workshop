@@ -6,9 +6,13 @@ authors = ["Your Name <you@example.com>"]
 requires-python = ">=3.11"
 dependencies = [
     "langgraph>=0.2.33",
-    "langchain-core>=0.3.0", 
+    "langchain-core>=0.3.0",
     "langchain-openai>=0.2.0",
+    "langchain-mcp-adapters>=0.1.9",
     "jupyter==1.1.1",
     "notebook==7.4.5",
-    "ipython<9"
+    "ipython<9",
+    "fastapi>=0.116.1",
+    "uvicorn>=0.35.0",
+    "websockets>=15.0.1",
 ]

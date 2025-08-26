@@ -291,3 +291,16 @@ echo $UV_PROJECT_ENVIRONMENT
 ```bash
 PYTHONPATH=$PWD uv run langflow run
 ```
+
+### langgraph host
+
+```bash
+uv run langgraph-agent/session_6_mcp_host.py
+```
+
+### langgraph server
+
+```bash
+uv run langgraph-agent/session_6_mcp_server.py
+```
+

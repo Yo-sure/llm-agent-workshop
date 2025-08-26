@@ -1,8 +1,9 @@
-entrypoint = "langgraph-agent/session4_handson.ipynb"
+entrypoint = "langgraph-agent/session_6_mcp_host.py"
 
 modules = ["python-3.11"]
 
-run = "uv run jupyter lab langgraph-agent/session4_handson.ipynb --ip=0.0.0.0 --port=8888 --no-browser --allow-root --ServerApp.token= --ServerApp.password= --ServerApp.root_dir=. --ServerApp.default_url=/lab/tree/langgraph-agent/session4_handson.ipynb"
+# 호스트만 실행 (호스트가 STDIO로 서버를 자식 프로세스로 실행)
+run = "uv run python langgraph-agent/session_6_mcp_host.py"
 
 [nix]
 channel = "stable-25_05"
@@ -13,11 +14,6 @@ language = "python3"
 [gitHubImport]
 requiredFiles = [".replit", "replit.nix"]
 
-# 클라우드 런 배포 설정 (옵션)
-[deployment]
-run = ["python3", "main.py"]
-deploymentTarget = "cloudrun"
-
 [[ports]]
-localPort = 8888
+localPort = 8080   # Web UI 포트
 externalPort = 80
