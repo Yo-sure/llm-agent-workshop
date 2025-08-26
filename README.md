@@ -84,17 +84,10 @@ uv run python mcp_news_server.py
 {
   "mcpServers": {
     "news_research": {
-      "command": "uv",
+      "command": "python",
       "args": [
-        "--directory",
-        ".",
-        "run",
-        "python",
         "mcp_news_server.py"
-      ],
-      "env": {
-        "PYTHONPATH": "."
-      }
+      ]
     }
   }
 }
