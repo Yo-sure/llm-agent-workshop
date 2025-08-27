@@ -1,12 +1,13 @@
-entrypoint = "langgraph-agent/session_6_mcp_host.py"
+entrypoint = "langgraph_agent_with_a2a/session_7_a2a_host.py"
 
 modules = ["python-3.11"]
 
 # 호스트만 실행 (호스트가 STDIO로 서버를 자식 프로세스로 실행)
-run = "uv run python langgraph-agent/session_6_mcp_host.py"
+run = "bash -lc 'bash run.sh'"
 
 [nix]
 channel = "stable-25_05"
+packages = ["glibcLocales", "xcodebuild", "zlib"]
 
 [unitTest]
 language = "python3"
@@ -15,5 +16,5 @@ language = "python3"
 requiredFiles = [".replit", "replit.nix"]
 
 [[ports]]
-localPort = 8080   # Web UI 포트
+localPort = 8080
 externalPort = 80
