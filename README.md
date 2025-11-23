@@ -44,12 +44,27 @@ uv sync
 jupyter notebook langgraph_agent/langgraph_tutorial.ipynb
 ```
 
-**04 브랜치 (Trading Bot)**
+**04 브랜치 (LangGraph + MCP Trading Bot)**
 ```bash
 git checkout 04-langgraph-mcp-trading
 uv sync
+
+# 환경변수 설정
+cp env.example .env
+# .env 파일에서 OPENAI_API_KEY 설정
+
+# Trading Bot 실행
 uv run python langgraph_agent/trading_bot_host.py
+
 # 브라우저: http://localhost:8080
+```
+
+**05 브랜치 (LangGraph + MCP + A2A 통합)**
+```bash
+git checkout 05-langgraph-mcp-a2a
+uv sync
+
+# 상세 실행 방법은 아래 "05 브랜치 실행 가이드" 참고
 ```
 
 ---
@@ -58,11 +73,14 @@ uv run python langgraph_agent/trading_bot_host.py
 
 강의 진행에 따라 **Git Branch**를 변경하며 실습합니다.
 
-- **`main`**: 환경 구성 및 Langflow UI 익히기
-- **`01-news-agent`**: GDELT 뉴스 데이터 분석 에이전트 구축
-- **`02-news-agent-with-mcp`**: MCP 서버 통합 및 Claude Desktop 연동
-- **`03-langgraph-agent`**: LangGraph 기초 및 ReAct Agent 패턴 학습
-- **`04-langgraph-mcp-trading`**: LangGraph + MCP 통합 Trading Bot (HITL)
+| 브랜치 | 주제 | 핵심 내용 |
+|--------|------|-----------|
+| `main` | 환경 구성 | Langflow UI 익히기 |
+| `01-news-agent` | Langflow 기초 | GDELT 뉴스 분석 에이전트 |
+| `02-news-agent-with-mcp` | MCP 통합 | Claude Desktop 연동 |
+| `03-langgraph-agent` | LangGraph | ReAct Agent 패턴 |
+| `04-langgraph-mcp-trading` | LangGraph + MCP | Trading Bot (HITL) |
+| `05-langgraph-mcp-a2a` | 종합 실습 | LangGraph + MCP + A2A |
 
 ---
 
