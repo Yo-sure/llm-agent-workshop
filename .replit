@@ -1,6 +1,6 @@
 entrypoint = "main.py"
 modules = ["python-3.11"]
-run = ["uv", "run", "langflow", "run"]
+run = ["sh", "-c", "PYTHONPATH=$PWD uv run langflow run"]
 
 [nix]
 channel = "stable-25_05"
