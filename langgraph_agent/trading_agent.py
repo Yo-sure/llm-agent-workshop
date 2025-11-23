@@ -78,6 +78,14 @@ from langgraph.graph.state import CompiledStateGraph
 from langgraph.errors import GraphInterrupt
 from langchain_core.tools import tool
 from langchain_core.messages import HumanMessage, AIMessage, ToolMessage, BaseMessage
+
+# A2A News Client
+try:
+    from langgraph_agent.news_a2a_client import NewsA2AClient
+    A2A_AVAILABLE = True
+except ImportError:
+    A2A_AVAILABLE = False
+    print("⚠️  A2A Client를 사용할 수 없습니다. 뉴스 기능이 비활성화됩니다.")
 from langchain_openai import ChatOpenAI
 
 from langchain_mcp_adapters.client import MultiServerMCPClient
@@ -131,6 +139,11 @@ agent_graph = None
 # - STDIO로 trading_mcp_server.py와 통신
 # - analyze_market_trend, execute_trade 등 Tool 제공
 mcp_client: MultiServerMCPClient | None = None
+
+# A2A News Client 인스턴스
+# - HTTP로 A2A 서버(Langflow 래퍼)와 통신
+# - 종목 뉴스 분석 데이터 제공
+news_a2a_client: NewsA2AClient | None = None
 
 # 승인 요청 매핑
 # - key: request_id (승인 요청 고유 ID)
@@ -214,6 +227,39 @@ def _emit_prompt_loaded(prompt_name: str, prompt_content: str) -> None:
         prompt_name=prompt_name,
         prompt_content=prompt_content,
     )
+
+
+async def _fetch_news_for_ticker(ticker: str) -> Optional[Dict[str, Any]]:
+    """
+    A2A 서버를 통해 종목 뉴스를 가져옵니다.
+    
+    Args:
+        ticker: 종목 심볼 (예: "AAPL", "005930.KS")
+    
+    Returns:
+        {"news": {...}} 또는 None (오류/비활성화 시)
+    """
+    if not news_a2a_client:
+        print("📰 A2A News Client가 초기화되지 않았습니다 (뉴스 기능 비활성화)")
+        return None
+    
+    try:
+        print(f"📰 뉴스 조회 중: {ticker}")
+        news_data = await news_a2a_client.fetch(ticker)
+        
+        if news_data and news_data.get("news"):
+            summary = news_data["news"].get("summary", "")
+            print(f"✅ 뉴스 조회 완료: {len(summary)} 글자")
+            return news_data
+        else:
+            print(f"⚠️  뉴스 데이터가 비어있습니다: {ticker}")
+            return None
+            
+    except Exception as e:
+        print(f"❌ 뉴스 조회 실패: {e}")
+        import traceback
+        traceback.print_exc()
+        return None
 
 
 def _emit_approval_request(approval_request: Dict[str, Any]) -> None:
@@ -470,11 +516,24 @@ async def build_agent() -> tuple[MultiServerMCPClient, CompiledStateGraph]:
         checkpointer=memory
     )
 
-    # 7. 전역 변수에 저장
+    # 7. A2A News Client 초기화 (선택사항)
+    #    - A2A 서버가 실행 중이면 뉴스 기능 활성화
+    #    - 실행되지 않았으면 기존 기능만 사용
+    global agent_graph, mcp_client, news_a2a_client
+    
+    if A2A_AVAILABLE:
+        a2a_url = os.getenv("A2A_SERVER_URL", f"http://localhost:{os.getenv('A2A_SERVER_PORT', '9999')}")
+        try:
+            news_a2a_client = NewsA2AClient(base_url=a2a_url)
+            print(f"📰 A2A News Client 초기화 완료: {a2a_url}")
+        except Exception as e:
+            print(f"⚠️  A2A News Client 초기화 실패: {e}")
+            news_a2a_client = None
+    
+    # 8. 전역 변수에 저장
     #    Python 규칙: 함수 내에서 전역 변수에 할당 시 `global` 선언 필수
     #    (읽기만 할 때는 불필요)
     #    용도: trading_api.py와 resume_agent_execution()에서 접근
-    global agent_graph, mcp_client
     agent_graph = agent
     mcp_client = client
     agent_ready.set()  # 초기화 완료 시그널 (API 요청 대기 해제)
@@ -599,13 +658,21 @@ async def run_trading_analysis(
             import traceback
             traceback.print_exc()
     
-    # 4. LLM 프롬프트 구성
+    # 4. 뉴스 데이터 조회 (A2A)
+    news_summary = ""
+    news_data = await _fetch_news_for_ticker(ticker)
+    if news_data and news_data.get("news"):
+        news_summary = news_data["news"].get("summary", "")[:500]  # 최대 500자
+        if news_summary:
+            news_summary = f"\n\n📰 **최근 뉴스 요약:**\n{news_summary}\n"
+    
+    # 5. LLM 프롬프트 구성
     task_instruction = f"""
 {ticker} 종목에 대해 거래 분석을 수행해주세요.
-
+{news_summary}
 다음 단계를 반드시 따라주세요:
 1. analyze_market_trend 도구를 사용해서 {ticker}의 시장 동향을 분석하세요
-2. 분석 결과를 바탕으로 BUY/SELL/HOLD 결정을 내리세요
+2. 위의 뉴스 요약 (있는 경우)과 시장 데이터를 종합하여 BUY/SELL/HOLD 결정을 내리세요
 3. BUY 또는 SELL 추천 시에는 request_human_approval 도구로 사용자 승인을 요청하세요
    (HOLD는 승인 불필요)
 4. 승인을 받으면 execute_trade 도구로 거래를 실행하세요
@@ -613,7 +680,7 @@ async def run_trading_analysis(
 모든 응답은 한국어로 해주세요.
 """.strip()
 
-    # 5. 최종 메시지 구성
+    # 6. 최종 메시지 구성
     #    - MCP Prompt가 있으면 먼저 포함 (Agent 성격/역할 설정)
     #    - 그 다음 task_instruction 추가 (구체적 작업 지시)
     messages = []
@@ -643,7 +710,7 @@ async def run_trading_analysis(
     # Task instruction 추가
     messages.append(HumanMessage(content=task_instruction))
     
-    # 6. LangGraph 실행 설정
+    # 7. LangGraph 실행 설정
     config = {"configurable": {"thread_id": thread_id}}
     
     try:
