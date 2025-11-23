@@ -28,10 +28,6 @@ from datetime import datetime
 from pathlib import Path
 from queue import SimpleQueue
 
-# .env 파일 로드
-from dotenv import load_dotenv
-load_dotenv()
-
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 import uvicorn
@@ -43,6 +39,18 @@ from langchain_core.messages import HumanMessage
 from langchain_openai import ChatOpenAI
 
 from langchain_mcp_adapters.client import MultiServerMCPClient
+
+# =============================================================================
+# PATHS & ENV
+# =============================================================================
+
+BASE_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = BASE_DIR.parent
+MCP_SERVER_PATH = str(BASE_DIR / "trading_mcp_server.py")
+
+# .env 파일 로드 (프로젝트 루트)
+from dotenv import load_dotenv
+load_dotenv(PROJECT_ROOT / ".env")
 
 # =============================================================================
 # GLOBAL STATE (In-Memory)
@@ -57,9 +65,6 @@ broadcast_q: SimpleQueue[dict] = SimpleQueue()
 agent_ready = asyncio.Event()
 global_agent = None
 global_mcp_client: MultiServerMCPClient | None = None
-
-BASE_DIR = Path(__file__).resolve().parent
-MCP_SERVER_PATH = str(BASE_DIR / "trading_mcp_server.py")
 
 # =============================================================================
 # HITL TOOL
