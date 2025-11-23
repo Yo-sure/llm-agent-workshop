@@ -66,7 +66,8 @@ wsl -e langflow run
 
 # 2. A2A News Server 실행 (Langflow 래퍼)
 # .env 파일에 LANGFLOW_* 변수 설정 필수
-cd langgraph_agent && ./start_a2a_server.sh
+uv run python a2a_news_server.py
+# 또는: bash langgraph_agent/start_a2a_server.sh
 
 # 3. Trading Bot 실행
 uv run python langgraph_agent/trading_bot_host.py

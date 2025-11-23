@@ -81,7 +81,7 @@ from langchain_core.messages import HumanMessage, AIMessage, ToolMessage, BaseMe
 
 # A2A News Client
 try:
-    from langgraph_agent.news_a2a_client import NewsA2AClient
+    from a2a_news_client import NewsA2AClient
     A2A_AVAILABLE = True
 except ImportError:
     A2A_AVAILABLE = False

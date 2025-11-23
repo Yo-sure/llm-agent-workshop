@@ -39,5 +39,6 @@ echo "   Langflow: $LANGFLOW_BASE_URL"
 echo "   Flow ID: $LANGFLOW_FLOW_ID"
 echo "   Port: $PORT"
 
-uv run python news_a2a_server_for_langflow.py
+cd ..
+uv run python a2a_news_server.py
 
