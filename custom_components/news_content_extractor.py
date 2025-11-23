@@ -2,12 +2,12 @@
 """
 News Content Extractor Component for LangFlow
 
-A specialized component that extracts clean article content from news websites,
-removing navigation, ads, and other unwanted elements.
+뉴스 웹사이트에서 깨끗한 기사 본문을 추출하는 전문 컴포넌트.
+네비게이션, 광고, 기타 불필요한 요소들을 제거합니다.
 """
 
 import re
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 import requests
 from bs4 import BeautifulSoup
@@ -20,16 +20,64 @@ from langflow.io import (
     Output,
 )
 from langflow.schema import DataFrame
-from langflow.helpers.data import safe_convert
 
 
 class NewsContentExtractorComponent(Component):
+    """뉴스 본문 추출 컴포넌트"""
+    
     display_name = "News Content Extractor"
     description = "Extract clean article content from news websites, removing navigation, ads, and unwanted elements."
     documentation: str = "https://docs.langflow.org/components-custom"
     icon = "newspaper"
     name = "NewsContentExtractor"
 
+    # ==================== 클래스 상수 ====================
+    
+    # 제거할 요소 선택자들
+    UNWANTED_SELECTORS = [
+        'nav', 'header', 'footer',  # 페이지 구조 요소
+        '.nav', '.navigation', '.menu',  # 네비게이션 클래스
+        '.ad', '.advertisement', '.ads',  # 광고
+        '.social', '.share', '.sharing',  # 소셜 공유
+        '.sidebar', '.related', '.recommended',  # 사이드바, 관련 기사
+        '.comments', '.comment',  # 댓글
+        'script', 'style', 'noscript',  # 스크립트, 스타일
+        '.subscribe', '.newsletter',  # 구독 관련
+        '.breadcrumb', '.breadcrumbs',  # 브레드크럼
+        '.cookie', '.privacy',  # 쿠키/개인정보 고지
+        '.popup', '.modal',  # 팝업, 모달
+    ]
+    
+    # 본문 영역 선택자들 (우선순위순)
+    CONTENT_SELECTORS = [
+        'article',  # HTML5 article 태그
+        '.article-body', '.article-content',  # 일반적인 기사 본문 클래스
+        '.story-body', '.story-content',  # 스토리 본문
+        '.post-content', '.post-body',  # 포스트 컨텐츠
+        '.content', '.main-content',  # 메인 컨텐츠
+        '[data-module="ArticleBody"]',  # CNBC 전용
+        '.ArticleBody-articleBody',  # CNBC 전용
+        '[itemprop="articleBody"]',  # Schema.org 마크업
+        '.entry-content',  # WordPress 기본
+        '.news-content', '.news-body',  # 뉴스 전용
+    ]
+    
+    # 제거할 텍스트 패턴들
+    UNWANTED_TEXT_PATTERNS = [
+        r'Skip Navigation.*?(?=\w)',  # Skip Navigation
+        r'Subscribe.*?(?=\w)',  # Subscribe 관련
+        r'Share.*?(?=\w)',  # Share 버튼
+        r'Follow.*?(?=\w)',  # Follow 버튼
+        r'Sign up.*?(?=\w)',  # Sign up
+        r'Cookie.*?(?=\w)',  # Cookie 고지
+        r'Privacy.*?(?=\w)',  # Privacy 고지
+    ]
+    
+    # RSS URL 패턴
+    RSS_PATTERNS = ("/rss", "rss.", ".rss")
+
+    # ==================== Langflow 설정 ====================
+    
     inputs = [
         MessageTextInput(
             name="urls",
@@ -75,121 +123,142 @@ class NewsContentExtractorComponent(Component):
         Output(name="extracted_content", display_name="Extracted Content", method="extract_content"),
     ]
 
-    def _extract_clean_news_content(self, html_content: str, url: str = "") -> Dict[str, Any]:
-        """Extract clean article content from HTML"""
+    # ==================== Private 헬퍼 메서드들 ====================
+    
+    @staticmethod
+    def _is_rss_url(url: str) -> bool:
+        """RSS/Feed URL인지 확인"""
+        return any(pattern.lower() in url.lower() for pattern in NewsContentExtractorComponent.RSS_PATTERNS)
+    
+    @staticmethod
+    def _normalize_urls(urls: Any) -> List[str]:
+        """다양한 입력 형식의 URL을 리스트로 정규화"""
+        if isinstance(urls, list):
+            return [url.strip() for url in urls if url.strip()]
+        elif isinstance(urls, str):
+            return [url.strip() for url in urls.split('\n') if url.strip()]
+        return []
+    
+    @staticmethod
+    def _create_error_response(url: str, error_msg: str) -> Dict[str, Any]:
+        """표준 에러 응답 생성"""
+        return {
+            'url': url,
+            'title': 'Error' if url else '',
+            'description': '',
+            'content': error_msg,
+            'content_length': 0,
+            'paragraphs_count': 0,
+            'success': False,
+            'error': error_msg
+        }
+
+    def _extract_metadata(self, soup: BeautifulSoup) -> Dict[str, str]:
+        """페이지 메타데이터 추출 (제목, 설명)"""
+        if not self.include_metadata:
+            return {'title': '', 'description': ''}
         
-        soup = BeautifulSoup(html_content, 'lxml')
+        title = ''
+        description = ''
         
-        # Extract metadata first
-        title = ""
-        description = ""
+        # 페이지 제목 추출
+        title_tag = soup.find('title')
+        if title_tag:
+            title = title_tag.get_text().strip()
         
-        if self.include_metadata:
-            # Try to get page title
-            title_tag = soup.find('title')
-            if title_tag:
-                title = title_tag.get_text().strip()
-            
-            # Try to get meta description
-            desc_tag = soup.find('meta', attrs={'name': 'description'}) or soup.find('meta', attrs={'property': 'og:description'})
-            if desc_tag:
-                description = desc_tag.get('content', '').strip()
+        # 메타 설명 추출
+        desc_tag = soup.find('meta', attrs={'name': 'description'}) or \
+                   soup.find('meta', attrs={'property': 'og:description'})
+        if desc_tag:
+            description = desc_tag.get('content', '').strip()
         
-        # 1. Remove unwanted elements
-        unwanted_selectors = [
-            'nav', 'header', 'footer',  # Page structure elements
-            '.nav', '.navigation', '.menu',  # Navigation classes
-            '.ad', '.advertisement', '.ads',  # Ads
-            '.social', '.share', '.sharing',  # Social sharing
-            '.sidebar', '.related', '.recommended',  # Sidebar, related articles
-            '.comments', '.comment',  # Comments
-            'script', 'style', 'noscript',  # Scripts, styles
-            '.subscribe', '.newsletter',  # Subscription related
-            '.breadcrumb', '.breadcrumbs',  # Breadcrumbs
-            '.cookie', '.privacy',  # Cookie/privacy notices
-            '.popup', '.modal',  # Popups and modals
-        ]
-        
-        for selector in unwanted_selectors:
+        return {'title': title, 'description': description}
+
+    def _remove_unwanted_elements(self, soup: BeautifulSoup) -> None:
+        """불필요한 HTML 요소 제거 (in-place)"""
+        for selector in self.UNWANTED_SELECTORS:
             for element in soup.select(selector):
                 element.decompose()
-        
-        # 2. Find main content area (news site patterns)
-        content_selectors = [
-            'article',  # HTML5 article tag
-            '.article-body', '.article-content',  # Common article body classes
-            '.story-body', '.story-content',  # Story body
-            '.post-content', '.post-body',  # Post content
-            '.content', '.main-content',  # Main content
-            '[data-module="ArticleBody"]',  # CNBC specific
-            '.ArticleBody-articleBody',  # CNBC specific
-            '[itemprop="articleBody"]',  # Schema.org markup
-            '.entry-content',  # WordPress default
-            '.news-content', '.news-body',  # News specific
-        ]
-        
-        main_content = None
-        for selector in content_selectors:
+
+    def _find_main_content(self, soup: BeautifulSoup) -> BeautifulSoup:
+        """본문 영역 찾기 (우선순위 기반)"""
+        # 본문 영역 선택자로 순차 탐색
+        for selector in self.CONTENT_SELECTORS:
             elements = soup.select(selector)
             if elements:
-                main_content = elements[0]
-                break
+                return elements[0]
         
-        # 3. Fallback to body if no main content found
-        if not main_content:
-            main_content = soup.find('body') or soup
-        
-        # 4. Extract and clean text
-        text = main_content.get_text(separator=' ', strip=True)
-        
-        # 5. Text post-processing
-        # Remove consecutive whitespace
+        # Fallback: body 또는 전체
+        return soup.find('body') or soup
+
+    def _clean_text(self, text: str) -> str:
+        """텍스트 정리 (공백, 불필요한 패턴 제거)"""
+        # 연속 공백 제거
         text = re.sub(r'\s+', ' ', text)
         
-        # Remove unwanted patterns
-        unwanted_patterns = [
-            r'Skip Navigation.*?(?=\w)',  # Skip Navigation
-            r'Subscribe.*?(?=\w)',  # Subscribe related
-            r'Share.*?(?=\w)',  # Share buttons
-            r'Follow.*?(?=\w)',  # Follow buttons
-            r'Sign up.*?(?=\w)',  # Sign up
-            r'Cookie.*?(?=\w)',  # Cookie notices
-            r'Privacy.*?(?=\w)',  # Privacy notices
-        ]
-        
-        for pattern in unwanted_patterns:
+        # 불필요한 텍스트 패턴 제거
+        for pattern in self.UNWANTED_TEXT_PATTERNS:
             text = re.sub(pattern, '', text, flags=re.IGNORECASE)
         
-        # 6. Split into paragraphs and filter
-        paragraphs = [p.strip() for p in text.split('\n') if p.strip()]
+        return text.strip()
+
+    def _filter_paragraphs(self, paragraphs: List[str]) -> List[str]:
+        """짧거나 의미 없는 문단 필터링"""
+        if not self.remove_short_paragraphs:
+            return paragraphs
         
-        if self.remove_short_paragraphs:
-            # Filter out very short paragraphs and common non-content
-            filtered_paragraphs = []
-            for p in paragraphs:
-                if (len(p) > 50 and 
-                    not p.startswith(('Copyright', '©', 'Terms', 'Privacy', 'Contact')) and
-                    not p.lower().startswith(('click', 'tap', 'swipe', 'scroll'))):
-                    filtered_paragraphs.append(p)
-            paragraphs = filtered_paragraphs
+        filtered = []
+        for p in paragraphs:
+            # 길이 체크 및 일반적인 비본문 제외
+            if (len(p) > 50 and 
+                not p.startswith(('Copyright', '©', 'Terms', 'Privacy', 'Contact')) and
+                not p.lower().startswith(('click', 'tap', 'swipe', 'scroll'))):
+                filtered.append(p)
         
-        # 7. Join paragraphs and apply length limit
-        clean_content = '\n\n'.join(paragraphs)
+        return filtered
+
+    def _apply_length_limit(self, content: str) -> str:
+        """최대 길이 제한 적용"""
+        if len(content) > self.max_content_length:
+            return content[:self.max_content_length] + '...'
+        return content
+
+    def _extract_clean_news_content(self, html_content: str, url: str = "") -> Dict[str, Any]:
+        """HTML에서 깨끗한 기사 본문 추출 (메인 로직)"""
+        soup = BeautifulSoup(html_content, 'lxml')
         
-        if len(clean_content) > self.max_content_length:
-            clean_content = clean_content[:self.max_content_length] + '...'
+        # 1. 메타데이터 추출
+        metadata = self._extract_metadata(soup)
+        
+        # 2. 불필요한 요소 제거
+        self._remove_unwanted_elements(soup)
+        
+        # 3. 본문 영역 찾기
+        main_content = self._find_main_content(soup)
+        
+        # 4. 텍스트 추출 및 정리
+        raw_text = main_content.get_text(separator=' ', strip=True)
+        clean_text = self._clean_text(raw_text)
+        
+        # 5. 문단 분리 및 필터링
+        paragraphs = [p.strip() for p in clean_text.split('\n') if p.strip()]
+        filtered_paragraphs = self._filter_paragraphs(paragraphs)
+        
+        # 6. 문단 합치기 및 길이 제한
+        content = '\n\n'.join(filtered_paragraphs)
+        content = self._apply_length_limit(content)
         
         return {
             'url': url,
-            'title': title,
-            'description': description,
-            'content': clean_content,
-            'content_length': len(clean_content),
-            'paragraphs_count': len(paragraphs),
+            'title': metadata['title'],
+            'description': metadata['description'],
+            'content': content,
+            'content_length': len(content),
+            'paragraphs_count': len(filtered_paragraphs),
         }
 
     def _fetch_url_content(self, url: str) -> Dict[str, Any]:
-        """Fetch content from a single URL"""
+        """단일 URL에서 컨텐츠 가져오기"""
         try:
             headers = {
                 'User-Agent': 'Mozilla/5.0 (compatible; NewsContentExtractor/1.0)',
@@ -203,7 +272,7 @@ class NewsContentExtractorComponent(Component):
             response = requests.get(url, headers=headers, timeout=self.timeout)
             response.raise_for_status()
             
-            # Extract content
+            # 본문 추출
             result = self._extract_clean_news_content(response.content, url)
             result['success'] = True
             result['error'] = None
@@ -211,83 +280,48 @@ class NewsContentExtractorComponent(Component):
             return result
             
         except requests.RequestException as e:
-            return {
-                'url': url,
-                'title': '',
-                'description': '',
-                'content': '',
-                'content_length': 0,
-                'paragraphs_count': 0,
-                'success': False,
-                'error': str(e)
-            }
+            return self._create_error_response(url, str(e))
         except Exception as e:
-            return {
-                'url': url,
-                'title': '',
-                'description': '',
-                'content': '',
-                'content_length': 0,
-                'paragraphs_count': 0,
-                'success': False,
-                'error': f"Extraction error: {str(e)}"
-            }
+            return self._create_error_response(url, f"Extraction error: {str(e)}")
 
+    # ==================== Public API ====================
+    
     def extract_content(self) -> DataFrame:
-        """Extract content from all configured URLs"""
+        """설정된 모든 URL에서 컨텐츠 추출 (메인 진입점)"""
         
-        # Handle both list and string inputs
-        if isinstance(self.urls, list):
-            urls = [url.strip() for url in self.urls if url.strip()]
-        elif isinstance(self.urls, str):
-            urls = [url.strip() for url in self.urls.split('\n') if url.strip()]
-        else:
-            urls = []
+        # URL 입력 정규화
+        urls = self._normalize_urls(self.urls)
         
-        rss_patterns = ("/rss", "rss.", ".rss")
-        rss_urls = [u for u in urls if any(p.lower() in u.lower() for p in rss_patterns)]
+        # RSS URL 체크
+        rss_urls = [u for u in urls if self._is_rss_url(u)]
         if rss_urls:
-            return DataFrame([{
-                'url': rss_urls[0],
-                'title': 'Error',
-                'description': '',
-                'content': f"RSS/Feed 링크는 지원하지 않습니다: {rss_urls[0]}",
-                'content_length': 0,
-                'paragraphs_count': 0,
-                'success': False,
-                'error': 'RSS URLs are not supported'
-            }])
-        # ----------------------------------
-
-        if not urls:
-            return DataFrame([{
-                'url': '',
-                'title': 'Error',
-                'description': '',
-                'content': 'No valid URLs provided',
-                'content_length': 0,
-                'paragraphs_count': 0,
-                'success': False,
-                'error': 'No URLs provided'
-            }])
+            return DataFrame([self._create_error_response(
+                rss_urls[0], 
+                f"RSS/Feed 링크는 지원하지 않습니다: {rss_urls[0]}"
+            )])
         
-        # Process each URL
+        # 빈 URL 체크
+        if not urls:
+            return DataFrame([self._create_error_response('', 'No valid URLs provided')])
+        
+        # 각 URL 처리
         results = []
         for url in urls:
             self.log(f"Processing: {url}")
             result = self._fetch_url_content(url)
             results.append(result)
         
-        # Log summary
+        # 요약 로그
         successful = sum(1 for r in results if r['success'])
         self.log(f"Processed {len(results)} URLs, {successful} successful")
         
         return DataFrame(results)
 
 
-# For standalone testing
+# ==================== 독립 실행 테스트 ====================
+
 if __name__ == "__main__":
-    # Test the component
+    # 컴포넌트 테스트
     extractor = NewsContentExtractorComponent()
     extractor.urls = [
         "https://www.cnbc.com/2025/08/22/stocks-making-the-biggest-moves-premarket-nvda-intu-wday-rost.html"
@@ -299,24 +333,24 @@ if __name__ == "__main__":
     
     try:
         result = extractor.extract_content()
-        print("=== News Content Extraction Test ===")
+        print("=== 뉴스 본문 추출 테스트 ===")
         
-        # DataFrame의 실제 데이터에 접근
+        # DataFrame 데이터 접근
         if hasattr(result, 'data'):
             data = result.data
         else:
             data = result.to_dict('records') if hasattr(result, 'to_dict') else []
         
-        print(f"Results: {len(data)} articles")
+        print(f"결과: {len(data)}개 기사")
         
         if data:
             first_result = data[0]
-            print(f"Title: {first_result.get('title', 'No title')}")
-            print(f"Success: {first_result.get('success', False)}")
-            print(f"Content length: {first_result.get('content_length', 0)}")
-            print(f"Content preview: {first_result.get('content', '')[:200]}...")
+            print(f"제목: {first_result.get('title', 'No title')}")
+            print(f"성공: {first_result.get('success', False)}")
+            print(f"본문 길이: {first_result.get('content_length', 0)}자")
+            print(f"본문 미리보기: {first_result.get('content', '')[:200]}...")
             
     except Exception as e:
-        print(f"Test failed: {e}")
+        print(f"테스트 실패: {e}")
         import traceback
         traceback.print_exc()

@@ -153,3 +153,9 @@ dmypy.json
 cython_debug/
 
 .idea/
+
+# HTTP Cache (requests_cache)
+gdelt_cache.sqlite
+gdelt_cache.sqlite-shm
+gdelt_cache.sqlite-wal
+*_cache.sqlite
