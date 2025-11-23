@@ -58,13 +58,15 @@ PYTHONPATH=$(pwd) uv run langflow run
 
 ```
 llm-agent-workshop/
-├── core_services/                 # 🔥 공통 비즈니스 로직
+├── core_services/                 # 🔥 공통 비즈니스 로직 (DRY principle)
 │   ├── gdelt_service.py           # GDELT API 서비스
 │   └── content_extractor_service.py # 콘텐츠 추출 서비스
 ├── custom_components/             # Langflow 컴포넌트
-│   ├── gdelt_doc_search_component.py
-│   └── news_content_extractor.py
-├── mcp_news_server.py             # 🆕 MCP 서버
+│   ├── gdelt_doc_search_component.py         # Original implementation
+│   ├── gdelt_doc_search_component_with_core.py   # Using core_services
+│   ├── news_content_extractor.py             # Original implementation
+│   └── news_content_extractor_with_core.py   # Using core_services
+├── mcp_news_server.py             # 🆕 MCP 서버 (uses core_services)
 └── custom_flows/                 # Langflow 플로우 예제
 ```
 
@@ -132,11 +134,19 @@ Langflow UI에서 MCP Tools 컴포넌트 추가 후 `http://127.0.0.1:8080/sse` 
 
 ```python
 search_gdelt_news(
-  query="artificial intelligence", 
+  query="Samsung SDS",  # Use ENGLISH keywords
   max_results=10,
-  timespan="7d"
+  financial_media_only=True,  # Filter to financial media
+  tone_filter="Positive",     # Sentiment filter
+  timespan="7days"
 )
 ```
+
+**새로운 기능:**
+- `financial_media_only`: 금융 미디어 프리셋 (Reuters, Bloomberg, WSJ 등)
+- `tone_filter`: 감성 필터링 (Positive/Negative/Neutral)
+- `languages`: ISO 639-3 언어 코드 (eng, kor, jpn, zho)
+- `countries`: FIPS 국가 코드 (US, KS, JA, CH)
 
 ### 2. `extract_article_content`
 
@@ -145,9 +155,11 @@ search_gdelt_news(
 ```python
 extract_article_content(
   urls="https://example.com/article1,https://example.com/article2",
-  max_length=3000
+  max_length=5000
 )
 ```
+
+**권장 사항:** GDELT 검색 후 상위 2-3개 URL만 추출
 
 ---
 
@@ -161,8 +173,8 @@ extract_article_content(
 ### 컴포지션 패턴 예시
 
 ```python
-# Langflow 컴포넌트
-class GDELTDocSearchComponent(Component):
+# Langflow 컴포넌트 (_with_core 버전)
+class GDELTDocSearchComponentWithCore(Component):
     def search_gdelt(self) -> DataFrame:
         df = GDELTService.search_news(...)  # 서비스 위임
         return DataFrame(df)
@@ -173,6 +185,17 @@ async def search_gdelt_news(...) -> str:
     df = GDELTService.search_news(...)  # 동일한 서비스 사용
     return format_results(df)
 ```
+
+### 컴포넌트 비교
+
+- **Original Components** (`gdelt_doc_search_component.py`, `news_content_extractor.py`):
+  - 자체 로직 구현
+  - Langflow 전용
+  
+- **With Core Components** (`*_with_core.py`):
+  - `core_services` 위임
+  - 코드 중복 최소화
+  - MCP 서버와 동일한 로직 공유
 
 ---
 

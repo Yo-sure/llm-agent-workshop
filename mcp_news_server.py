@@ -4,7 +4,6 @@ MCP News Research Server
 
 A Model Context Protocol server that provides news research tools using:
 - GDELT DOC 2.0 API for global news search
-- Google News RSS for current news
 - Content extraction from news URLs
 
 This server exposes the same functionality as the Langflow components
@@ -18,7 +17,7 @@ from mcp.server.fastmcp import FastMCP
 
 # Configure logging
 logging.basicConfig(
-    level=logging.DEBUG,  # Changed to DEBUG for more detailed logs
+    level=logging.DEBUG,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
         logging.StreamHandler()  # stderr로 출력
@@ -28,14 +27,13 @@ logger = logging.getLogger("mcp-news-server")
 
 # Import our core services
 from core_services.gdelt_service import GDELTService
-from core_services.google_news_service import GoogleNewsService
 from core_services.content_extractor_service import ContentExtractorService
 
 # Initialize FastMCP server
 mcp = FastMCP(
     name="news-research",
     host="127.0.0.1",
-    port=8080  # Back to original port
+    port=8080
 )
 
 
@@ -47,25 +45,38 @@ async def search_gdelt_news(
     domains: Optional[str] = None,
     languages: Optional[str] = None,
     countries: Optional[str] = None,
-    timespan: Optional[str] = None
+    financial_media_only: bool = False,
+    tone_filter: str = "All",
+    timespan: str = "7days"
 ) -> str:
     """
     Search global news using GDELT DOC 2.0 API.
     
     GDELT monitors global news media and provides comprehensive coverage of events worldwide.
-    ⚠️  BEST FOR: English queries and international news. For Korean/local news, use search_google_news instead.
+    
+    IMPORTANT: Use SHORT ENGLISH keywords for best results!
+       Korean/non-English keywords rarely return results (global news focus).
     
     Args:
         query: Search query in ENGLISH (supports Boolean operators like AND, OR, parentheses)
-        max_results: Maximum number of articles to return (1-250)
-        mode: Search mode - "ArtList" for articles, timeline modes for analysis
+               Examples: "Samsung SDS", "NVIDIA", "(Tesla OR SpaceX)"
+        max_results: Maximum number of articles to return (1-250, default: 10)
+        mode: Search mode - "ArtList" for articles, or timeline modes for analysis
         domains: Comma-separated domain filters (e.g., "reuters.com,bloomberg.com")
-        languages: Comma-separated language filters (e.g., "English,Korean")
-        countries: Comma-separated country filters (e.g., "United States,South Korea")
-        timespan: Time range (e.g., "7d" for last 7 days, "1m" for last month)
+        languages: Comma-separated language filters - ISO 639-3 codes (e.g., "eng,kor,jpn,zho")
+        countries: Comma-separated country filters - FIPS codes (e.g., "US,KS,JA,CH")
+                   Note: KS=South Korea, not KR
+        financial_media_only: Filter to financial media only (Reuters, Bloomberg, WSJ, etc.)
+        tone_filter: Sentiment filter - "All", "Positive" (>5), "Negative" (<-5), "Neutral" (-5~5)
+        timespan: Time range (e.g., "7days", "24hours", "14days", "30days", default: "7days")
     
     Returns:
-        Formatted string with article titles, URLs, dates, and domains
+        Formatted string with article titles, URLs, dates, domains, language, country, and tone
+    
+    Examples:
+        1. Basic search: search_gdelt_news("Samsung SDS", max_results=5)
+        2. Financial bullish news: search_gdelt_news("NVIDIA", financial_media_only=True, tone_filter="Positive")
+        3. Risk monitoring: search_gdelt_news("Tesla recall", tone_filter="Negative", timespan="7days")
     """
     try:
         # Parse comma-separated filters
@@ -73,36 +84,28 @@ async def search_gdelt_news(
         language_list = [l.strip() for l in languages.split(",")] if languages else None
         country_list = [c.strip() for c in countries.split(",")] if countries else None
         
-        df = None
-        filter_attempts = [
-            {"domains": domain_list, "languages": language_list, "countries": country_list, "desc": "모든 필터"},
-            {"domains": None, "languages": language_list, "countries": country_list, "desc": "도메인 필터 제거"},  
-            {"domains": None, "languages": None, "countries": country_list, "desc": "언어 필터까지 제거"},
-            {"domains": None, "languages": None, "countries": None, "desc": "모든 필터 제거"}
-        ]
+        df = GDELTService.search_news(
+            query=query,
+            mode=mode,
+            maxrecords=min(max_results, 250),
+            domains=domain_list,
+            languages=language_list, 
+            countries=country_list,
+            financial_media_only=financial_media_only,
+            tone_filter=tone_filter,
+            timespan=timespan
+        )
         
-        for attempt in filter_attempts:
-            df = GDELTService.search_news(
-                query=query,
-                mode=mode,
-                maxrecords=min(max_results, 250),
-                domains=attempt["domains"],
-                languages=attempt["languages"], 
-                countries=attempt["countries"],
-                timespan=timespan
-            )
-            
-            # 성공적인 결과가 있으면 중단
-            if not df.empty and not ('message' in df.columns and 'No results' in str(df.iloc[0].get('message', ''))):
-                logger.info(f"GDELT 검색 성공: {attempt['desc']} 적용")
-                break
-        
-        if df.empty or ('message' in df.columns and 'No results' in str(df.iloc[0].get('message', ''))):
-            return "No articles found for the given query, even with relaxed filters."
+        if df.empty:
+            return "No articles found for the given query."
         
         # Check for errors
         if "title" in df.columns and df.iloc[0]["title"] == "Error":
             return f"GDELT API Error: {df.iloc[0].get('summary', 'Unknown error')}"
+        
+        # Check for "No results" message
+        if "title" in df.columns and df.iloc[0]["title"] == "No results":
+            return f"No articles found: {df.iloc[0].get('summary', 'No matching articles')}"
         
         # Format results
         results = []
@@ -113,7 +116,8 @@ URL: {row.get('url', 'N/A')}
 Date: {row.get('seendate', 'N/A')}
 Domain: {row.get('domain', 'N/A')}
 Language: {row.get('language', 'N/A')}
-Country: {row.get('sourcecountry', 'N/A')}"""
+Country: {row.get('sourcecountry', 'N/A')}
+Tone: {row.get('tone', 'N/A')}"""
             else:
                 # Timeline mode formatting
                 result = f"""Series: {row.get('series', 'N/A')}
@@ -124,71 +128,8 @@ Value: {row.get('value', 'N/A')}"""
         return f"Found {len(df)} articles from GDELT:\n\n" + "\n\n---\n\n".join(results)
         
     except Exception as e:
+        logger.error(f"Error searching GDELT: {str(e)}")
         return f"Error searching GDELT: {str(e)}"
-
-
-@mcp.tool()
-async def search_google_news(
-    query: Optional[str] = None,
-    topic: Optional[str] = None,
-    location: Optional[str] = None,
-    max_results: int = 10,
-    language: str = "ko",
-    country: str = "KR"
-) -> str:
-    """
-    Search current news using Google News RSS.
-    
-    Get the latest news articles from Google News by keyword, topic, or location.
-    ✅ BEST FOR: Korean queries, local news, and recent breaking news with excellent language support.
-    
-    Args:
-        query: Search keyword in ANY LANGUAGE (e.g., "삼성SDS", "artificial intelligence")
-        topic: News topic category (WORLD, NATION, BUSINESS, TECHNOLOGY, ENTERTAINMENT, SCIENCE, SPORTS, HEALTH)
-        location: Geographic location for news (e.g., "Seoul", "California", "Japan")
-        max_results: Maximum number of articles to return (1-100)
-        language: Language code (e.g., "ko" for Korean, "en" for English)
-        country: Country code (e.g., "KR" for Korea, "US" for United States)
-    
-    Returns:
-        Formatted string with article titles, links, publication dates, and summaries
-    """
-    try:
-        # Build language parameters
-        hl = f"{language}-{country}" if language == "en" else language
-        ceid = f"{country}:{language}"
-        
-        # Call Google News service
-        df = GoogleNewsService.search_news(
-            query=query,
-            topic=topic,
-            location=location,
-            hl=hl,
-            gl=country,
-            ceid=ceid,
-            max_results=max_results
-        )
-        
-        if df.empty:
-            return "No articles found from Google News."
-        
-        # Check for errors
-        if "title" in df.columns and df.iloc[0]["title"] == "Error":
-            return f"Google News Error: {df.iloc[0].get('summary', 'Unknown error')}"
-        
-        # Format results
-        results = []
-        for _, row in df.head(max_results).iterrows():
-            result = f"""Title: {row.get('title', 'N/A')}
-Link: {row.get('link', 'N/A')}
-Published: {row.get('published', 'N/A')}
-Summary: {row.get('summary', 'N/A')}"""
-            results.append(result)
-        
-        return f"Found {len(df)} articles from Google News:\n\n" + "\n\n---\n\n".join(results)
-        
-    except Exception as e:
-        return f"Error searching Google News: {str(e)}"
 
 
 @mcp.tool()
@@ -202,13 +143,21 @@ async def extract_article_content(
     
     Removes navigation, ads, and other unwanted elements to get just the article text.
     
+    USAGE: ALWAYS call this after search_gdelt_news to get full article text!
+           GDELT only returns headlines - this tool extracts the complete content.
+    
     Args:
         urls: Comma-separated list of news article URLs to extract content from
-        max_length: Maximum length of extracted content per article (characters)
-        include_metadata: Whether to include page title and description metadata
+              Limit to 2-3 URLs for optimal performance
+        max_length: Maximum length of extracted content per article (characters, default: 5000)
+        include_metadata: Whether to include page title and description metadata (default: True)
     
     Returns:
         Formatted string with extracted content, titles, and metadata for each URL
+    
+    Example:
+        After getting GDELT results, extract top 2 articles:
+        extract_article_content("https://example.com/article1,https://example.com/article2")
     """
     try:
         # Parse URLs
@@ -251,6 +200,7 @@ Content:
         return f"Processed {len(results)} URLs, {successful} successful:\n\n" + "\n\n" + "="*50 + "\n\n".join(formatted_results)
         
     except Exception as e:
+        logger.error(f"Error extracting content: {str(e)}")
         return f"Error extracting content: {str(e)}"
 
 
@@ -262,13 +212,11 @@ if __name__ == "__main__":
     if mode == "--http":
         logger.info("🌐 Starting MCP News Server (Streamable HTTP)")
         logger.info("📡 Base URL: http://127.0.0.1:8080/mcp")
-        # run()에는 host/port/path를 넘기지 않는다 (해당 버전 미지원)
         mcp.run(transport="streamable-http")
 
     elif mode == "--sse":
         logger.info("🌐 Starting MCP News Server (SSE)")
         logger.info("📡 SSE URL: http://127.0.0.1:8080/sse")
-        # run()에는 host/port/path를 넘기지 않는다 (해당 버전 미지원)
         mcp.run(transport="sse")
 
     else:
