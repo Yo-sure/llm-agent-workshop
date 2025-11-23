@@ -116,13 +116,62 @@ uv run python mcp_news_server.py --sse
 
 ### 3. Langflow MCP Tools 연동
 
-##### 서버 실행
+Langflow는 두 가지 transport 방식을 지원합니다. 상황에 맞게 선택하세요.
+
+---
+
+#### Option A: SSE 모드
+
+##### 1) 서버 실행
 
 ```bash
 uv run python mcp_news_server.py --sse
 ```
 
-Langflow UI에서 MCP Tools 컴포넌트 추가 후 `http://127.0.0.1:8080/sse` 연결
+##### 2) Langflow JSON 설정
+
+```json
+{
+  "news-research-sse": {
+    "url": "http://127.0.0.1:8080/sse",
+    "transport": "sse"
+  }
+}
+```
+
+---
+
+#### Option B: STDIO 모드
+
+##### Langflow JSON 설정 (서버 실행 불필요)
+
+```json
+{
+  "news-research-stdio": {
+    "command": "uv",
+    "args": [
+      "run",
+      "python",
+      "mcp_news_server.py"
+    ],
+    "transport": "stdio"
+  }
+}
+```
+
+⚠️ **STDIO 주의사항**: 
+- STDIO는 표준 입출력(`stdin`/`stdout`)으로 JSON-RPC 메시지를 주고받습니다
+- 서버 코드에서 **`print()` 사용 금지** - 통신이 깨집니다
+- 로깅은 이미 `sys.stderr`로 설정되어 있어 안전합니다 (`mcp_news_server.py` 참고)
+
+---
+
+#### 📝 Langflow에서 JSON 설정 사용하기
+
+1. Langflow UI → **Settings** → **MCP Servers**
+2. **Import from JSON** 클릭
+3. 위의 JSON 중 하나를 붙여넣기
+4. **MCP Tools** 컴포넌트에서 서버 선택
 
 ---
 
