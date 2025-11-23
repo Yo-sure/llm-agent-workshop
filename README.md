@@ -45,12 +45,24 @@ jupyter notebook langgraph_agent/langgraph_tutorial.ipynb
 ```
 
 **04 브랜치 (Trading Bot with A2A Integration)**
+
+⚠️ **주의**: Langflow는 의존성 충돌로 인해 별도 환경에서 실행됩니다.
+
 ```bash
 git checkout 04-langgraph-mcp-trading
 uv sync
 
-# 1. Langflow 실행 (뉴스 분석용)
-uv run langflow run
+# 1. Langflow 설치 및 실행 (별도 환경 권장)
+# 옵션 A: 별도 venv
+python -m venv venv-langflow
+source venv-langflow/bin/activate  # Windows: venv-langflow\Scripts\activate
+pip install langflow
+langflow run
+deactivate
+
+# 옵션 B: WSL 환경 (권장)
+# WSL에서 이미 설치되어 있다면 그대로 사용
+wsl -e langflow run
 
 # 2. A2A News Server 실행 (Langflow 래퍼)
 # .env 파일에 LANGFLOW_* 변수 설정 필수

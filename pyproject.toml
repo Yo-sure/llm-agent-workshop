@@ -27,3 +27,7 @@ dependencies = [
     "ipython<9",
     "a2a>=0.1.0",
 ]
+
+# Note: Langflow는 별도 환경(WSL)에서 실행됩니다.
+# Langflow 의존성이 Trading Bot과 충돌하므로 분리하여 관리합니다.
+# Langflow 설치: pip install langflow (별도 환경)
