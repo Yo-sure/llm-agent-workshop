@@ -7,7 +7,7 @@
         "data": {
           "sourceHandle": {
             "dataType": "ChatInput",
-            "id": "ChatInput-3j06d",
+            "id": "ChatInput-1G888",
             "name": "message",
             "output_types": [
               "Message"
@@ -15,7 +15,7 @@
           },
           "targetHandle": {
             "fieldName": "input_value",
-            "id": "Prompt-WoWP5",
+            "id": "Prompt-UZCEH",
             "inputTypes": [
               "Message",
               "Text"
@@ -23,12 +23,12 @@
             "type": "str"
           }
         },
-        "id": "reactflow__edge-ChatInput-3j06d{œdataTypeœ:œChatInputœ,œidœ:œChatInput-3j06dœ,œnameœ:œmessageœ,œoutput_typesœ:[œMessageœ]}-Prompt-WoWP5{œfieldNameœ:œinput_valueœ,œidœ:œPrompt-WoWP5œ,œinputTypesœ:[œMessageœ,œTextœ],œtypeœ:œstrœ}",
+        "id": "reactflow__edge-ChatInput-1G888{œdataTypeœ:œChatInputœ,œidœ:œChatInput-1G888œ,œnameœ:œmessageœ,œoutput_typesœ:[œMessageœ]}-Prompt-UZCEH{œfieldNameœ:œinput_valueœ,œidœ:œPrompt-UZCEHœ,œinputTypesœ:[œMessageœ,œTextœ],œtypeœ:œstrœ}",
         "selected": false,
-        "source": "ChatInput-3j06d",
-        "sourceHandle": "{œdataTypeœ:œChatInputœ,œidœ:œChatInput-3j06dœ,œnameœ:œmessageœ,œoutput_typesœ:[œMessageœ]}",
-        "target": "Prompt-WoWP5",
-        "targetHandle": "{œfieldNameœ:œinput_valueœ,œidœ:œPrompt-WoWP5œ,œinputTypesœ:[œMessageœ,œTextœ],œtypeœ:œstrœ}"
+        "source": "ChatInput-1G888",
+        "sourceHandle": "{œdataTypeœ:œChatInputœ,œidœ:œChatInput-1G888œ,œnameœ:œmessageœ,œoutput_typesœ:[œMessageœ]}",
+        "target": "Prompt-UZCEH",
+        "targetHandle": "{œfieldNameœ:œinput_valueœ,œidœ:œPrompt-UZCEHœ,œinputTypesœ:[œMessageœ,œTextœ],œtypeœ:œstrœ}"
       },
       {
         "animated": false,
@@ -36,7 +36,7 @@
         "data": {
           "sourceHandle": {
             "dataType": "Prompt",
-            "id": "Prompt-TgQf1",
+            "id": "Prompt-MmVSI",
             "name": "prompt",
             "output_types": [
               "Message"
@@ -44,19 +44,19 @@
           },
           "targetHandle": {
             "fieldName": "system_message",
-            "id": "LanguageModelComponent-M2aFT",
+            "id": "LanguageModelComponent-nBpsv",
             "inputTypes": [
               "Message"
             ],
             "type": "str"
           }
         },
-        "id": "reactflow__edge-Prompt-TgQf1{œdataTypeœ:œPromptœ,œidœ:œPrompt-TgQf1œ,œnameœ:œpromptœ,œoutput_typesœ:[œMessageœ]}-LanguageModelComponent-M2aFT{œfieldNameœ:œsystem_messageœ,œidœ:œLanguageModelComponent-M2aFTœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}",
+        "id": "reactflow__edge-Prompt-MmVSI{œdataTypeœ:œPromptœ,œidœ:œPrompt-MmVSIœ,œnameœ:œpromptœ,œoutput_typesœ:[œMessageœ]}-LanguageModelComponent-nBpsv{œfieldNameœ:œsystem_messageœ,œidœ:œLanguageModelComponent-nBpsvœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}",
         "selected": false,
-        "source": "Prompt-TgQf1",
-        "sourceHandle": "{œdataTypeœ:œPromptœ,œidœ:œPrompt-TgQf1œ,œnameœ:œpromptœ,œoutput_typesœ:[œMessageœ]}",
-        "target": "LanguageModelComponent-M2aFT",
-        "targetHandle": "{œfieldNameœ:œsystem_messageœ,œidœ:œLanguageModelComponent-M2aFTœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}"
+        "source": "Prompt-MmVSI",
+        "sourceHandle": "{œdataTypeœ:œPromptœ,œidœ:œPrompt-MmVSIœ,œnameœ:œpromptœ,œoutput_typesœ:[œMessageœ]}",
+        "target": "LanguageModelComponent-nBpsv",
+        "targetHandle": "{œfieldNameœ:œsystem_messageœ,œidœ:œLanguageModelComponent-nBpsvœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}"
       },
       {
         "animated": false,
@@ -64,7 +64,7 @@
         "data": {
           "sourceHandle": {
             "dataType": "ChatInput",
-            "id": "ChatInput-3j06d",
+            "id": "ChatInput-1G888",
             "name": "message",
             "output_types": [
               "Message"
@@ -72,19 +72,19 @@
           },
           "targetHandle": {
             "fieldName": "input_value",
-            "id": "LanguageModelComponent-M2aFT",
+            "id": "LanguageModelComponent-nBpsv",
             "inputTypes": [
               "Message"
             ],
             "type": "str"
           }
         },
-        "id": "reactflow__edge-ChatInput-3j06d{œdataTypeœ:œChatInputœ,œidœ:œChatInput-3j06dœ,œnameœ:œmessageœ,œoutput_typesœ:[œMessageœ]}-LanguageModelComponent-M2aFT{œfieldNameœ:œinput_valueœ,œidœ:œLanguageModelComponent-M2aFTœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}",
+        "id": "reactflow__edge-ChatInput-1G888{œdataTypeœ:œChatInputœ,œidœ:œChatInput-1G888œ,œnameœ:œmessageœ,œoutput_typesœ:[œMessageœ]}-LanguageModelComponent-nBpsv{œfieldNameœ:œinput_valueœ,œidœ:œLanguageModelComponent-nBpsvœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}",
         "selected": false,
-        "source": "ChatInput-3j06d",
-        "sourceHandle": "{œdataTypeœ:œChatInputœ,œidœ:œChatInput-3j06dœ,œnameœ:œmessageœ,œoutput_typesœ:[œMessageœ]}",
-        "target": "LanguageModelComponent-M2aFT",
-        "targetHandle": "{œfieldNameœ:œinput_valueœ,œidœ:œLanguageModelComponent-M2aFTœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}"
+        "source": "ChatInput-1G888",
+        "sourceHandle": "{œdataTypeœ:œChatInputœ,œidœ:œChatInput-1G888œ,œnameœ:œmessageœ,œoutput_typesœ:[œMessageœ]}",
+        "target": "LanguageModelComponent-nBpsv",
+        "targetHandle": "{œfieldNameœ:œinput_valueœ,œidœ:œLanguageModelComponent-nBpsvœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}"
       },
       {
         "animated": false,
@@ -92,7 +92,7 @@
         "data": {
           "sourceHandle": {
             "dataType": "Prompt",
-            "id": "Prompt-MviR5",
+            "id": "Prompt-8WHZV",
             "name": "prompt",
             "output_types": [
               "Message"
@@ -100,19 +100,19 @@
           },
           "targetHandle": {
             "fieldName": "system_message",
-            "id": "LanguageModelComponent-e75co",
+            "id": "LanguageModelComponent-B9z1v",
             "inputTypes": [
               "Message"
             ],
             "type": "str"
           }
         },
-        "id": "reactflow__edge-Prompt-MviR5{œdataTypeœ:œPromptœ,œidœ:œPrompt-MviR5œ,œnameœ:œpromptœ,œoutput_typesœ:[œMessageœ]}-LanguageModelComponent-e75co{œfieldNameœ:œsystem_messageœ,œidœ:œLanguageModelComponent-e75coœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}",
+        "id": "reactflow__edge-Prompt-8WHZV{œdataTypeœ:œPromptœ,œidœ:œPrompt-8WHZVœ,œnameœ:œpromptœ,œoutput_typesœ:[œMessageœ]}-LanguageModelComponent-B9z1v{œfieldNameœ:œsystem_messageœ,œidœ:œLanguageModelComponent-B9z1vœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}",
         "selected": false,
-        "source": "Prompt-MviR5",
-        "sourceHandle": "{œdataTypeœ:œPromptœ,œidœ:œPrompt-MviR5œ,œnameœ:œpromptœ,œoutput_typesœ:[œMessageœ]}",
-        "target": "LanguageModelComponent-e75co",
-        "targetHandle": "{œfieldNameœ:œsystem_messageœ,œidœ:œLanguageModelComponent-e75coœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}"
+        "source": "Prompt-8WHZV",
+        "sourceHandle": "{œdataTypeœ:œPromptœ,œidœ:œPrompt-8WHZVœ,œnameœ:œpromptœ,œoutput_typesœ:[œMessageœ]}",
+        "target": "LanguageModelComponent-B9z1v",
+        "targetHandle": "{œfieldNameœ:œsystem_messageœ,œidœ:œLanguageModelComponent-B9z1vœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}"
       },
       {
         "animated": false,
@@ -120,7 +120,7 @@
         "data": {
           "sourceHandle": {
             "dataType": "Prompt",
-            "id": "Prompt-WoWP5",
+            "id": "Prompt-UZCEH",
             "name": "prompt",
             "output_types": [
               "Message"
@@ -128,19 +128,19 @@
           },
           "targetHandle": {
             "fieldName": "input_value",
-            "id": "LanguageModelComponent-e75co",
+            "id": "LanguageModelComponent-B9z1v",
             "inputTypes": [
               "Message"
             ],
             "type": "str"
           }
         },
-        "id": "reactflow__edge-Prompt-WoWP5{œdataTypeœ:œPromptœ,œidœ:œPrompt-WoWP5œ,œnameœ:œpromptœ,œoutput_typesœ:[œMessageœ]}-LanguageModelComponent-e75co{œfieldNameœ:œinput_valueœ,œidœ:œLanguageModelComponent-e75coœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}",
+        "id": "reactflow__edge-Prompt-UZCEH{œdataTypeœ:œPromptœ,œidœ:œPrompt-UZCEHœ,œnameœ:œpromptœ,œoutput_typesœ:[œMessageœ]}-LanguageModelComponent-B9z1v{œfieldNameœ:œinput_valueœ,œidœ:œLanguageModelComponent-B9z1vœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}",
         "selected": false,
-        "source": "Prompt-WoWP5",
-        "sourceHandle": "{œdataTypeœ:œPromptœ,œidœ:œPrompt-WoWP5œ,œnameœ:œpromptœ,œoutput_typesœ:[œMessageœ]}",
-        "target": "LanguageModelComponent-e75co",
-        "targetHandle": "{œfieldNameœ:œinput_valueœ,œidœ:œLanguageModelComponent-e75coœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}"
+        "source": "Prompt-UZCEH",
+        "sourceHandle": "{œdataTypeœ:œPromptœ,œidœ:œPrompt-UZCEHœ,œnameœ:œpromptœ,œoutput_typesœ:[œMessageœ]}",
+        "target": "LanguageModelComponent-B9z1v",
+        "targetHandle": "{œfieldNameœ:œinput_valueœ,œidœ:œLanguageModelComponent-B9z1vœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}"
       },
       {
         "animated": false,
@@ -148,7 +148,7 @@
         "data": {
           "sourceHandle": {
             "dataType": "LanguageModelComponent",
-            "id": "LanguageModelComponent-e75co",
+            "id": "LanguageModelComponent-B9z1v",
             "name": "text_output",
             "output_types": [
               "Message"
@@ -156,7 +156,7 @@
           },
           "targetHandle": {
             "fieldName": "input_value",
-            "id": "ChatOutput-E5yeB",
+            "id": "ChatOutput-Y78TN",
             "inputTypes": [
               "Data",
               "DataFrame",
@@ -165,12 +165,12 @@
             "type": "other"
           }
         },
-        "id": "reactflow__edge-LanguageModelComponent-e75co{œdataTypeœ:œLanguageModelComponentœ,œidœ:œLanguageModelComponent-e75coœ,œnameœ:œtext_outputœ,œoutput_typesœ:[œMessageœ]}-ChatOutput-E5yeB{œfieldNameœ:œinput_valueœ,œidœ:œChatOutput-E5yeBœ,œinputTypesœ:[œDataœ,œDataFrameœ,œMessageœ],œtypeœ:œotherœ}",
+        "id": "reactflow__edge-LanguageModelComponent-B9z1v{œdataTypeœ:œLanguageModelComponentœ,œidœ:œLanguageModelComponent-B9z1vœ,œnameœ:œtext_outputœ,œoutput_typesœ:[œMessageœ]}-ChatOutput-Y78TN{œfieldNameœ:œinput_valueœ,œidœ:œChatOutput-Y78TNœ,œinputTypesœ:[œDataœ,œDataFrameœ,œMessageœ],œtypeœ:œotherœ}",
         "selected": false,
-        "source": "LanguageModelComponent-e75co",
-        "sourceHandle": "{œdataTypeœ:œLanguageModelComponentœ,œidœ:œLanguageModelComponent-e75coœ,œnameœ:œtext_outputœ,œoutput_typesœ:[œMessageœ]}",
-        "target": "ChatOutput-E5yeB",
-        "targetHandle": "{œfieldNameœ:œinput_valueœ,œidœ:œChatOutput-E5yeBœ,œinputTypesœ:[œDataœ,œDataFrameœ,œMessageœ],œtypeœ:œotherœ}"
+        "source": "LanguageModelComponent-B9z1v",
+        "sourceHandle": "{œdataTypeœ:œLanguageModelComponentœ,œidœ:œLanguageModelComponent-B9z1vœ,œnameœ:œtext_outputœ,œoutput_typesœ:[œMessageœ]}",
+        "target": "ChatOutput-Y78TN",
+        "targetHandle": "{œfieldNameœ:œinput_valueœ,œidœ:œChatOutput-Y78TNœ,œinputTypesœ:[œDataœ,œDataFrameœ,œMessageœ],œtypeœ:œotherœ}"
       },
       {
         "animated": false,
@@ -178,7 +178,7 @@
         "data": {
           "sourceHandle": {
             "dataType": "Prompt",
-            "id": "Prompt-L0Zaf",
+            "id": "Prompt-huoAN",
             "name": "prompt",
             "output_types": [
               "Message"
@@ -186,19 +186,19 @@
           },
           "targetHandle": {
             "fieldName": "input_value",
-            "id": "Agent-UwO8j",
+            "id": "Agent-nIOmU",
             "inputTypes": [
               "Message"
             ],
             "type": "str"
           }
         },
-        "id": "reactflow__edge-Prompt-L0Zaf{œdataTypeœ:œPromptœ,œidœ:œPrompt-L0Zafœ,œnameœ:œpromptœ,œoutput_typesœ:[œMessageœ]}-Agent-UwO8j{œfieldNameœ:œinput_valueœ,œidœ:œAgent-UwO8jœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}",
+        "id": "reactflow__edge-Prompt-huoAN{œdataTypeœ:œPromptœ,œidœ:œPrompt-huoANœ,œnameœ:œpromptœ,œoutput_typesœ:[œMessageœ]}-Agent-nIOmU{œfieldNameœ:œinput_valueœ,œidœ:œAgent-nIOmUœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}",
         "selected": false,
-        "source": "Prompt-L0Zaf",
-        "sourceHandle": "{œdataTypeœ:œPromptœ,œidœ:œPrompt-L0Zafœ,œnameœ:œpromptœ,œoutput_typesœ:[œMessageœ]}",
-        "target": "Agent-UwO8j",
-        "targetHandle": "{œfieldNameœ:œinput_valueœ,œidœ:œAgent-UwO8jœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}"
+        "source": "Prompt-huoAN",
+        "sourceHandle": "{œdataTypeœ:œPromptœ,œidœ:œPrompt-huoANœ,œnameœ:œpromptœ,œoutput_typesœ:[œMessageœ]}",
+        "target": "Agent-nIOmU",
+        "targetHandle": "{œfieldNameœ:œinput_valueœ,œidœ:œAgent-nIOmUœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}"
       },
       {
         "animated": false,
@@ -206,7 +206,7 @@
         "data": {
           "sourceHandle": {
             "dataType": "Agent",
-            "id": "Agent-UwO8j",
+            "id": "Agent-nIOmU",
             "name": "response",
             "output_types": [
               "Message"
@@ -214,7 +214,7 @@
           },
           "targetHandle": {
             "fieldName": "search_results",
-            "id": "Prompt-WoWP5",
+            "id": "Prompt-UZCEH",
             "inputTypes": [
               "Message",
               "Text"
@@ -222,40 +222,12 @@
             "type": "str"
           }
         },
-        "id": "reactflow__edge-Agent-UwO8j{œdataTypeœ:œAgentœ,œidœ:œAgent-UwO8jœ,œnameœ:œresponseœ,œoutput_typesœ:[œMessageœ]}-Prompt-WoWP5{œfieldNameœ:œsearch_resultsœ,œidœ:œPrompt-WoWP5œ,œinputTypesœ:[œMessageœ,œTextœ],œtypeœ:œstrœ}",
+        "id": "reactflow__edge-Agent-nIOmU{œdataTypeœ:œAgentœ,œidœ:œAgent-nIOmUœ,œnameœ:œresponseœ,œoutput_typesœ:[œMessageœ]}-Prompt-UZCEH{œfieldNameœ:œsearch_resultsœ,œidœ:œPrompt-UZCEHœ,œinputTypesœ:[œMessageœ,œTextœ],œtypeœ:œstrœ}",
         "selected": false,
-        "source": "Agent-UwO8j",
-        "sourceHandle": "{œdataTypeœ:œAgentœ,œidœ:œAgent-UwO8jœ,œnameœ:œresponseœ,œoutput_typesœ:[œMessageœ]}",
-        "target": "Prompt-WoWP5",
-        "targetHandle": "{œfieldNameœ:œsearch_resultsœ,œidœ:œPrompt-WoWP5œ,œinputTypesœ:[œMessageœ,œTextœ],œtypeœ:œstrœ}"
-      },
-      {
-        "animated": false,
-        "className": "",
-        "data": {
-          "sourceHandle": {
-            "dataType": "NewsContentExtractor",
-            "id": "CustomComponent-xCydF",
-            "name": "component_as_tool",
-            "output_types": [
-              "Tool"
-            ]
-          },
-          "targetHandle": {
-            "fieldName": "tools",
-            "id": "Agent-UwO8j",
-            "inputTypes": [
-              "Tool"
-            ],
-            "type": "other"
-          }
-        },
-        "id": "xy-edge__CustomComponent-xCydF{œdataTypeœ:œNewsContentExtractorœ,œidœ:œCustomComponent-xCydFœ,œnameœ:œcomponent_as_toolœ,œoutput_typesœ:[œToolœ]}-Agent-UwO8j{œfieldNameœ:œtoolsœ,œidœ:œAgent-UwO8jœ,œinputTypesœ:[œToolœ],œtypeœ:œotherœ}",
-        "selected": false,
-        "source": "CustomComponent-xCydF",
-        "sourceHandle": "{œdataTypeœ:œNewsContentExtractorœ,œidœ:œCustomComponent-xCydFœ,œnameœ:œcomponent_as_toolœ,œoutput_typesœ:[œToolœ]}",
-        "target": "Agent-UwO8j",
-        "targetHandle": "{œfieldNameœ:œtoolsœ,œidœ:œAgent-UwO8jœ,œinputTypesœ:[œToolœ],œtypeœ:œotherœ}"
+        "source": "Agent-nIOmU",
+        "sourceHandle": "{œdataTypeœ:œAgentœ,œidœ:œAgent-nIOmUœ,œnameœ:œresponseœ,œoutput_typesœ:[œMessageœ]}",
+        "target": "Prompt-UZCEH",
+        "targetHandle": "{œfieldNameœ:œsearch_resultsœ,œidœ:œPrompt-UZCEHœ,œinputTypesœ:[œMessageœ,œTextœ],œtypeœ:œstrœ}"
       },
       {
         "animated": false,
@@ -263,7 +235,7 @@
         "data": {
           "sourceHandle": {
             "dataType": "GDELTDocSearch",
-            "id": "CustomComponent-vCOXe",
+            "id": "GDELTDocSearch-9EHMu",
             "name": "component_as_tool",
             "output_types": [
               "Tool"
@@ -271,19 +243,19 @@
           },
           "targetHandle": {
             "fieldName": "tools",
-            "id": "Agent-UwO8j",
+            "id": "Agent-nIOmU",
             "inputTypes": [
               "Tool"
             ],
             "type": "other"
           }
         },
-        "id": "xy-edge__CustomComponent-vCOXe{œdataTypeœ:œGDELTDocSearchœ,œidœ:œCustomComponent-vCOXeœ,œnameœ:œcomponent_as_toolœ,œoutput_typesœ:[œToolœ]}-Agent-UwO8j{œfieldNameœ:œtoolsœ,œidœ:œAgent-UwO8jœ,œinputTypesœ:[œToolœ],œtypeœ:œotherœ}",
+        "id": "reactflow__edge-GDELTDocSearch-9EHMu{œdataTypeœ:œGDELTDocSearchœ,œidœ:œGDELTDocSearch-9EHMuœ,œnameœ:œcomponent_as_toolœ,œoutput_typesœ:[œToolœ]}-Agent-nIOmU{œfieldNameœ:œtoolsœ,œidœ:œAgent-nIOmUœ,œinputTypesœ:[œToolœ],œtypeœ:œotherœ}",
         "selected": false,
-        "source": "CustomComponent-vCOXe",
-        "sourceHandle": "{œdataTypeœ:œGDELTDocSearchœ,œidœ:œCustomComponent-vCOXeœ,œnameœ:œcomponent_as_toolœ,œoutput_typesœ:[œToolœ]}",
-        "target": "Agent-UwO8j",
-        "targetHandle": "{œfieldNameœ:œtoolsœ,œidœ:œAgent-UwO8jœ,œinputTypesœ:[œToolœ],œtypeœ:œotherœ}"
+        "source": "GDELTDocSearch-9EHMu",
+        "sourceHandle": "{œdataTypeœ:œGDELTDocSearchœ,œidœ:œGDELTDocSearch-9EHMuœ,œnameœ:œcomponent_as_toolœ,œoutput_typesœ:[œToolœ]}",
+        "target": "Agent-nIOmU",
+        "targetHandle": "{œfieldNameœ:œtoolsœ,œidœ:œAgent-nIOmUœ,œinputTypesœ:[œToolœ],œtypeœ:œotherœ}"
       },
       {
         "animated": false,
@@ -291,7 +263,7 @@
         "data": {
           "sourceHandle": {
             "dataType": "LanguageModelComponent",
-            "id": "LanguageModelComponent-M2aFT",
+            "id": "LanguageModelComponent-nBpsv",
             "name": "text_output",
             "output_types": [
               "Message"
@@ -299,19 +271,19 @@
           },
           "targetHandle": {
             "fieldName": "previous_response",
-            "id": "Prompt-L0Zaf",
+            "id": "Prompt-huoAN",
             "inputTypes": [
               "Message"
             ],
             "type": "str"
           }
         },
-        "id": "xy-edge__LanguageModelComponent-M2aFT{œdataTypeœ:œLanguageModelComponentœ,œidœ:œLanguageModelComponent-M2aFTœ,œnameœ:œtext_outputœ,œoutput_typesœ:[œMessageœ]}-Prompt-L0Zaf{œfieldNameœ:œprevious_responseœ,œidœ:œPrompt-L0Zafœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}",
+        "id": "reactflow__edge-LanguageModelComponent-nBpsv{œdataTypeœ:œLanguageModelComponentœ,œidœ:œLanguageModelComponent-nBpsvœ,œnameœ:œtext_outputœ,œoutput_typesœ:[œMessageœ]}-Prompt-huoAN{œfieldNameœ:œprevious_responseœ,œidœ:œPrompt-huoANœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}",
         "selected": false,
-        "source": "LanguageModelComponent-M2aFT",
-        "sourceHandle": "{œdataTypeœ:œLanguageModelComponentœ,œidœ:œLanguageModelComponent-M2aFTœ,œnameœ:œtext_outputœ,œoutput_typesœ:[œMessageœ]}",
-        "target": "Prompt-L0Zaf",
-        "targetHandle": "{œfieldNameœ:œprevious_responseœ,œidœ:œPrompt-L0Zafœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}"
+        "source": "LanguageModelComponent-nBpsv",
+        "sourceHandle": "{œdataTypeœ:œLanguageModelComponentœ,œidœ:œLanguageModelComponent-nBpsvœ,œnameœ:œtext_outputœ,œoutput_typesœ:[œMessageœ]}",
+        "target": "Prompt-huoAN",
+        "targetHandle": "{œfieldNameœ:œprevious_responseœ,œidœ:œPrompt-huoANœ,œinputTypesœ:[œMessageœ],œtypeœ:œstrœ}"
       }
     ],
     "nodes": [
@@ -319,7 +291,7 @@
         "data": {
           "description": "Create a prompt template with dynamic variables.",
           "display_name": "Prompt",
-          "id": "Prompt-L0Zaf",
+          "id": "Prompt-huoAN",
           "node": {
             "base_classes": [
               "Message"
@@ -466,7 +438,7 @@
         },
         "dragging": false,
         "height": 347,
-        "id": "Prompt-L0Zaf",
+        "id": "Prompt-huoAN",
         "measured": {
           "height": 347,
           "width": 320
@@ -485,7 +457,7 @@
       },
       {
         "data": {
-          "id": "ChatInput-3j06d",
+          "id": "ChatInput-1G888",
           "node": {
             "base_classes": [
               "Message"
@@ -701,7 +673,7 @@
         },
         "dragging": false,
         "height": 234,
-        "id": "ChatInput-3j06d",
+        "id": "ChatInput-1G888",
         "measured": {
           "height": 234,
           "width": 320
@@ -722,7 +694,7 @@
         "data": {
           "description": "Create a prompt template with dynamic variables.",
           "display_name": "Prompt",
-          "id": "Prompt-WoWP5",
+          "id": "Prompt-UZCEH",
           "node": {
             "base_classes": [
               "Message"
@@ -882,7 +854,7 @@
         },
         "dragging": false,
         "height": 433,
-        "id": "Prompt-WoWP5",
+        "id": "Prompt-UZCEH",
         "measured": {
           "height": 433,
           "width": 320
@@ -903,7 +875,7 @@
         "data": {
           "description": "Create a prompt template with dynamic variables.",
           "display_name": "Prompt",
-          "id": "Prompt-TgQf1",
+          "id": "Prompt-MmVSI",
           "node": {
             "base_classes": [
               "Message"
@@ -1026,7 +998,7 @@
         },
         "dragging": false,
         "height": 260,
-        "id": "Prompt-TgQf1",
+        "id": "Prompt-MmVSI",
         "measured": {
           "height": 260,
           "width": 320
@@ -1047,7 +1019,7 @@
         "data": {
           "description": "Create a prompt template with dynamic variables.",
           "display_name": "Prompt",
-          "id": "Prompt-MviR5",
+          "id": "Prompt-8WHZV",
           "node": {
             "base_classes": [
               "Message"
@@ -1170,7 +1142,7 @@
         },
         "dragging": false,
         "height": 260,
-        "id": "Prompt-MviR5",
+        "id": "Prompt-8WHZV",
         "measured": {
           "height": 260,
           "width": 320
@@ -1189,7 +1161,7 @@
       },
       {
         "data": {
-          "id": "TavilySearchComponent-ieEPF",
+          "id": "TavilySearchComponent-GHE2P",
           "node": {
             "base_classes": [
               "Data",
@@ -1214,7 +1186,7 @@
             ],
             "frozen": false,
             "icon": "TavilyIcon",
-            "last_updated": "2025-11-23T12:15:00.872Z",
+            "last_updated": "2025-11-23T12:49:37.589Z",
             "legacy": false,
             "lf_version": "1.6.8",
             "metadata": {},
@@ -1571,7 +1543,7 @@
           "type": "TavilySearchComponent"
         },
         "dragging": false,
-        "id": "TavilySearchComponent-ieEPF",
+        "id": "TavilySearchComponent-GHE2P",
         "measured": {
           "height": 315,
           "width": 320
@@ -1585,7 +1557,7 @@
       },
       {
         "data": {
-          "id": "ChatOutput-E5yeB",
+          "id": "ChatOutput-Y78TN",
           "node": {
             "base_classes": [
               "Message"
@@ -1794,7 +1766,7 @@
           "showNode": false,
           "type": "ChatOutput"
         },
-        "id": "ChatOutput-E5yeB",
+        "id": "ChatOutput-Y78TN",
         "measured": {
           "height": 48,
           "width": 192
@@ -1808,7 +1780,7 @@
       },
       {
         "data": {
-          "id": "LanguageModelComponent-M2aFT",
+          "id": "LanguageModelComponent-nBpsv",
           "node": {
             "base_classes": [
               "LanguageModel",
@@ -1832,7 +1804,7 @@
             ],
             "frozen": false,
             "icon": "brain-circuit",
-            "last_updated": "2025-11-23T12:15:00.873Z",
+            "last_updated": "2025-11-23T12:49:37.589Z",
             "legacy": false,
             "lf_version": "1.6.8",
             "metadata": {
@@ -2089,7 +2061,7 @@
           "type": "LanguageModelComponent"
         },
         "dragging": false,
-        "id": "LanguageModelComponent-M2aFT",
+        "id": "LanguageModelComponent-nBpsv",
         "measured": {
           "height": 531,
           "width": 320
@@ -2103,7 +2075,7 @@
       },
       {
         "data": {
-          "id": "LanguageModelComponent-e75co",
+          "id": "LanguageModelComponent-B9z1v",
           "node": {
             "base_classes": [
               "LanguageModel",
@@ -2127,7 +2099,7 @@
             ],
             "frozen": false,
             "icon": "brain-circuit",
-            "last_updated": "2025-11-23T12:15:00.873Z",
+            "last_updated": "2025-11-23T12:49:37.590Z",
             "legacy": false,
             "lf_version": "1.6.8",
             "metadata": {
@@ -2384,7 +2356,7 @@
           "type": "LanguageModelComponent"
         },
         "dragging": false,
-        "id": "LanguageModelComponent-e75co",
+        "id": "LanguageModelComponent-B9z1v",
         "measured": {
           "height": 531,
           "width": 320
@@ -2398,7 +2370,7 @@
       },
       {
         "data": {
-          "id": "Agent-UwO8j",
+          "id": "Agent-nIOmU",
           "node": {
             "base_classes": [
               "Message"
@@ -2436,7 +2408,7 @@
             "frozen": false,
             "icon": "bot",
             "key": "Agent",
-            "last_updated": "2025-11-23T12:15:00.874Z",
+            "last_updated": "2025-11-23T12:49:37.591Z",
             "legacy": false,
             "lf_version": "1.6.8",
             "metadata": {},
@@ -3032,7 +3004,7 @@
           "type": "Agent"
         },
         "dragging": false,
-        "id": "Agent-UwO8j",
+        "id": "Agent-nIOmU",
         "measured": {
           "height": 591,
           "width": 320
@@ -3046,7 +3018,7 @@
       },
       {
         "data": {
-          "id": "CustomComponent-vCOXe",
+          "id": "GDELTDocSearch-9EHMu",
           "node": {
             "base_classes": [
               "DataFrame"
@@ -3078,9 +3050,7 @@
             ],
             "frozen": false,
             "icon": "globe",
-            "last_updated": "2025-11-23T12:15:00.876Z",
             "legacy": false,
-            "lf_version": "1.6.8",
             "metadata": {},
             "minimized": false,
             "output_types": [],
@@ -3140,7 +3110,7 @@
                 "show": true,
                 "title_case": false,
                 "type": "code",
-                "value": "#!/usr/bin/env python3\r\n\"\"\"\r\nGDELT Doc Search Component for Langflow\r\n\r\nGDELT DOC 2.0 API를 통해 전 세계 뉴스를 실시간 검색하는 커스텀 컴포넌트.\r\n\r\n주요 기능:\r\n- Articles 모드: 뉴스 기사 목록 검색 (title, url, domain, tone 등)\r\n- Timeline 모드: 시계열 트렌드 분석 (기사량, 감성, 언어/국가 분포)\r\n- 금융 미디어 프리셋: Reuters, Bloomberg 등 10개 금융 매체\r\n- 감성 필터링: Positive/Negative/Neutral 톤 기반 필터\r\n- 다국어 지원: 65개 언어 검색 (ISO 639-3 코드)\r\n\r\n권장 사항:\r\n- 영문 키워드 사용 (예: \"Samsung SDS\", \"NVIDIA\")\r\n- 한글 키워드는 검색 결과가 거의 없음 (글로벌 뉴스 중심)\r\n\"\"\"\r\n\r\nfrom typing import Any, Dict, List, Optional\r\n\r\nimport pandas as pd\r\nimport requests\r\nimport requests_cache\r\nfrom requests.adapters import HTTPAdapter\r\nfrom urllib3.util.retry import Retry\r\n\r\nfrom langflow.custom import Component\r\nfrom langflow.io import (\r\n    MessageTextInput,\r\n    IntInput,\r\n    BoolInput,\r\n    DropdownInput,\r\n    Output,\r\n)\r\nfrom langflow.schema import DataFrame\r\n\r\n\r\nclass GDELTDocSearchComponent(Component):\r\n    \"\"\"\r\n    GDELT DOC 2.0 API 검색 컴포넌트\r\n    \r\n    전 세계 뉴스를 실시간 검색하고 감성 분석을 수행하는 Langflow 커스텀 컴포넌트입니다.\r\n    \"\"\"\r\n    \r\n    display_name = \"GDELT Doc Search\"\r\n    description = \"\"\"Search global news via GDELT DOC 2.0 API.\r\n\r\nIMPORTANT: Use ENGLISH keywords for best results!\r\n   Korean/non-English keywords rarely return results (global news focus).\r\n\r\nBasic Usage:\r\n   • query: English keywords (\"Samsung SDS\", \"NVIDIA\", \"Tesla\")\r\n   • mode: \"Articles\" (news list) or \"Timeline\" (trend analysis)\r\n   • maxrecords: 5-20 recommended for LLM agents\r\n\r\nFinancial Analysis:\r\n   • financial_media_only=True → Reuters, Bloomberg, WSJ, etc. (10 sources)\r\n   • tone_filter=Positive → bullish news only\r\n   • tone_filter=Negative → risk monitoring\r\n\r\nAdvanced Filters:\r\n   • languages: ISO 639-3 codes (eng, kor, jpn, zho)\r\n   • countries: FIPS codes (US, KS=Korea, JA=Japan, CH=China)\r\n\r\nExamples:\r\n   1. Basic: \"Samsung SDS\" → finds all articles (incl. Korean articles!)\r\n   2. Bullish: \"NVIDIA\" + financial_media_only + tone_filter=Positive\r\n   3. Risk: \"Tesla recall\" + tone_filter=Negative + timespan=7days\r\n\r\n📊 Returns: DataFrame with title, url, domain, language, country, tone\"\"\"\r\n    documentation: str = \"https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/\"\r\n    icon = \"globe\"\r\n    name = \"GDELTDocSearch\"\r\n\r\n    # ==================== 클래스 상수 ====================\r\n    \r\n    # GDELT API 엔드포인트\r\n    GDELT_ENDPOINT = \"https://api.gdeltproject.org/api/v2/doc/doc\"\r\n    \r\n    # 모드 매핑: 사용자 친화적 이름 → GDELT API 파라미터\r\n    MODE_MAPPING = {\r\n        \"Articles (기사 목록)\": \"ArtList\",\r\n        \"Timeline - Volume (시간별 기사량)\": \"timelinevol\",\r\n        \"Timeline - Sentiment (시간별 감성 변화)\": \"timelinetone\",\r\n        \"Timeline - Language (언어별 분포)\": \"timelinelang\",\r\n        \"Timeline - Country (국가별 분포)\": \"timelinesourcecountry\",\r\n    }\r\n    \r\n    # Timeline 모드 집합 (내부 API 값)\r\n    TIMELINE_MODES = {\r\n        \"timelinevol\",\r\n        \"timelinevolraw\",\r\n        \"timelinetone\",\r\n        \"timelinelang\",\r\n        \"timelinesourcecountry\"\r\n    }\r\n    \r\n    # 에러 응답 컬럼 (내부 API 모드 기준)\r\n    ERROR_COLUMNS = {\r\n        \"ArtList\": [\"title\", \"url\", \"seendate\", \"domain\", \"summary\"],\r\n        \"timeline\": [\"message\", \"mode\"],\r\n    }\r\n    \r\n    # 금융 미디어 도메인 (프리셋)\r\n    FINANCIAL_DOMAINS = [\r\n        \"reuters.com\",\r\n        \"bloomberg.com\",\r\n        \"ft.com\",            # Financial Times\r\n        \"wsj.com\",           # Wall Street Journal\r\n        \"cnbc.com\",\r\n        \"marketwatch.com\",\r\n        \"barrons.com\",\r\n        \"seekingalpha.com\",\r\n        \"investopedia.com\",\r\n        \"fool.com\",          # Motley Fool\r\n    ]\r\n\r\n    # ==================== Langflow 설정 ====================\r\n    \r\n    inputs = [\r\n        MessageTextInput(\r\n            name=\"query\",\r\n            display_name=\"Query\",\r\n            info='예) (\"NVDA\" OR \"NVIDIA\"), (A OR B) AND C. 복잡한 쿼리는 직접 괄호 사용',\r\n            tool_mode=True,\r\n            required=True,\r\n        ),\r\n        MessageTextInput(\r\n            name=\"domains\",\r\n            display_name=\"Domains\",\r\n            info=\"도메인 필터. 예: reuters.com, bloomberg.com\",\r\n            is_list=True,\r\n            advanced=True,\r\n        ),\r\n        BoolInput(\r\n            name=\"financial_media_only\",\r\n            display_name=\"Financial Media Only\",\r\n            info=\"금융 미디어만 검색 (Reuters, Bloomberg, WSJ 등)\",\r\n            value=False,\r\n            advanced=True,\r\n        ),\r\n        MessageTextInput(\r\n            name=\"languages\",\r\n            display_name=\"Languages\",\r\n            info=\"언어 필터 (ISO 639-3, 3자리). 예: eng, kor, jpn, zho\",\r\n            is_list=True,\r\n            advanced=True,\r\n        ),\r\n        MessageTextInput(\r\n            name=\"countries\",\r\n            display_name=\"Source Countries\",\r\n            info=\"발행국가 (FIPS 2자리). 예: US, KS, JA, CH\",\r\n            is_list=True,\r\n            advanced=True,\r\n        ),\r\n        DropdownInput(\r\n            name=\"mode\",\r\n            display_name=\"Mode\",\r\n            options=[\r\n                \"Articles (기사 목록)\",\r\n                \"Timeline - Volume (시간별 기사량)\",\r\n                \"Timeline - Sentiment (시간별 감성 변화)\",\r\n                \"Timeline - Language (언어별 분포)\",\r\n                \"Timeline - Country (국가별 분포)\"\r\n            ],\r\n            value=\"Articles (기사 목록)\",\r\n            info=\"검색 모드: 기사 목록을 받을지, 시계열 트렌드 데이터를 받을지 선택\",\r\n            tool_mode=True,\r\n            required=True,\r\n        ),\r\n        MessageTextInput(\r\n            name=\"timespan\",\r\n            display_name=\"TIMESPAN\",\r\n            info=\"예: 24hours, 7days, 14days, 30days (미지정 시: 7days)\",\r\n            value=\"7days\",\r\n            advanced=True,\r\n        ),\r\n        MessageTextInput(\r\n            name=\"start_datetime\",\r\n            display_name=\"STARTDATETIME\",\r\n            info=\"YYYYMMDDHHMMSS (timespan 대신 사용)\",\r\n            advanced=True,\r\n        ),\r\n        MessageTextInput(\r\n            name=\"end_datetime\",\r\n            display_name=\"ENDDATETIME\",\r\n            info=\"YYYYMMDDHHMMSS (timespan 대신 사용)\",\r\n            advanced=True,\r\n        ),\r\n        IntInput(\r\n            name=\"maxrecords\",\r\n            display_name=\"Max Records\",\r\n            info=\"1~250 (LLM Tool 사용시 5~20 권장)\",\r\n            value=5,\r\n            advanced=False,\r\n        ),\r\n        DropdownInput(\r\n            name=\"sort\",\r\n            display_name=\"Sort (ArtList)\",\r\n            options=[\"DateDesc\", \"DateAsc\"],\r\n            value=\"DateDesc\",\r\n            advanced=True,\r\n        ),\r\n        IntInput(\r\n            name=\"timeline_smooth\",\r\n            display_name=\"Timeline Smooth\",\r\n            info=\"Timeline 전용. 0=off\",\r\n            value=0,\r\n            advanced=True,\r\n        ),\r\n        IntInput(\r\n            name=\"timeout\",\r\n            display_name=\"Timeout (sec)\",\r\n            value=25,\r\n            advanced=True,\r\n        ),\r\n        BoolInput(\r\n            name=\"use_cache\",\r\n            display_name=\"Use Cache\",\r\n            value=True,\r\n            advanced=True,\r\n        ),\r\n        IntInput(\r\n            name=\"cache_ttl\",\r\n            display_name=\"Cache TTL (sec)\",\r\n            value=300,\r\n            advanced=True,\r\n        ),\r\n        DropdownInput(\r\n            name=\"tone_filter\",\r\n            display_name=\"Sentiment Filter\",\r\n            options=[\"All\", \"Positive\", \"Negative\", \"Neutral\"],\r\n            value=\"All\",\r\n            info=\"감성 톤으로 필터링 (Positive: >5, Negative: <-5, Neutral: -5~5)\",\r\n            advanced=True,\r\n        ),\r\n    ]\r\n\r\n    outputs = [\r\n        Output(name=\"articles\", display_name=\"Results\", method=\"search_gdelt\"),\r\n    ]\r\n\r\n    # ==================== Private Methods ====================\r\n    \r\n    def _make_session(self) -> requests.Session:\r\n        \"\"\"\r\n        캐싱 및 Retry 정책이 적용된 HTTP 세션 생성\r\n        \r\n        Returns:\r\n            requests.Session: 설정이 적용된 HTTP 세션\r\n        \"\"\"\r\n        expire = self.cache_ttl if self.use_cache else 0\r\n        sess: requests.Session = requests_cache.CachedSession(\r\n            \"gdelt_cache\", \r\n            expire_after=expire\r\n        )\r\n        \r\n        # Retry 정책: 3회 재시도, 지수 백오프\r\n        retry = Retry(\r\n            total=3,\r\n            backoff_factor=1.2,\r\n            status_forcelist=[429, 500, 502, 503, 504],\r\n            allowed_methods=[\"GET\", \"HEAD\", \"OPTIONS\"],\r\n            raise_on_status=False,\r\n        )\r\n        \r\n        adapter = HTTPAdapter(max_retries=retry)\r\n        sess.mount(\"https://\", adapter)\r\n        sess.mount(\"http://\", adapter)\r\n        sess.headers.update({\r\n            \"User-Agent\": \"Mozilla/5.0 (compatible; Langflow-GDELT/2.0)\"\r\n        })\r\n        \r\n        return sess\r\n\r\n    def _or_join(self, prefix: str, values: Optional[List[str]]) -> str:\r\n        \"\"\"\r\n        리스트를 OR 조건으로 결합\r\n        \r\n        Args:\r\n            prefix: 필터 접두사 (예: \"domain:\", \"sourcelang:\")\r\n            values: 값 리스트\r\n            \r\n        Returns:\r\n            str: 조합된 쿼리 문자열\r\n            - 단일 값: \"prefix:value\" (괄호 없음)\r\n            - 복수 값: \"(prefix:a OR prefix:b)\" (괄호 + OR)\r\n            \r\n        Examples:\r\n            [\"kor\"] → \"sourcelang:kor\"\r\n            [\"eng\", \"kor\"] → \"(sourcelang:eng OR sourcelang:kor)\"\r\n        \"\"\"\r\n        if not values:\r\n            return \"\"\r\n        \r\n        parts = [f\"{prefix}{v.strip()}\" for v in values if v and v.strip()]\r\n        if not parts:\r\n            return \"\"\r\n        \r\n        # GDELT 규칙: 괄호는 OR 조합에서만 사용\r\n        return parts[0] if len(parts) == 1 else \"(\" + \" OR \".join(parts) + \")\"\r\n\r\n    def _build_query(self) -> str:\r\n        \"\"\"\r\n        최종 검색 쿼리 문자열 생성 (도메인, 언어, 국가 필터 포함)\r\n        \r\n        Returns:\r\n            str: GDELT API 호환 쿼리 문자열\r\n            \r\n        Examples:\r\n            \"NVIDIA\" → \"NVIDIA\"\r\n            \"NVIDIA\" + financial_media_only → \"NVIDIA (domain:reuters.com OR ...)\"\r\n            \"Samsung\" + languages=[\"kor\"] → \"Samsung sourcelang:kor\"\r\n        \"\"\"\r\n        base = (self.query or \"\").strip()\r\n        q_parts = [base] if base else []\r\n        \r\n        # 금융 미디어 프리셋 적용\r\n        domains_to_use = self.domains\r\n        if self.financial_media_only:\r\n            if domains_to_use:\r\n                # 기존 domains와 프리셋 병합 (중복 제거)\r\n                domains_to_use = list(set(domains_to_use + self.FINANCIAL_DOMAINS))\r\n            else:\r\n                domains_to_use = self.FINANCIAL_DOMAINS\r\n        \r\n        # 필터 추가 (공백으로 연결)\r\n        q_parts.append(self._or_join(\"domain:\", domains_to_use))\r\n        q_parts.append(self._or_join(\"sourcelang:\", self.languages))\r\n        q_parts.append(self._or_join(\"sourcecountry:\", self.countries))\r\n        \r\n        return \" \".join([p for p in q_parts if p])\r\n    \r\n    def _get_api_mode(self) -> str:\r\n        \"\"\"\r\n        사용자 친화적 모드명을 GDELT API 모드로 변환\r\n        \r\n        Returns:\r\n            str: GDELT API 모드 (\"ArtList\", \"timelinevol\", etc.)\r\n        \"\"\"\r\n        return self.MODE_MAPPING.get(self.mode, \"ArtList\")\r\n\r\n    def _build_api_params(self) -> Dict[str, Any]:\r\n        \"\"\"\r\n        GDELT API 호출 파라미터 구성\r\n        \r\n        Returns:\r\n            Dict[str, Any]: API 호출용 파라미터 딕셔너리\r\n        \"\"\"\r\n        api_mode = self._get_api_mode()\r\n        maxrecords = min(max(1, int(self.maxrecords or 5)), 250)\r\n        \r\n        params: Dict[str, Any] = {\r\n            \"mode\": api_mode,\r\n            \"format\": \"json\",\r\n            \"query\": self._build_query(),\r\n        }\r\n\r\n        # Articles 모드 전용 파라미터\r\n        if api_mode == \"ArtList\":\r\n            params[\"maxrecords\"] = maxrecords\r\n            params[\"sort\"] = self.sort\r\n        \r\n        # Timeline 모드 전용 파라미터\r\n        elif api_mode in self.TIMELINE_MODES:\r\n            smooth = int(self.timeline_smooth or 0)\r\n            if smooth > 0:\r\n                params[\"timelinesmooth\"] = smooth\r\n\r\n        # 시간 범위 설정 (우선순위: 절대 시간 > 상대 시간)\r\n        if self.start_datetime and self.end_datetime:\r\n            params[\"STARTDATETIME\"] = str(self.start_datetime).strip()\r\n            params[\"ENDDATETIME\"] = str(self.end_datetime).strip()\r\n        elif self.timespan:\r\n            params[\"TIMESPAN\"] = str(self.timespan).strip()\r\n\r\n        # 빈 값 제거\r\n        return {k: v for k, v in params.items() if v not in (None, \"\", [])}\r\n\r\n    def _fetch_gdelt_api(self, params: Dict[str, Any]) -> Dict[str, Any]:\r\n        \"\"\"\r\n        GDELT API 호출 및 JSON 응답 반환\r\n        \r\n        Args:\r\n            params: API 호출 파라미터\r\n            \r\n        Returns:\r\n            Dict[str, Any]: JSON 응답 데이터\r\n            \r\n        Raises:\r\n            requests.RequestException: API 오류 (HTTP 에러, HTML 응답 등)\r\n        \"\"\"\r\n        sess = self._make_session()\r\n        \r\n        resp = sess.get(\r\n            self.GDELT_ENDPOINT,\r\n            params=params,\r\n            timeout=self.timeout,\r\n        )\r\n        \r\n        if not resp.ok:\r\n            raise requests.RequestException(\r\n                f\"HTTP {resp.status_code}: {resp.text[:200]}\"\r\n            )\r\n        \r\n        try:\r\n            payload = resp.json()\r\n            \r\n            # 빈 JSON {} 체크 (검색 결과 없음)\r\n            if not payload or (isinstance(payload, dict) and not payload):\r\n                self.log(\"GDELT API returned empty JSON - no results found\")\r\n            \r\n            return payload\r\n            \r\n        except ValueError as e:\r\n            ctype = resp.headers.get(\"content-type\", \"unknown\")\r\n            \r\n            # HTML 응답 = GDELT 에러 메시지\r\n            if \"text/html\" in ctype:\r\n                error_msg = resp.text.strip()\r\n                \r\n                # 짧은 키워드 에러 (2글자 이하)\r\n                if \"too short\" in error_msg.lower():\r\n                    raise requests.RequestException(\r\n                        'GDELT 오류: 검색어가 너무 짧습니다. '\r\n                        '2글자 키워드는 따옴표로 묶으세요 (예: \"SK Hynix\")'\r\n                    ) from e\r\n                \r\n                # 괄호 사용 오류\r\n                elif \"parentheses\" in error_msg.lower():\r\n                    raise requests.RequestException(\r\n                        'GDELT 오류: 괄호는 OR 조합에만 사용 가능합니다.'\r\n                    ) from e\r\n                \r\n                # 기타 GDELT 에러\r\n                else:\r\n                    raise requests.RequestException(\r\n                        f\"GDELT 오류: {error_msg[:100]}. \"\r\n                        \"한글 키워드는 영문으로 변환하세요 (예: '삼성SDS' → 'Samsung SDS')\"\r\n                    ) from e\r\n            else:\r\n                raise requests.RequestException(\r\n                    f\"Non-JSON response (Content-Type: {ctype})\"\r\n                ) from e\r\n\r\n    def _normalize_artlist(self, payload: Dict[str, Any]) -> pd.DataFrame:\r\n        \"\"\"\r\n        Articles 모드 응답을 DataFrame으로 변환\r\n        \r\n        Args:\r\n            payload: GDELT API JSON 응답\r\n            \r\n        Returns:\r\n            pd.DataFrame: 기사 목록 (title, url, domain, language, tone 등)\r\n        \"\"\"\r\n        # 빈 payload 체크\r\n        if not payload:\r\n            return pd.DataFrame([])\r\n        \r\n        arts = payload.get(\"articles\", [])\r\n        if not isinstance(arts, list):\r\n            return pd.DataFrame([])\r\n        \r\n        rows = []\r\n        for article in arts:\r\n            if not isinstance(article, dict):\r\n                continue\r\n            \r\n            # 기본 정보\r\n            row = {\r\n                \"title\": article.get(\"title\"),\r\n                \"url\": article.get(\"url\"),\r\n                \"seendate\": article.get(\"seendate\"),\r\n                \"domain\": article.get(\"domain\"),\r\n                \"language\": article.get(\"language\") or article.get(\"sourcelang\"),\r\n                \"sourcecountry\": article.get(\"sourcecountry\"),\r\n            }\r\n            \r\n            # 감성 톤 추가 (GDELT 2.0 GKG에서 제공)\r\n            if \"tone\" in article:\r\n                row[\"tone\"] = article.get(\"tone\")\r\n            \r\n            rows.append(row)\r\n        \r\n        return pd.DataFrame(rows)\r\n\r\n    def _normalize_timeline(self, payload: Dict[str, Any]) -> pd.DataFrame:\r\n        \"\"\"\r\n        Timeline 모드 응답을 DataFrame으로 변환\r\n        \r\n        Args:\r\n            payload: GDELT API JSON 응답\r\n            \r\n        Returns:\r\n            pd.DataFrame: 시계열 데이터 (series, date, value 등)\r\n        \"\"\"\r\n        timeline = payload.get(\"timeline\", [])\r\n        if not isinstance(timeline, list):\r\n            return pd.DataFrame([])\r\n        \r\n        rows: List[Dict[str, Any]] = []\r\n        \r\n        for series_item in timeline:\r\n            if not isinstance(series_item, dict):\r\n                continue\r\n            \r\n            series_name = series_item.get(\"series\", \"series\")\r\n            data_points = series_item.get(\"data\", [])\r\n            \r\n            # 데이터 포인트가 리스트인 경우\r\n            if isinstance(data_points, list):\r\n                for dp in data_points:\r\n                    if not isinstance(dp, dict):\r\n                        continue\r\n                    \r\n                    row = {\r\n                        \"series\": series_name,\r\n                        \"date\": dp.get(\"date\"),\r\n                        \"value\": dp.get(\"value\")\r\n                    }\r\n                    \r\n                    # 추가 필드 복사\r\n                    for k, v in dp.items():\r\n                        if k not in (\"date\", \"value\"):\r\n                            row[k] = v\r\n                    \r\n                    rows.append(row)\r\n            \r\n            # 단일 데이터 포인트인 경우\r\n            else:\r\n                row = {\r\n                    \"series\": series_name,\r\n                    \"date\": series_item.get(\"date\")\r\n                }\r\n                \r\n                # value 필드 찾기\r\n                for key in (\"value\", \"volume\", \"count\", \"v\"):\r\n                    if key in series_item:\r\n                        row[\"value\"] = series_item[key]\r\n                        break\r\n                \r\n                # 중첩된 딕셔너리 필드 펼치기\r\n                for key in (\"language\", \"languages\", \"lang\", \"country\", \r\n                           \"countries\", \"sourcecountry\", \"counts\"):\r\n                    value = series_item.get(key)\r\n                    if isinstance(value, dict):\r\n                        for k, v in value.items():\r\n                            row[str(k)] = v\r\n                \r\n                rows.append(row)\r\n        \r\n        return pd.DataFrame(rows)\r\n\r\n    def _filter_by_tone(self, df: pd.DataFrame) -> pd.DataFrame:\r\n        \"\"\"\r\n        감성 톤 기반 필터링 (Positive/Negative/Neutral)\r\n        \r\n        Args:\r\n            df: 원본 DataFrame (tone 컬럼 포함)\r\n            \r\n        Returns:\r\n            pd.DataFrame: 필터링된 DataFrame\r\n            \r\n        Filter Rules:\r\n            - Positive: tone > 5\r\n            - Negative: tone < -5\r\n            - Neutral: -5 <= tone <= 5\r\n            - All: 필터링 안 함\r\n        \"\"\"\r\n        if self.tone_filter == \"All\" or \"tone\" not in df.columns:\r\n            return df\r\n        \r\n        # 톤 값을 숫자로 변환 (실패 시 0)\r\n        df[\"tone_numeric\"] = pd.to_numeric(df[\"tone\"], errors=\"coerce\").fillna(0)\r\n        \r\n        if self.tone_filter == \"Positive\":\r\n            df = df[df[\"tone_numeric\"] > 5]\r\n        elif self.tone_filter == \"Negative\":\r\n            df = df[df[\"tone_numeric\"] < -5]\r\n        elif self.tone_filter == \"Neutral\":\r\n            df = df[(df[\"tone_numeric\"] >= -5) & (df[\"tone_numeric\"] <= 5)]\r\n        \r\n        # tone_numeric 컬럼 제거 (임시 컬럼)\r\n        if \"tone_numeric\" in df.columns:\r\n            df = df.drop(columns=[\"tone_numeric\"])\r\n        \r\n        return df\r\n    \r\n    def _parse_response(self, payload: Dict[str, Any]) -> pd.DataFrame:\r\n        \"\"\"\r\n        모드에 따라 API 응답 파싱\r\n        \r\n        Args:\r\n            payload: GDELT API JSON 응답\r\n            \r\n        Returns:\r\n            pd.DataFrame: 파싱된 데이터\r\n        \"\"\"\r\n        api_mode = self._get_api_mode()\r\n        \r\n        if api_mode == \"ArtList\":\r\n            df = self._normalize_artlist(payload)\r\n            # 감성 필터 적용\r\n            df = self._filter_by_tone(df)\r\n            return df\r\n        elif api_mode in self.TIMELINE_MODES:\r\n            return self._normalize_timeline(payload)\r\n        else:\r\n            # 알 수 없는 모드는 원본 반환\r\n            return pd.DataFrame([{\"raw\": payload}])\r\n\r\n    @staticmethod\r\n    def _create_error_response(error_msg: str, mode: str = \"ArtList\") -> DataFrame:\r\n        \"\"\"\r\n        에러 발생 시 표준 에러 응답 DataFrame 생성\r\n        \r\n        Args:\r\n            error_msg: 에러 메시지\r\n            mode: GDELT API 모드\r\n            \r\n        Returns:\r\n            DataFrame: 에러 정보가 포함된 DataFrame\r\n        \"\"\"\r\n        if mode == \"ArtList\":\r\n            return DataFrame(pd.DataFrame([{\r\n                \"title\": \"Error\",\r\n                \"url\": \"\",\r\n                \"seendate\": \"\",\r\n                \"domain\": \"\",\r\n                \"summary\": error_msg\r\n            }]))\r\n        else:\r\n            return DataFrame(pd.DataFrame([{\r\n                \"message\": error_msg,\r\n                \"mode\": mode\r\n            }]))\r\n\r\n    # ==================== Public API ====================\r\n    \r\n    def search_gdelt(self) -> DataFrame:\r\n        \"\"\"\r\n        GDELT 검색 실행 (메인 진입점)\r\n        \r\n        이 메서드는 Langflow에서 자동으로 호출됩니다.\r\n        \r\n        Returns:\r\n            DataFrame: 검색 결과 또는 에러 정보\r\n            \r\n        Process:\r\n            1. API 파라미터 구성 (_build_api_params)\r\n            2. GDELT API 호출 (_fetch_gdelt_api)\r\n            3. 응답 파싱 (_parse_response)\r\n            4. 감성 필터링 적용 (Articles 모드)\r\n            5. 결과 수 제한 (maxrecords)\r\n        \"\"\"\r\n        api_mode = self._get_api_mode()\r\n        maxrecords = min(max(1, int(self.maxrecords or 5)), 250)\r\n        \r\n        try:\r\n            # 1. API 파라미터 구성\r\n            params = self._build_api_params()\r\n            \r\n            # 2. API 호출\r\n            payload = self._fetch_gdelt_api(params)\r\n            \r\n            # 3. 응답 파싱\r\n            df = self._parse_response(payload)\r\n            \r\n            # 4. 빈 결과 체크\r\n            if df is None or df.empty:\r\n                return self._create_error_response(\"No results\", api_mode)\r\n            \r\n            # 5. 레코드 수 제한\r\n            df = df.head(maxrecords)\r\n            \r\n            return DataFrame(df)\r\n            \r\n        except requests.RequestException as e:\r\n            self.log(f\"GDELT API 요청 실패: {e}\")\r\n            return self._create_error_response(str(e), api_mode)\r\n        \r\n        except Exception as e:\r\n            self.log(f\"GDELT 응답 파싱 실패: {e}\")\r\n            return self._create_error_response(f\"Parsing error: {str(e)}\", api_mode)\r\n\r\n\r\n# ==================== 독립 실행 테스트 ====================\r\n\r\nif __name__ == \"__main__\":\r\n    \"\"\"\r\n    독립 실행 테스트\r\n    \r\n    Usage:\r\n        python custom_components/gdelt_doc_search_component.py\r\n    \"\"\"\r\n    print(\"=\"*70)\r\n    print(\"GDELT Doc Search Component - 테스트\")\r\n    print(\"=\"*70)\r\n    \r\n    # 컴포넌트 초기화\r\n    component = GDELTDocSearchComponent()\r\n    \r\n    # 테스트 설정: 금융 미디어에서 NVIDIA 긍정 뉴스 검색\r\n    component.query = \"NVIDIA\"\r\n    component.mode = \"Articles (기사 목록)\"\r\n    component.maxrecords = 5\r\n    component.timespan = \"7days\"\r\n    component.financial_media_only = True\r\n    component.tone_filter = \"Positive\"\r\n    component.use_cache = False\r\n    component.timeout = 25\r\n    \r\n    print(f\"\\n검색 조건:\")\r\n    print(f\"  - Query: {component.query}\")\r\n    print(f\"  - Mode: {component.mode}\")\r\n    print(f\"  - Financial Media Only: {component.financial_media_only}\")\r\n    print(f\"  - Tone Filter: {component.tone_filter}\")\r\n    print(f\"  - Max Records: {component.maxrecords}\")\r\n    print(f\"  - Timespan: {component.timespan}\")\r\n    \r\n    try:\r\n        print(f\"\\n🔍 검색 중...\")\r\n        result = component.search_gdelt()\r\n        \r\n        # DataFrame 데이터 접근\r\n        if hasattr(result, 'data'):\r\n            data = result.data\r\n        else:\r\n            data = result.to_dict('records') if hasattr(result, 'to_dict') else []\r\n        \r\n        print(f\"\\n✅ 검색 완료: {len(data)}개 기사\")\r\n        \r\n        if data:\r\n            print(f\"\\n📰 첫 번째 기사:\")\r\n            first = data[0]\r\n            print(f\"  제목: {first.get('title', 'No title')[:80]}\")\r\n            print(f\"  URL: {first.get('url', 'No URL')}\")\r\n            print(f\"  도메인: {first.get('domain', 'No domain')}\")\r\n            if 'tone' in first:\r\n                print(f\"  감성 톤: {first.get('tone')} (긍정적)\")\r\n        else:\r\n            print(\"\\n⚠️ 검색 결과 없음\")\r\n            \r\n    except Exception as e:\r\n        print(f\"\\n❌ 테스트 실패: {e}\")\r\n        import traceback\r\n        traceback.print_exc()\r\n    \r\n    print(\"\\n\" + \"=\"*70)\r\n"
+                "value": "#!/usr/bin/env python3\r\n\"\"\"\r\nGDELT Doc Search Component for Langflow\r\n\r\nGDELT DOC 2.0 API를 통해 전 세계 뉴스를 실시간 검색하는 커스텀 컴포넌트.\r\n\r\n주요 기능:\r\n- Articles 모드: 뉴스 기사 목록 검색 (title, url, domain, tone 등)\r\n- Timeline 모드: 시계열 트렌드 분석 (기사량, 감성, 언어/국가 분포)\r\n- 금융 미디어 프리셋: Reuters, Bloomberg 등 10개 금융 매체\r\n- 감성 필터링: Positive/Negative/Neutral 톤 기반 필터\r\n- 다국어 지원: 65개 언어 검색 (ISO 639-3 코드)\r\n\r\n권장 사항:\r\n- 영문 키워드 사용 (예: \"Samsung SDS\", \"NVIDIA\")\r\n- 한글 키워드는 검색 결과가 거의 없음 (글로벌 뉴스 중심)\r\n\"\"\"\r\n\r\nfrom typing import Any, Dict, List, Optional\r\n\r\nimport pandas as pd\r\nimport requests\r\nimport requests_cache\r\nfrom requests.adapters import HTTPAdapter\r\nfrom urllib3.util.retry import Retry\r\n\r\nfrom langflow.custom import Component\r\nfrom langflow.io import (\r\n    MessageTextInput,\r\n    IntInput,\r\n    BoolInput,\r\n    DropdownInput,\r\n    Output,\r\n)\r\nfrom langflow.schema import DataFrame\r\n\r\n\r\nclass GDELTDocSearchComponent(Component):\r\n    \"\"\"\r\n    GDELT DOC 2.0 API 검색 컴포넌트\r\n    \r\n    전 세계 뉴스를 실시간 검색하고 감성 분석을 수행하는 Langflow 커스텀 컴포넌트입니다.\r\n    \"\"\"\r\n    \r\n    display_name = \"GDELT Doc Search\"\r\n    description = \"\"\"Search global news via GDELT DOC 2.0 API.\r\n\r\nIMPORTANT: Use ENGLISH keywords for best results!\r\n   Korean/non-English keywords rarely return results (global news focus).\r\n\r\nBasic Usage:\r\n   • query: English keywords (\"Samsung SDS\", \"NVIDIA\", \"Tesla\")\r\n   • mode: \"Articles\" (news list) or \"Timeline\" (trend analysis)\r\n   • maxrecords: 5-20 recommended for LLM agents\r\n\r\nFinancial Analysis:\r\n   • financial_media_only=True → Reuters, Bloomberg, WSJ, etc. (10 sources)\r\n   • tone_filter=Positive → bullish news only\r\n   • tone_filter=Negative → risk monitoring\r\n\r\nAdvanced Filters:\r\n   • languages: ISO 639-3 codes (eng, kor, jpn, zho)\r\n   • countries: FIPS codes (US, KS=Korea, JA=Japan, CH=China)\r\n\r\nExamples:\r\n   1. Basic: \"Samsung SDS\" → finds all articles (incl. Korean articles!)\r\n   2. Bullish: \"NVIDIA\" + financial_media_only + tone_filter=Positive\r\n   3. Risk: \"Tesla recall\" + tone_filter=Negative + timespan=7days\r\n\r\n📊 Returns: DataFrame with title, url, domain, language, country, tone\"\"\"\r\n    documentation: str = \"https://blog.gdeltproject.org/gdelt-doc-2-0-api-debuts/\"\r\n    icon = \"globe\"\r\n    name = \"GDELTDocSearch\"\r\n\r\n    # ==================== 클래스 상수 ====================\r\n    \r\n    # GDELT API 엔드포인트\r\n    GDELT_ENDPOINT = \"https://api.gdeltproject.org/api/v2/doc/doc\"\r\n    \r\n    # 모드 매핑: 사용자 친화적 이름 → GDELT API 파라미터\r\n    MODE_MAPPING = {\r\n        \"Articles (기사 목록)\": \"ArtList\",\r\n        \"Timeline - Volume (시간별 기사량)\": \"timelinevol\",\r\n        \"Timeline - Sentiment (시간별 감성 변화)\": \"timelinetone\",\r\n        \"Timeline - Language (언어별 분포)\": \"timelinelang\",\r\n        \"Timeline - Country (국가별 분포)\": \"timelinesourcecountry\",\r\n    }\r\n    \r\n    # Timeline 모드 집합 (내부 API 값)\r\n    TIMELINE_MODES = {\r\n        \"timelinevol\",\r\n        \"timelinevolraw\",\r\n        \"timelinetone\",\r\n        \"timelinelang\",\r\n        \"timelinesourcecountry\"\r\n    }\r\n    \r\n    # 에러 응답 컬럼 (내부 API 모드 기준)\r\n    ERROR_COLUMNS = {\r\n        \"ArtList\": [\"title\", \"url\", \"seendate\", \"domain\", \"summary\"],\r\n        \"timeline\": [\"message\", \"mode\"],\r\n    }\r\n    \r\n    # 금융 미디어 도메인 (프리셋)\r\n    FINANCIAL_DOMAINS = [\r\n        \"reuters.com\",\r\n        \"bloomberg.com\",\r\n        \"ft.com\",            # Financial Times\r\n        \"wsj.com\",           # Wall Street Journal\r\n        \"cnbc.com\",\r\n        \"marketwatch.com\",\r\n        \"barrons.com\",\r\n        \"seekingalpha.com\",\r\n        \"investopedia.com\",\r\n        \"fool.com\",          # Motley Fool\r\n    ]\r\n    \r\n    # ==================== Langflow 설정 ====================\r\n    \r\n    inputs = [\r\n        MessageTextInput(\r\n            name=\"query\",\r\n            display_name=\"Query\",\r\n            info='예) (\"NVDA\" OR \"NVIDIA\"), (A OR B) AND C. 복잡한 쿼리는 직접 괄호 사용',\r\n            tool_mode=True,\r\n            required=True,\r\n        ),\r\n        MessageTextInput(\r\n            name=\"domains\",\r\n            display_name=\"Domains\",\r\n            info=\"도메인 필터. 예: reuters.com, bloomberg.com\",\r\n            is_list=True,\r\n            advanced=True,\r\n        ),\r\n        BoolInput(\r\n            name=\"financial_media_only\",\r\n            display_name=\"Financial Media Only\",\r\n            info=\"금융 미디어만 검색 (Reuters, Bloomberg, WSJ 등)\",\r\n            value=False,\r\n            advanced=True,\r\n        ),\r\n        MessageTextInput(\r\n            name=\"languages\",\r\n            display_name=\"Languages\",\r\n            info=\"언어 필터 (ISO 639-3, 3자리). 예: eng, kor, jpn, zho\",\r\n            is_list=True,\r\n            advanced=True,\r\n        ),\r\n        MessageTextInput(\r\n            name=\"countries\",\r\n            display_name=\"Source Countries\",\r\n            info=\"발행국가 (FIPS 2자리). 예: US, KS, JA, CH\",\r\n            is_list=True,\r\n            advanced=True,\r\n        ),\r\n        DropdownInput(\r\n            name=\"mode\",\r\n            display_name=\"Mode\",\r\n            options=[\r\n                \"Articles (기사 목록)\",\r\n                \"Timeline - Volume (시간별 기사량)\",\r\n                \"Timeline - Sentiment (시간별 감성 변화)\",\r\n                \"Timeline - Language (언어별 분포)\",\r\n                \"Timeline - Country (국가별 분포)\"\r\n            ],\r\n            value=\"Articles (기사 목록)\",\r\n            info=\"검색 모드: 기사 목록을 받을지, 시계열 트렌드 데이터를 받을지 선택\",\r\n            tool_mode=True,\r\n            required=True,\r\n        ),\r\n        MessageTextInput(\r\n            name=\"timespan\",\r\n            display_name=\"TIMESPAN\",\r\n            info=\"예: 24hours, 7days, 14days, 30days (미지정 시: 7days)\",\r\n            value=\"7days\",\r\n            advanced=True,\r\n        ),\r\n        MessageTextInput(\r\n            name=\"start_datetime\",\r\n            display_name=\"STARTDATETIME\",\r\n            info=\"YYYYMMDDHHMMSS (timespan 대신 사용)\",\r\n            advanced=True,\r\n        ),\r\n        MessageTextInput(\r\n            name=\"end_datetime\",\r\n            display_name=\"ENDDATETIME\",\r\n            info=\"YYYYMMDDHHMMSS (timespan 대신 사용)\",\r\n            advanced=True,\r\n        ),\r\n        IntInput(\r\n            name=\"maxrecords\",\r\n            display_name=\"Max Records\",\r\n            info=\"1~250 (LLM Tool 사용시 5~20 권장)\",\r\n            value=5,\r\n            advanced=False,\r\n        ),\r\n        DropdownInput(\r\n            name=\"sort\",\r\n            display_name=\"Sort (ArtList)\",\r\n            options=[\"DateDesc\", \"DateAsc\"],\r\n            value=\"DateDesc\",\r\n            advanced=True,\r\n        ),\r\n        IntInput(\r\n            name=\"timeline_smooth\",\r\n            display_name=\"Timeline Smooth\",\r\n            info=\"Timeline 전용. 0=off\",\r\n            value=0,\r\n            advanced=True,\r\n        ),\r\n        IntInput(\r\n            name=\"timeout\",\r\n            display_name=\"Timeout (sec)\",\r\n            value=25,\r\n            advanced=True,\r\n        ),\r\n        BoolInput(\r\n            name=\"use_cache\",\r\n            display_name=\"Use Cache\",\r\n            value=True,\r\n            advanced=True,\r\n        ),\r\n        IntInput(\r\n            name=\"cache_ttl\",\r\n            display_name=\"Cache TTL (sec)\",\r\n            value=300,\r\n            advanced=True,\r\n        ),\r\n        DropdownInput(\r\n            name=\"tone_filter\",\r\n            display_name=\"Sentiment Filter\",\r\n            options=[\"All\", \"Positive\", \"Negative\", \"Neutral\"],\r\n            value=\"All\",\r\n            info=\"감성 톤으로 필터링 (Positive: >5, Negative: <-5, Neutral: -5~5)\",\r\n            advanced=True,\r\n        ),\r\n    ]\r\n\r\n    outputs = [\r\n        Output(name=\"articles\", display_name=\"Results\", method=\"search_gdelt\"),\r\n    ]\r\n\r\n    # ==================== Private Methods ====================\r\n    \r\n    def _make_session(self) -> requests.Session:\r\n        \"\"\"\r\n        캐싱 및 Retry 정책이 적용된 HTTP 세션 생성\r\n        \r\n        Returns:\r\n            requests.Session: 설정이 적용된 HTTP 세션\r\n        \"\"\"\r\n        expire = self.cache_ttl if self.use_cache else 0\r\n        sess: requests.Session = requests_cache.CachedSession(\r\n            \"gdelt_cache\", \r\n            expire_after=expire\r\n        )\r\n        \r\n        # Retry 정책: 3회 재시도, 지수 백오프\r\n        retry = Retry(\r\n            total=3,\r\n            backoff_factor=1.2,\r\n            status_forcelist=[429, 500, 502, 503, 504],\r\n            allowed_methods=[\"GET\", \"HEAD\", \"OPTIONS\"],\r\n            raise_on_status=False,\r\n        )\r\n        \r\n        adapter = HTTPAdapter(max_retries=retry)\r\n        sess.mount(\"https://\", adapter)\r\n        sess.mount(\"http://\", adapter)\r\n        sess.headers.update({\r\n            \"User-Agent\": \"Mozilla/5.0 (compatible; Langflow-GDELT/2.0)\"\r\n        })\r\n        \r\n        return sess\r\n\r\n    def _or_join(self, prefix: str, values: Optional[List[str]]) -> str:\r\n        \"\"\"\r\n        리스트를 OR 조건으로 결합\r\n        \r\n        Args:\r\n            prefix: 필터 접두사 (예: \"domain:\", \"sourcelang:\")\r\n            values: 값 리스트\r\n            \r\n        Returns:\r\n            str: 조합된 쿼리 문자열\r\n            - 단일 값: \"prefix:value\" (괄호 없음)\r\n            - 복수 값: \"(prefix:a OR prefix:b)\" (괄호 + OR)\r\n            \r\n        Examples:\r\n            [\"kor\"] → \"sourcelang:kor\"\r\n            [\"eng\", \"kor\"] → \"(sourcelang:eng OR sourcelang:kor)\"\r\n        \"\"\"\r\n        if not values:\r\n            return \"\"\r\n        \r\n        parts = [f\"{prefix}{v.strip()}\" for v in values if v and v.strip()]\r\n        if not parts:\r\n            return \"\"\r\n        \r\n        # GDELT 규칙: 괄호는 OR 조합에서만 사용\r\n        return parts[0] if len(parts) == 1 else \"(\" + \" OR \".join(parts) + \")\"\r\n\r\n    def _build_query(self) -> str:\r\n        \"\"\"\r\n        최종 검색 쿼리 문자열 생성 (도메인, 언어, 국가 필터 포함)\r\n        \r\n        Returns:\r\n            str: GDELT API 호환 쿼리 문자열\r\n            \r\n        Examples:\r\n            \"NVIDIA\" → \"NVIDIA\"\r\n            \"NVIDIA\" + financial_media_only → \"NVIDIA (domain:reuters.com OR ...)\"\r\n            \"Samsung\" + languages=[\"kor\"] → \"Samsung sourcelang:kor\"\r\n        \"\"\"\r\n        base = (self.query or \"\").strip()\r\n        q_parts = [base] if base else []\r\n        \r\n        # 금융 미디어 프리셋 적용\r\n        domains_to_use = self.domains\r\n        if self.financial_media_only:\r\n            if domains_to_use:\r\n                # 기존 domains와 프리셋 병합 (중복 제거)\r\n                domains_to_use = list(set(domains_to_use + self.FINANCIAL_DOMAINS))\r\n            else:\r\n                domains_to_use = self.FINANCIAL_DOMAINS\r\n        \r\n        # 필터 추가 (공백으로 연결)\r\n        q_parts.append(self._or_join(\"domain:\", domains_to_use))\r\n        q_parts.append(self._or_join(\"sourcelang:\", self.languages))\r\n        q_parts.append(self._or_join(\"sourcecountry:\", self.countries))\r\n        \r\n        return \" \".join([p for p in q_parts if p])\r\n    \r\n    def _get_api_mode(self) -> str:\r\n        \"\"\"\r\n        사용자 친화적 모드명을 GDELT API 모드로 변환\r\n        \r\n        Returns:\r\n            str: GDELT API 모드 (\"ArtList\", \"timelinevol\", etc.)\r\n        \"\"\"\r\n        return self.MODE_MAPPING.get(self.mode, \"ArtList\")\r\n\r\n    def _build_api_params(self) -> Dict[str, Any]:\r\n        \"\"\"\r\n        GDELT API 호출 파라미터 구성\r\n        \r\n        Returns:\r\n            Dict[str, Any]: API 호출용 파라미터 딕셔너리\r\n        \"\"\"\r\n        api_mode = self._get_api_mode()\r\n        maxrecords = min(max(1, int(self.maxrecords or 5)), 250)\r\n        \r\n        params: Dict[str, Any] = {\r\n            \"mode\": api_mode,\r\n            \"format\": \"json\",\r\n            \"query\": self._build_query(),\r\n        }\r\n\r\n        # Articles 모드 전용 파라미터\r\n        if api_mode == \"ArtList\":\r\n            params[\"maxrecords\"] = maxrecords\r\n            params[\"sort\"] = self.sort\r\n        \r\n        # Timeline 모드 전용 파라미터\r\n        elif api_mode in self.TIMELINE_MODES:\r\n            smooth = int(self.timeline_smooth or 0)\r\n            if smooth > 0:\r\n                params[\"timelinesmooth\"] = smooth\r\n\r\n        # 시간 범위 설정 (우선순위: 절대 시간 > 상대 시간)\r\n        if self.start_datetime and self.end_datetime:\r\n            params[\"STARTDATETIME\"] = str(self.start_datetime).strip()\r\n            params[\"ENDDATETIME\"] = str(self.end_datetime).strip()\r\n        elif self.timespan:\r\n            params[\"TIMESPAN\"] = str(self.timespan).strip()\r\n\r\n        # 빈 값 제거\r\n        return {k: v for k, v in params.items() if v not in (None, \"\", [])}\r\n\r\n    def _fetch_gdelt_api(self, params: Dict[str, Any]) -> Dict[str, Any]:\r\n        \"\"\"\r\n        GDELT API 호출 및 JSON 응답 반환\r\n        \r\n        Args:\r\n            params: API 호출 파라미터\r\n            \r\n        Returns:\r\n            Dict[str, Any]: JSON 응답 데이터\r\n            \r\n        Raises:\r\n            requests.RequestException: API 오류 (HTTP 에러, HTML 응답 등)\r\n        \"\"\"\r\n        sess = self._make_session()\r\n        \r\n        resp = sess.get(\r\n            self.GDELT_ENDPOINT,\r\n            params=params,\r\n            timeout=self.timeout,\r\n        )\r\n        \r\n        if not resp.ok:\r\n            raise requests.RequestException(\r\n                f\"HTTP {resp.status_code}: {resp.text[:200]}\"\r\n            )\r\n        \r\n        try:\r\n            payload = resp.json()\r\n            \r\n            # 빈 JSON {} 체크 (검색 결과 없음)\r\n            if not payload or (isinstance(payload, dict) and not payload):\r\n                self.log(\"GDELT API returned empty JSON - no results found\")\r\n            \r\n            return payload\r\n            \r\n        except ValueError as e:\r\n            ctype = resp.headers.get(\"content-type\", \"unknown\")\r\n            \r\n            # HTML 응답 = GDELT 에러 메시지\r\n            if \"text/html\" in ctype:\r\n                error_msg = resp.text.strip()\r\n                \r\n                # 짧은 키워드 에러 (2글자 이하)\r\n                if \"too short\" in error_msg.lower():\r\n                    raise requests.RequestException(\r\n                        'GDELT 오류: 검색어가 너무 짧습니다. '\r\n                        '2글자 키워드는 따옴표로 묶으세요 (예: \"SK Hynix\")'\r\n                    ) from e\r\n                \r\n                # 괄호 사용 오류\r\n                elif \"parentheses\" in error_msg.lower():\r\n                    raise requests.RequestException(\r\n                        'GDELT 오류: 괄호는 OR 조합에만 사용 가능합니다.'\r\n                    ) from e\r\n                \r\n                # 기타 GDELT 에러\r\n                else:\r\n                    raise requests.RequestException(\r\n                        f\"GDELT 오류: {error_msg[:100]}. \"\r\n                        \"한글 키워드는 영문으로 변환하세요 (예: '삼성SDS' → 'Samsung SDS')\"\r\n                    ) from e\r\n            else:\r\n                raise requests.RequestException(\r\n                    f\"Non-JSON response (Content-Type: {ctype})\"\r\n                ) from e\r\n\r\n    def _normalize_artlist(self, payload: Dict[str, Any]) -> pd.DataFrame:\r\n        \"\"\"\r\n        Articles 모드 응답을 DataFrame으로 변환\r\n        \r\n        Args:\r\n            payload: GDELT API JSON 응답\r\n            \r\n        Returns:\r\n            pd.DataFrame: 기사 목록 (title, url, domain, language, tone 등)\r\n        \"\"\"\r\n        # 빈 payload 체크\r\n        if not payload:\r\n            return pd.DataFrame([])\r\n        \r\n        arts = payload.get(\"articles\", [])\r\n        if not isinstance(arts, list):\r\n            return pd.DataFrame([])\r\n        \r\n        rows = []\r\n        for article in arts:\r\n            if not isinstance(article, dict):\r\n                continue\r\n            \r\n            # 기본 정보\r\n            row = {\r\n                \"title\": article.get(\"title\"),\r\n                \"url\": article.get(\"url\"),\r\n                \"seendate\": article.get(\"seendate\"),\r\n                \"domain\": article.get(\"domain\"),\r\n                \"language\": article.get(\"language\") or article.get(\"sourcelang\"),\r\n                \"sourcecountry\": article.get(\"sourcecountry\"),\r\n            }\r\n            \r\n            # 감성 톤 추가 (GDELT 2.0 GKG에서 제공)\r\n            if \"tone\" in article:\r\n                row[\"tone\"] = article.get(\"tone\")\r\n            \r\n            rows.append(row)\r\n        \r\n        return pd.DataFrame(rows)\r\n\r\n    def _normalize_timeline(self, payload: Dict[str, Any]) -> pd.DataFrame:\r\n        \"\"\"\r\n        Timeline 모드 응답을 DataFrame으로 변환\r\n        \r\n        Args:\r\n            payload: GDELT API JSON 응답\r\n            \r\n        Returns:\r\n            pd.DataFrame: 시계열 데이터 (series, date, value 등)\r\n        \"\"\"\r\n        timeline = payload.get(\"timeline\", [])\r\n        if not isinstance(timeline, list):\r\n            return pd.DataFrame([])\r\n        \r\n        rows: List[Dict[str, Any]] = []\r\n        \r\n        for series_item in timeline:\r\n            if not isinstance(series_item, dict):\r\n                continue\r\n            \r\n            series_name = series_item.get(\"series\", \"series\")\r\n            data_points = series_item.get(\"data\", [])\r\n            \r\n            # 데이터 포인트가 리스트인 경우\r\n            if isinstance(data_points, list):\r\n                for dp in data_points:\r\n                    if not isinstance(dp, dict):\r\n                        continue\r\n                    \r\n                    row = {\r\n                        \"series\": series_name,\r\n                        \"date\": dp.get(\"date\"),\r\n                        \"value\": dp.get(\"value\")\r\n                    }\r\n                    \r\n                    # 추가 필드 복사\r\n                    for k, v in dp.items():\r\n                        if k not in (\"date\", \"value\"):\r\n                            row[k] = v\r\n                    \r\n                    rows.append(row)\r\n            \r\n            # 단일 데이터 포인트인 경우\r\n            else:\r\n                row = {\r\n                    \"series\": series_name,\r\n                    \"date\": series_item.get(\"date\")\r\n                }\r\n                \r\n                # value 필드 찾기\r\n                for key in (\"value\", \"volume\", \"count\", \"v\"):\r\n                    if key in series_item:\r\n                        row[\"value\"] = series_item[key]\r\n                        break\r\n                \r\n                # 중첩된 딕셔너리 필드 펼치기\r\n                for key in (\"language\", \"languages\", \"lang\", \"country\", \r\n                           \"countries\", \"sourcecountry\", \"counts\"):\r\n                    value = series_item.get(key)\r\n                    if isinstance(value, dict):\r\n                        for k, v in value.items():\r\n                            row[str(k)] = v\r\n                \r\n                rows.append(row)\r\n        \r\n        return pd.DataFrame(rows)\r\n\r\n    def _filter_by_tone(self, df: pd.DataFrame) -> pd.DataFrame:\r\n        \"\"\"\r\n        감성 톤 기반 필터링 (Positive/Negative/Neutral)\r\n        \r\n        Args:\r\n            df: 원본 DataFrame (tone 컬럼 포함)\r\n            \r\n        Returns:\r\n            pd.DataFrame: 필터링된 DataFrame\r\n            \r\n        Filter Rules:\r\n            - Positive: tone > 5\r\n            - Negative: tone < -5\r\n            - Neutral: -5 <= tone <= 5\r\n            - All: 필터링 안 함\r\n        \"\"\"\r\n        if self.tone_filter == \"All\" or \"tone\" not in df.columns:\r\n            return df\r\n        \r\n        # 톤 값을 숫자로 변환 (실패 시 0)\r\n        df[\"tone_numeric\"] = pd.to_numeric(df[\"tone\"], errors=\"coerce\").fillna(0)\r\n        \r\n        if self.tone_filter == \"Positive\":\r\n            df = df[df[\"tone_numeric\"] > 5]\r\n        elif self.tone_filter == \"Negative\":\r\n            df = df[df[\"tone_numeric\"] < -5]\r\n        elif self.tone_filter == \"Neutral\":\r\n            df = df[(df[\"tone_numeric\"] >= -5) & (df[\"tone_numeric\"] <= 5)]\r\n        \r\n        # tone_numeric 컬럼 제거 (임시 컬럼)\r\n        if \"tone_numeric\" in df.columns:\r\n            df = df.drop(columns=[\"tone_numeric\"])\r\n        \r\n        return df\r\n    \r\n    def _parse_response(self, payload: Dict[str, Any]) -> pd.DataFrame:\r\n        \"\"\"\r\n        모드에 따라 API 응답 파싱\r\n        \r\n        Args:\r\n            payload: GDELT API JSON 응답\r\n            \r\n        Returns:\r\n            pd.DataFrame: 파싱된 데이터\r\n        \"\"\"\r\n        api_mode = self._get_api_mode()\r\n        \r\n        if api_mode == \"ArtList\":\r\n            df = self._normalize_artlist(payload)\r\n            # 감성 필터 적용\r\n            df = self._filter_by_tone(df)\r\n            return df\r\n        elif api_mode in self.TIMELINE_MODES:\r\n            return self._normalize_timeline(payload)\r\n        else:\r\n            # 알 수 없는 모드는 원본 반환\r\n            return pd.DataFrame([{\"raw\": payload}])\r\n\r\n    @staticmethod\r\n    def _create_error_response(error_msg: str, mode: str = \"ArtList\") -> DataFrame:\r\n        \"\"\"\r\n        에러 발생 시 표준 에러 응답 DataFrame 생성\r\n        \r\n        Args:\r\n            error_msg: 에러 메시지\r\n            mode: GDELT API 모드\r\n            \r\n        Returns:\r\n            DataFrame: 에러 정보가 포함된 DataFrame\r\n        \"\"\"\r\n        if mode == \"ArtList\":\r\n            return DataFrame(pd.DataFrame([{\r\n                \"title\": \"Error\",\r\n                \"url\": \"\",\r\n                \"seendate\": \"\",\r\n                \"domain\": \"\",\r\n                \"summary\": error_msg\r\n            }]))\r\n        else:\r\n            return DataFrame(pd.DataFrame([{\r\n                \"message\": error_msg,\r\n                \"mode\": mode\r\n            }]))\r\n\r\n    # ==================== Public API ====================\r\n    \r\n    def search_gdelt(self) -> DataFrame:\r\n        \"\"\"\r\n        GDELT 검색 실행 (메인 진입점)\r\n        \r\n        이 메서드는 Langflow에서 자동으로 호출됩니다.\r\n        \r\n        Returns:\r\n            DataFrame: 검색 결과 또는 에러 정보\r\n            \r\n        Process:\r\n            1. API 파라미터 구성 (_build_api_params)\r\n            2. GDELT API 호출 (_fetch_gdelt_api)\r\n            3. 응답 파싱 (_parse_response)\r\n            4. 감성 필터링 적용 (Articles 모드)\r\n            5. 결과 수 제한 (maxrecords)\r\n        \"\"\"\r\n        api_mode = self._get_api_mode()\r\n        maxrecords = min(max(1, int(self.maxrecords or 5)), 250)\r\n        \r\n        try:\r\n            # 1. API 파라미터 구성\r\n            params = self._build_api_params()\r\n            \r\n            # 2. API 호출\r\n            payload = self._fetch_gdelt_api(params)\r\n            \r\n            # 3. 응답 파싱\r\n            df = self._parse_response(payload)\r\n            \r\n            # 4. 빈 결과 체크\r\n            if df is None or df.empty:\r\n                return self._create_error_response(\"No results\", api_mode)\r\n            \r\n            # 5. 레코드 수 제한\r\n            df = df.head(maxrecords)\r\n            \r\n            return DataFrame(df)\r\n            \r\n        except requests.RequestException as e:\r\n            self.log(f\"GDELT API 요청 실패: {e}\")\r\n            return self._create_error_response(str(e), api_mode)\r\n        \r\n        except Exception as e:\r\n            self.log(f\"GDELT 응답 파싱 실패: {e}\")\r\n            return self._create_error_response(f\"Parsing error: {str(e)}\", api_mode)\r\n\r\n\r\n# ==================== 독립 실행 테스트 ====================\r\n\r\nif __name__ == \"__main__\":\r\n    \"\"\"\r\n    독립 실행 테스트\r\n    \r\n    Usage:\r\n        python custom_components/gdelt_doc_search_component.py\r\n    \"\"\"\r\n    print(\"=\"*70)\r\n    print(\"GDELT Doc Search Component - 테스트\")\r\n    print(\"=\"*70)\r\n    \r\n    # 컴포넌트 초기화\r\n    component = GDELTDocSearchComponent()\r\n    \r\n    # 테스트 설정: 금융 미디어에서 NVIDIA 긍정 뉴스 검색\r\n    component.query = \"NVIDIA\"\r\n    component.mode = \"Articles (기사 목록)\"\r\n    component.maxrecords = 5\r\n    component.timespan = \"7days\"\r\n    component.financial_media_only = True\r\n    component.tone_filter = \"Positive\"\r\n    component.use_cache = False\r\n    component.timeout = 25\r\n    \r\n    print(f\"\\n검색 조건:\")\r\n    print(f\"  - Query: {component.query}\")\r\n    print(f\"  - Mode: {component.mode}\")\r\n    print(f\"  - Financial Media Only: {component.financial_media_only}\")\r\n    print(f\"  - Tone Filter: {component.tone_filter}\")\r\n    print(f\"  - Max Records: {component.maxrecords}\")\r\n    print(f\"  - Timespan: {component.timespan}\")\r\n    \r\n    try:\r\n        print(f\"\\n🔍 검색 중...\")\r\n        result = component.search_gdelt()\r\n        \r\n        # DataFrame 데이터 접근\r\n        if hasattr(result, 'data'):\r\n            data = result.data\r\n        else:\r\n            data = result.to_dict('records') if hasattr(result, 'to_dict') else []\r\n        \r\n        print(f\"\\n✅ 검색 완료: {len(data)}개 기사\")\r\n        \r\n        if data:\r\n            print(f\"\\n📰 첫 번째 기사:\")\r\n            first = data[0]\r\n            print(f\"  제목: {first.get('title', 'No title')[:80]}\")\r\n            print(f\"  URL: {first.get('url', 'No URL')}\")\r\n            print(f\"  도메인: {first.get('domain', 'No domain')}\")\r\n            if 'tone' in first:\r\n                print(f\"  감성 톤: {first.get('tone')} (긍정적)\")\r\n        else:\r\n            print(\"\\n⚠️ 검색 결과 없음\")\r\n            \r\n    except Exception as e:\r\n        print(f\"\\n❌ 테스트 실패: {e}\")\r\n        import traceback\r\n        traceback.print_exc()\r\n    \r\n    print(\"\\n\" + \"=\"*70)\r\n"
               },
               "countries": {
                 "_input_type": "MessageTextInput",
@@ -3233,7 +3203,7 @@
               },
               "languages": {
                 "_input_type": "MessageTextInput",
-                "advanced": false,
+                "advanced": true,
                 "display_name": "Languages",
                 "dynamic": false,
                 "info": "언어 필터 (ISO 639-3, 3자리). 예: eng, kor, jpn, zho",
@@ -3285,7 +3255,6 @@
                 "dynamic": false,
                 "external_options": {},
                 "info": "검색 모드: 기사 목록을 받을지, 시계열 트렌드 데이터를 받을지 선택",
-                "load_from_db": false,
                 "name": "mode",
                 "options": [
                   "Articles (기사 목록)",
@@ -3537,9 +3506,9 @@
           "type": "GDELTDocSearch"
         },
         "dragging": false,
-        "id": "CustomComponent-vCOXe",
+        "id": "GDELTDocSearch-9EHMu",
         "measured": {
-          "height": 1013,
+          "height": 885,
           "width": 320
         },
         "position": {
@@ -3551,7 +3520,7 @@
       },
       {
         "data": {
-          "id": "CustomComponent-xCydF",
+          "id": "NewsContentExtractor-cOQu2",
           "node": {
             "base_classes": [
               "DataFrame"
@@ -3572,9 +3541,7 @@
             ],
             "frozen": false,
             "icon": "newspaper",
-            "last_updated": "2025-11-23T12:15:00.877Z",
             "legacy": false,
-            "lf_version": "1.6.8",
             "metadata": {},
             "minimized": false,
             "output_types": [],
@@ -3752,9 +3719,7 @@
                 "trace_as_input": true,
                 "trace_as_metadata": true,
                 "type": "str",
-                "value": [
-                  "https://zdnet.co.kr/view/?no=20251122090538"
-                ]
+                "value": ""
               }
             },
             "tool_mode": true
@@ -3763,7 +3728,7 @@
           "type": "NewsContentExtractor"
         },
         "dragging": false,
-        "id": "CustomComponent-xCydF",
+        "id": "NewsContentExtractor-cOQu2",
         "measured": {
           "height": 233,
           "width": 320
@@ -3772,19 +3737,19 @@
           "x": 1419.0864865192375,
           "y": 1193.544573302148
         },
-        "selected": false,
+        "selected": true,
         "type": "genericNode"
       }
     ],
     "viewport": {
-      "x": -269.5095099257576,
-      "y": 48.26297511826931,
-      "zoom": 0.4623677219512776
+      "x": -424.60830854745836,
+      "y": -87.02147229368438,
+      "zoom": 0.5311210416091591
     }
   },
   "description": "Agent that generates focused plans, conducts web searches, and synthesizes findings into comprehensive reports.",
   "endpoint_name": null,
-  "id": "a73cc92f-b471-443e-a80d-8ad3836990de",
+  "id": "f26e48a9-2673-4f50-8cfe-4b95540d1e9e",
   "is_component": false,
   "last_tested_version": "1.6.8",
   "name": "02_SDS_Research_Agent",

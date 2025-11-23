@@ -115,17 +115,6 @@ Examples:
         "fool.com",          # Motley Fool
     ]
     
-    # 알려진 기업명 정규화 맵 (붙여쓰기 → 띄어쓰기)
-    COMPANY_NAME_NORMALIZATION = {
-        "samsungsds": "Samsung SDS",
-        "skhynix": "SK Hynix",
-        "sktelekom": "SK Telecom",
-        "lgelectronics": "LG Electronics",
-        "lgenergy": "LG Energy",
-        "navercloud": "Naver Cloud",
-        "kakaocorp": "Kakao Corp",
-    }
-
     # ==================== Langflow 설정 ====================
     
     inputs = [
@@ -311,29 +300,6 @@ Examples:
         # GDELT 규칙: 괄호는 OR 조합에서만 사용
         return parts[0] if len(parts) == 1 else "(" + " OR ".join(parts) + ")"
 
-    def _normalize_company_name(self, query: str) -> str:
-        """
-        알려진 기업명을 GDELT 친화적 형식으로 정규화
-        
-        Args:
-            query: 원본 검색어
-            
-        Returns:
-            str: 정규화된 검색어
-            
-        Examples:
-            "SamsungSDS" → "Samsung SDS"
-            "skhynix" → "SK Hynix"
-            "NVIDIA" → "NVIDIA" (변경 없음)
-        """
-        query_lower = query.lower().strip()
-        
-        # 정규화 맵에서 찾기
-        if query_lower in self.COMPANY_NAME_NORMALIZATION:
-            return self.COMPANY_NAME_NORMALIZATION[query_lower]
-        
-        return query
-    
     def _build_query(self) -> str:
         """
         최종 검색 쿼리 문자열 생성 (도메인, 언어, 국가 필터 포함)
@@ -343,13 +309,10 @@ Examples:
             
         Examples:
             "NVIDIA" → "NVIDIA"
-            "SamsungSDS" → "Samsung SDS" (정규화)
             "NVIDIA" + financial_media_only → "NVIDIA (domain:reuters.com OR ...)"
             "Samsung" + languages=["kor"] → "Samsung sourcelang:kor"
         """
-        # 기업명 정규화
-        normalized_query = self._normalize_company_name(self.query or "")
-        base = normalized_query.strip()
+        base = (self.query or "").strip()
         q_parts = [base] if base else []
         
         # 금융 미디어 프리셋 적용
