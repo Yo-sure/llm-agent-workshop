@@ -36,6 +36,8 @@ PYTHONPATH=$(pwd) uv run langflow run
 - **`main`**: 환경 구성 및 Langflow UI 익히기
 - **`01-news-agent`**: GDELT 뉴스 데이터 분석 에이전트 구축
 - **`02-news-agent-with-mcp`**: MCP 서버 통합 및 Claude Desktop 연동
+- **`03-langgraph-agent`**: LangGraph 기초 및 ReAct Agent 패턴 학습
+- **`04-langgraph-mcp-trading`**: LangGraph + MCP 통합 Trading Bot (HITL)
 
 ---
 
@@ -283,3 +285,22 @@ echo $UV_PROJECT_ENVIRONMENT
 1. GDELT 컴포넌트로 뉴스 검색
 2. Content Extractor로 본문 추출
 3. LLM 컴포넌트로 요약 생성
+
+### LangGraph Trading Bot (04 브랜치)
+
+```bash
+# 환경 변수 설정
+export OPENAI_API_KEY="your-api-key"
+
+# Trading Bot 실행
+uv run python langgraph_agent/trading_bot_host.py
+
+# 브라우저에서 접속
+# http://localhost:8080
+```
+
+**기능:**
+- 시장 트렌드 분석 (MCP tools)
+- 거래 결정 (BUY/SELL/HOLD)
+- Human-in-the-Loop 승인 시스템
+- 실시간 WebSocket UI
