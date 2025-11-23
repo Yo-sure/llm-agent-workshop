@@ -15,6 +15,8 @@ Langflow와 GDELT 데이터를 활용해 AI 에이전트를 구축해보는 실�
 
 ### 로컬 환경
 
+#### 브랜치별 실행 방법
+
 ```bash
 # 프로젝트 클론
 git clone https://github.com/Yo-sure/llm-agent-workshop
@@ -22,13 +24,32 @@ cd llm-agent-workshop
 
 # 환경 변수 설정
 cp env.example .env
-# .env 파일을 열어 OPENAI_API_KEY 등 필요한 값을 입력하세요
+# .env 파일을 열어 OPENAI_API_KEY를 입력하세요
 
 # 의존성 설치
 uv sync
+```
 
-# Langflow 실행
+**01-02 브랜치 (Langflow)**
+```bash
+git checkout 01-news-agent  # 또는 02-news-agent-with-mcp
+uv sync
 PYTHONPATH=$(pwd) uv run langflow run
+```
+
+**03 브랜치 (LangGraph Tutorial)**
+```bash
+git checkout 03-langgraph-agent
+uv sync
+jupyter notebook langgraph_agent/langgraph_tutorial.ipynb
+```
+
+**04 브랜치 (Trading Bot)**
+```bash
+git checkout 04-langgraph-mcp-trading
+uv sync
+uv run python langgraph_agent/trading_bot_host.py
+# 브라우저: http://localhost:8080
 ```
 
 ---

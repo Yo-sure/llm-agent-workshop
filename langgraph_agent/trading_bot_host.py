@@ -28,6 +28,10 @@ from datetime import datetime
 from pathlib import Path
 from queue import SimpleQueue
 
+# .env 파일 로드
+from dotenv import load_dotenv
+load_dotenv()
+
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 import uvicorn
