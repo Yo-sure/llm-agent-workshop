@@ -195,6 +195,24 @@
         </div>
         <div class="input-section">
             <h3 style="text-align: center; margin-bottom: 15px;">📊 거래 분석 요청</h3>
+            
+            <!-- 프롬프트 스타일 선택 -->
+            <div style="max-width: 600px; margin: 0 auto 15px auto;">
+                <label style="display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px;">
+                    🎯 분석 스타일:
+                </label>
+                <select id="promptStyle" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;">
+                    <option value="default">기본 (적극적 매매 권장)</option>
+                    <option value="neutral_analyst">중립 분석가 (MCP Prompt - 보수적 관망)</option>
+                </select>
+                
+                <!-- 로드된 프롬프트 표시 -->
+                <div id="promptDisplay" style="display: none; margin-top: 10px; padding: 10px; background: #f0f8ff; border-left: 3px solid #007bff; font-size: 12px; max-height: 150px; overflow-y: auto;">
+                    <strong>📄 로드된 프롬프트:</strong>
+                    <div id="promptContent" style="margin-top: 5px; white-space: pre-wrap; color: #555;"></div>
+                </div>
+            </div>
+            
             <div class="input-group">
                 <div class="dropdown-container">
                     <input type="text" id="stockSearch" class="dropdown-input" placeholder="종목명 또는 티커 검색 (예: Apple, NVDA)" readonly onclick="toggleDropdown()">
@@ -267,15 +285,94 @@
                 addApprovalRequest(request);
             } else if (message.type === 'approval_processed') {
                 document.getElementById('status').innerHTML = '✅ 승인 처리 완료 - 다음 요청을 기다리는 중...';
+            } else if (message.type === 'agent_message') {
+                // Agent AI 응답 메시지
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'message system-message';
+                msgDiv.innerHTML = `<strong>🤖 분석 결과:</strong> ${message.content}`;
+                chatContainer.appendChild(msgDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            } else if (message.type === 'tool_result') {
+                // Tool 실행 결과
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'message system-message';
+                msgDiv.style.background = '#e7f3ff';
+                msgDiv.innerHTML = `<strong>🔧 ${message.tool_name}:</strong> ${message.content.substring(0, 200)}${message.content.length > 200 ? '...' : ''}`;
+                chatContainer.appendChild(msgDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            } else if (message.type === 'agent_completed') {
+                // Agent 완료
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'message system-message';
+                
+                // HOLD 거래는 회색, 실제 거래(BUY/SELL)는 초록색
+                const isHold = message.content.toLowerCase().includes('hold') || 
+                               message.content.includes('관망') ||
+                               message.content.includes('거래 없음');
+                
+                if (isHold) {
+                    msgDiv.style.background = '#e2e3e5';  // 회색
+                    msgDiv.style.color = '#383d41';
+                    msgDiv.innerHTML = `<strong>⚪ 분석 완료:</strong> ${message.content}`;
+                } else {
+                    msgDiv.style.background = '#d4edda';  // 초록색
+                    msgDiv.innerHTML = `<strong>✅ 거래 완료:</strong> ${message.content}`;
+                }
+                
+                chatContainer.appendChild(msgDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                
+                document.getElementById('status').innerHTML = '✅ 분석 완료 - 다음 요청을 기다리는 중...';
+                document.getElementById('status').style.background = isHold ? '#e2e3e5' : '#d4edda';
+                
+                // 분석 버튼 초기화 (새 분석 가능)
+                const analyzeBtn = document.getElementById('analyzeBtn');
+                analyzeBtn.textContent = '분석 요청';
+                analyzeBtn.disabled = true;
+                selectedStock = null;
+                document.getElementById('stockSearch').value = '';
+            } else if (message.type === 'agent_error') {
+                // Agent 에러
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'message system-message';
+                msgDiv.style.background = '#f8d7da';
+                msgDiv.style.color = '#721c24';
+                msgDiv.innerHTML = `<strong>❌ 오류:</strong> ${message.error}`;
+                chatContainer.appendChild(msgDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            } else if (message.type === 'prompt_loaded') {
+                // MCP Prompt 로드 완료
+                console.log('📖 MCP Prompt 로드 완료:', message.prompt_name);
+                
+                // 프롬프트 내용 표시
+                const promptDisplay = document.getElementById('promptDisplay');
+                const promptContent = document.getElementById('promptContent');
+                promptContent.textContent = message.prompt_content.substring(0, 500) + (message.prompt_content.length > 500 ? '...' : '');
+                promptDisplay.style.display = 'block';
+                
+                // 채팅에도 표시
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'message system-message';
+                msgDiv.style.background = '#e7f3ff';
+                msgDiv.innerHTML = `<strong>📖 MCP Prompt 적용:</strong> "${message.prompt_name}" 스타일로 분석을 진행합니다.`;
+                chatContainer.appendChild(msgDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
             }
         }
 
         function addApprovalRequest(request) {
             const chatContainer = document.getElementById('chatContainer');
+            const requestId = `request-${request.request_id}`;
+            
+            // 중복 방지: 이미 동일 request_id로 렌더링된 카드가 있으면 무시
+            if (document.getElementById(requestId)) {
+                console.log('⚠️  중복 승인 요청 무시:', request.request_id);
+                return;
+            }
             
             const messageDiv = document.createElement('div');
             messageDiv.className = 'message approval-request';
-            messageDiv.id = `request-${request.request_id}`;
+            messageDiv.id = requestId;
             
             const actionClass = request.action === 'BUY' ? 'action-buy' : 'action-sell';
             
@@ -430,18 +527,29 @@
             chatContainer.scrollTop = chatContainer.scrollHeight;
             
             try {
+                // 프롬프트 스타일 가져오기
+                const promptStyle = document.getElementById('promptStyle').value;
+                
                 const response = await fetch('/api/trade', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ ticker: ticker })
+                    body: JSON.stringify({ 
+                        ticker: ticker,
+                        prompt_style: promptStyle
+                    })
                 });
                 
                 const result = await response.json();
                 
-                if (result.status === 'success') {
-                    // Add success message
+                if (result.status === 'started') {
+                    // 백그라운드에서 Agent 실행 중
+                    document.getElementById('status').innerHTML = `⏳ ${ticker} 분석 중... (WebSocket으로 결과 수신)`;
+                    document.getElementById('status').style.background = '#cce5ff';
+                    // WebSocket 메시지로 결과 수신 대기
+                } else if (result.status === 'success') {
+                    // 즉시 완료 (구형 API 호환)
                     const successDiv = document.createElement('div');
                     successDiv.className = 'message system-message';
                     successDiv.innerHTML = `<strong>✅ 분석 완료:</strong> ${result.response}`;
@@ -449,8 +557,8 @@
                     
                     document.getElementById('status').innerHTML = '✅ 분석 완료 - 다음 요청을 기다리는 중...';
                     document.getElementById('status').style.background = '#d4edda';
-                } else {
-                    // Add error message
+                } else if (result.status === 'error') {
+                    // 에러 처리
                     const errorDiv = document.createElement('div');
                     errorDiv.className = 'message system-message';
                     errorDiv.style.background = '#f8d7da';
@@ -475,12 +583,9 @@
                 document.getElementById('status').innerHTML = '❌ 네트워크 오류';
                 document.getElementById('status').style.background = '#f8d7da';
             } finally {
-                // Re-enable button and reset selection
-                analyzeBtn.disabled = true; // Keep disabled until new stock is selected
-                analyzeBtn.textContent = '분석 요청';
-                selectedStock = null;
-                document.getElementById('stockSearch').value = '';
+                // 스크롤은 유지
                 chatContainer.scrollTop = chatContainer.scrollHeight;
+                // 버튼 상태는 agent_completed 메시지에서 처리
             }
         }
     </script>
