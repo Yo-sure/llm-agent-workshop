@@ -17,10 +17,10 @@ from mcp.server.fastmcp import FastMCP
 
 # Configure logging
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.DEBUG,  # DEBUG 레벨 이상의 모든 로그 출력
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.StreamHandler()  # stderr로 출력
+        logging.StreamHandler()  # sys.stderr로 출력 (기본값)
     ]
 )
 logger = logging.getLogger("mcp-news-server")
@@ -111,18 +111,22 @@ async def search_gdelt_news(
         results = []
         for _, row in df.head(max_results).iterrows():
             if mode == "ArtList":
-                result = f"""Title: {row.get('title', 'N/A')}
+                result = f"""
+Title: {row.get('title', 'N/A')}
 URL: {row.get('url', 'N/A')}
 Date: {row.get('seendate', 'N/A')}
 Domain: {row.get('domain', 'N/A')}
 Language: {row.get('language', 'N/A')}
 Country: {row.get('sourcecountry', 'N/A')}
-Tone: {row.get('tone', 'N/A')}"""
+Tone: {row.get('tone', 'N/A')}
+"""
             else:
                 # Timeline mode formatting
-                result = f"""Series: {row.get('series', 'N/A')}
+                result = f"""
+Series: {row.get('series', 'N/A')}
 Date: {row.get('date', 'N/A')}
-Value: {row.get('value', 'N/A')}"""
+Value: {row.get('value', 'N/A')}
+"""
             results.append(result)
         
         return f"Found {len(df)} articles from GDELT:\n\n" + "\n\n---\n\n".join(results)
@@ -182,11 +186,13 @@ async def extract_article_content(
         formatted_results = []
         for result in results:
             if not result.get('success', False):
-                formatted_result = f"""URL: {result.get('url', 'N/A')}
+                formatted_result = f"""
+URL: {result.get('url', 'N/A')}
 Status: FAILED
 Error: {result.get('error', 'Unknown error')}"""
             else:
-                formatted_result = f"""URL: {result.get('url', 'N/A')}
+                formatted_result = f"""
+URL: {result.get('url', 'N/A')}
 Title: {result.get('title', 'N/A')}
 Content Length: {result.get('content_length', 0)} characters
 Paragraphs: {result.get('paragraphs_count', 0)}
