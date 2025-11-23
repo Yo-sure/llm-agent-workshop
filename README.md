@@ -51,28 +51,89 @@ jupyter notebook langgraph_agent/langgraph_tutorial.ipynb
 ```bash
 git checkout 04-langgraph-mcp-trading
 uv sync
+```
 
-# 1. Langflow 설치 및 실행 (별도 환경 권장)
-# 옵션 A: 별도 venv
+#### 📋 실행 전 준비
+
+**1. 환경변수 설정 (.env 파일)**
+```bash
+cp env.example .env
+# .env 파일을 열어 다음 값들을 설정:
+
+# 필수
+OPENAI_API_KEY=sk-your-key-here
+
+# A2A + Langflow (뉴스 분석용)
+LANGFLOW_BASE_URL=http://localhost:7860
+LANGFLOW_FLOW_ID=your-flow-id        # Langflow UI에서 확인
+LANGFLOW_API_KEY=your-api-key        # Langflow UI에서 발급
+A2A_SERVER_PORT=9999
+```
+
+**2. Langflow 준비**
+- Langflow UI: http://localhost:7860
+- News Research Flow 생성 또는 Import
+- API Key 발급 (Settings → API Keys)
+- Flow ID 확인 (URL 또는 Flow 설정에서)
+
+#### 🚀 실행 순서 (3개 터미널)
+
+**터미널 1: Langflow 실행**
+```bash
+# 옵션 A: WSL (권장)
+wsl -e langflow run
+
+# 옵션 B: 별도 venv
 python -m venv venv-langflow
 source venv-langflow/bin/activate  # Windows: venv-langflow\Scripts\activate
 pip install langflow
 langflow run
-deactivate
+```
 
-# 옵션 B: WSL 환경 (권장)
-# WSL에서 이미 설치되어 있다면 그대로 사용
-wsl -e langflow run
-
-# 2. A2A News Server 실행 (Langflow 래퍼)
-# .env 파일에 LANGFLOW_* 변수 설정 필수
+**터미널 2: A2A News Server 실행**
+```bash
+# A2A 서버 (Langflow 래퍼)
 uv run python a2a_news_server.py
-# 또는: bash langgraph_agent/start_a2a_server.sh
 
-# 3. Trading Bot 실행
+# 또는 스크립트 사용
+bash langgraph_agent/start_a2a_server.sh
+```
+
+**터미널 3: Trading Bot 실행**
+```bash
+# Trading Bot (LangGraph + MCP + A2A)
 uv run python langgraph_agent/trading_bot_host.py
 
-# 4. 브라우저: http://localhost:8080
+# 브라우저 접속: http://localhost:8080
+```
+
+#### ✅ 테스트 방법
+
+1. **브라우저에서 http://localhost:8080 접속**
+2. **종목 선택**: 
+   - 검색창에 입력 (예: AAPL, MSFT, NVDA)
+   - 드롭다운에서 선택
+3. **분석 스타일 선택** (선택사항):
+   - `Default`: 일반 분석 (뉴스 + 시장 데이터)
+   - `Neutral Analyst`: 무조건 HOLD 추천 (MCP Prompt 데모)
+4. **"분석 요청" 버튼 클릭**
+5. **결과 확인**:
+   - 📰 뉴스 요약 (A2A → Langflow)
+   - 📊 시장 분석 (MCP → Trading Server)
+   - 🤖 LLM 종합 판단
+6. **승인/거부**: BUY/SELL 추천 시 승인 필요 (HITL)
+
+#### 🔍 각 포트별 확인
+
+- **8080**: Trading Bot Web UI
+- **9999**: A2A News Server
+- **7860**: Langflow UI
+
+```bash
+# 포트 확인
+curl http://localhost:8080          # Trading Bot
+curl http://localhost:9999          # A2A Server
+curl http://localhost:7860/health   # Langflow
 ```
 
 ---
@@ -81,11 +142,20 @@ uv run python langgraph_agent/trading_bot_host.py
 
 강의 진행에 따라 **Git Branch**를 변경하며 실습합니다.
 
-- **`main`**: 환경 구성 및 Langflow UI 익히기
-- **`01-news-agent`**: GDELT 뉴스 데이터 분석 에이전트 구축
-- **`02-news-agent-with-mcp`**: MCP 서버 통합 및 Claude Desktop 연동
-- **`03-langgraph-agent`**: LangGraph 기초 및 ReAct Agent 패턴 학습
-- **`04-langgraph-mcp-trading`**: LangGraph + MCP + A2A 통합 Trading Bot (HITL + News)
+| 브랜치 | 주제 | 핵심 내용 | 문서 |
+|--------|------|-----------|------|
+| `main` | 환경 구성 | Langflow UI 익히기 | - |
+| `01-news-agent` | Langflow 기초 | GDELT 뉴스 분석 에이전트 | Chapter 1, 2 |
+| `02-news-agent-with-mcp` | MCP 통합 | Claude Desktop 연동 | Chapter 3, 4 |
+| `03-langgraph-agent` | LangGraph | ReAct Agent 패턴 | Tutorial Notebook |
+| `04-langgraph-mcp-trading` | 종합 실습 | LangGraph + MCP + A2A | Chapter 5 |
+
+### 📖 문서별 안내
+
+- **Chapter 1, 2**: Langflow 기초 및 심화
+- **Chapter 3**: MCP 이론 및 프로토콜 이해
+- **Chapter 4**: MCP 서버 구현 및 전환
+- **Chapter 5**: A2A 통합 및 Agent 간 통신 (신규 ⭐)
 
 ---
 
