@@ -84,6 +84,7 @@ try:
     from a2a_news_client import NewsA2AClient
     A2A_AVAILABLE = True
 except ImportError:
+    NewsA2AClient = None  # 타입 힌트용 Fallback
     A2A_AVAILABLE = False
     print("⚠️  A2A Client를 사용할 수 없습니다. 뉴스 기능이 비활성화됩니다.")
 from langchain_openai import ChatOpenAI
@@ -143,7 +144,7 @@ mcp_client: MultiServerMCPClient | None = None
 # A2A News Client 인스턴스
 # - HTTP로 A2A 서버(Langflow 래퍼)와 통신
 # - 종목 뉴스 분석 데이터 제공
-news_a2a_client: NewsA2AClient | None = None
+news_a2a_client = None  # Type: NewsA2AClient | None
 
 # 승인 요청 매핑
 # - key: request_id (승인 요청 고유 ID)
