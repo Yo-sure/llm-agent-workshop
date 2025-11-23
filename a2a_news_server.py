@@ -56,10 +56,10 @@ class LangFlowRESTAdapter:
             "session_id": "a2a-news-session",  # Langflow v1.5+ 필수
         }
         
-        print(f"\n📤 [A2A→Langflow] 요청 전송")
-        print(f"   URL: {self.url}")
-        print(f"   Payload: {payload}")
-        print(f"   Headers: x-api-key={self.headers.get('x-api-key','')[:10]}***")
+        log.info(f"📤 [A2A→Langflow] 요청 전송")
+        log.info(f"   URL: {self.url}")
+        log.info(f"   Payload: {payload}")
+        log.info(f"   Headers: x-api-key={self.headers.get('x-api-key','')[:10]}***")
         
         log.debug("LF.url=%s", self.url)
         log.debug("LF.payload=%s", payload)
@@ -72,25 +72,25 @@ class LangFlowRESTAdapter:
                 resp.raise_for_status()
                 text = resp.text or ""
                 
-                print(f"✅ [A2A←Langflow] 응답 수신")
-                print(f"   Status: {resp.status_code}")
-                print(f"   Length: {len(text)} bytes")
-                print(f"   Preview: {text[:200]}")
+                log.info(f"✅ [A2A←Langflow] 응답 수신")
+                log.info(f"   Status: {resp.status_code}")
+                log.info(f"   Length: {len(text)} bytes")
+                log.info(f"   Preview: {text[:200]}")
                 
                 log.debug("LF.status=%s, len=%d", resp.status_code, len(text))
                 return text
         except httpx.TimeoutException as e:
-            print(f"⏱️  [A2A←Langflow] 타임아웃 ({self.timeout}초)")
+            log.error(f"⏱️  [A2A←Langflow] 타임아웃 ({self.timeout}초)")
             log.exception("LF.timeout url=%s", self.url)
             raise
         except httpx.HTTPStatusError as e:
-            print(f"❌ [A2A←Langflow] HTTP 에러")
-            print(f"   Status: {e.response.status_code}")
-            print(f"   Response: {e.response.text[:500]}")
+            log.error(f"❌ [A2A←Langflow] HTTP 에러")
+            log.error(f"   Status: {e.response.status_code}")
+            log.error(f"   Response: {e.response.text[:500]}")
             log.exception("LF.http_status_error url=%s status=%s", self.url, e.response.status_code)
             raise
         except httpx.HTTPError as e:
-            print(f"❌ [A2A←Langflow] 네트워크 에러: {e}")
+            log.error(f"❌ [A2A←Langflow] 네트워크 에러: {e}")
             log.exception("LF.http_error url=%s err=%r", self.url, e)
             raise
 

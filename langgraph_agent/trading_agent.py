@@ -245,19 +245,26 @@ async def _fetch_news_for_ticker(ticker: str) -> Optional[Dict[str, Any]]:
         return None
     
     try:
-        print(f"📰 뉴스 조회 중: {ticker}")
+        print(f"\n📰 [Trading Bot] A2A로 뉴스 조회 시작: {ticker}")
+        print(f"   A2A Server URL: {news_a2a_client.base_url}")
+        print(f"   Timeout: {news_a2a_client.timeout}초")
+        
         news_data = await news_a2a_client.fetch(ticker)
+        
+        print(f"📥 [Trading Bot] A2A 응답 수신: {type(news_data)}")
+        print(f"   응답 내용 (전체): {json.dumps(news_data, ensure_ascii=False, indent=2)}")
         
         if news_data and news_data.get("news"):
             summary = news_data["news"].get("summary", "")
-            print(f"✅ 뉴스 조회 완료: {len(summary)} 글자")
+            print(f"✅ [Trading Bot] 뉴스 조회 완료: {len(summary)} 글자")
+            print(f"   뉴스 전체 내용:\n{summary}")
             return news_data
         else:
-            print(f"⚠️  뉴스 데이터가 비어있습니다: {ticker}")
+            print(f"⚠️  [Trading Bot] 뉴스 데이터가 비어있습니다")
             return None
             
     except Exception as e:
-        print(f"❌ 뉴스 조회 실패: {e}")
+        print(f"❌ [Trading Bot] 뉴스 조회 실패: {e}")
         import traceback
         traceback.print_exc()
         return None
