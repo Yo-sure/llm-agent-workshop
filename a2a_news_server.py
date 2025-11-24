@@ -5,7 +5,6 @@ from datetime import datetime, timezone
 
 import httpx
 import uvicorn
-from dotenv import load_dotenv
 from a2a.server.agent_execution import AgentExecutor, RequestContext
 from a2a.server.apps import A2AStarletteApplication
 from a2a.server.events import EventQueue
@@ -14,9 +13,6 @@ from a2a.server.tasks import InMemoryTaskStore
 from a2a.types import AgentCard, AgentCapabilities, AgentSkill, Part, DataPart
 from a2a.utils import new_agent_parts_message, get_data_parts, get_text_parts
 from typing_extensions import override
-
-# .env 파일 로드
-load_dotenv()
 
 log = logging.getLogger("a2a.news")
 log.setLevel(logging.DEBUG)
@@ -53,16 +49,14 @@ class LangFlowRESTAdapter:
             "output_type": "chat",
             "input_type": "chat",
             "input_value": query_text,
-            "session_id": "a2a-news-session",  # Langflow v1.5+ 필수
         }
-        
-        log.info(f"📤 [A2A→Langflow] 요청 전송")
-        log.info(f"   URL: {self.url}")
-        log.info(f"   Payload: {payload}")
-        log.info(f"   Headers: x-api-key={self.headers.get('x-api-key','')[:10]}***")
-        
         log.debug("LF.url=%s", self.url)
-        log.debug("LF.payload=%s", payload)
+        # 키는 일부 마스킹
+        _hdr = {
+            **self.headers, "x-api-key":
+            f"{self.headers.get('x-api-key','')[:6]}***"
+        }
+        log.debug("LF.headers=%s", _hdr)
 
         try:
             async with httpx.AsyncClient(timeout=self.timeout) as http:
@@ -71,26 +65,9 @@ class LangFlowRESTAdapter:
                                        headers=self.headers)
                 resp.raise_for_status()
                 text = resp.text or ""
-                
-                log.info(f"✅ [A2A←Langflow] 응답 수신")
-                log.info(f"   Status: {resp.status_code}")
-                log.info(f"   Length: {len(text)} bytes")
-                log.info(f"   Preview: {text[:200]}")
-                
                 log.debug("LF.status=%s, len=%d", resp.status_code, len(text))
                 return text
-        except httpx.TimeoutException as e:
-            log.error(f"⏱️  [A2A←Langflow] 타임아웃 ({self.timeout}초)")
-            log.exception("LF.timeout url=%s", self.url)
-            raise
-        except httpx.HTTPStatusError as e:
-            log.error(f"❌ [A2A←Langflow] HTTP 에러")
-            log.error(f"   Status: {e.response.status_code}")
-            log.error(f"   Response: {e.response.text[:500]}")
-            log.exception("LF.http_status_error url=%s status=%s", self.url, e.response.status_code)
-            raise
         except httpx.HTTPError as e:
-            log.error(f"❌ [A2A←Langflow] 네트워크 에러: {e}")
             log.exception("LF.http_error url=%s err=%r", self.url, e)
             raise
 

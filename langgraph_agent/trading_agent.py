@@ -77,16 +77,7 @@ from langgraph.types import interrupt, Command
 from langgraph.graph.state import CompiledStateGraph
 from langgraph.errors import GraphInterrupt
 from langchain_core.tools import tool
-from langchain_core.messages import HumanMessage, AIMessage, ToolMessage, BaseMessage, SystemMessage
-
-# A2A News Client
-try:
-    from a2a_news_client import NewsA2AClient
-    A2A_AVAILABLE = True
-except ImportError:
-    NewsA2AClient = None  # 타입 힌트용 Fallback
-    A2A_AVAILABLE = False
-    print("⚠️  A2A Client를 사용할 수 없습니다. 뉴스 기능이 비활성화됩니다.")
+from langchain_core.messages import HumanMessage, AIMessage, ToolMessage, BaseMessage
 from langchain_openai import ChatOpenAI
 
 from langchain_mcp_adapters.client import MultiServerMCPClient
@@ -140,11 +131,6 @@ agent_graph = None
 # - STDIO로 trading_mcp_server.py와 통신
 # - analyze_market_trend, execute_trade 등 Tool 제공
 mcp_client: MultiServerMCPClient | None = None
-
-# A2A News Client 인스턴스
-# - HTTP로 A2A 서버(Langflow 래퍼)와 통신
-# - 종목 뉴스 분석 데이터 제공
-news_a2a_client = None  # Type: NewsA2AClient | None
 
 # 승인 요청 매핑
 # - key: request_id (승인 요청 고유 ID)
@@ -228,46 +214,6 @@ def _emit_prompt_loaded(prompt_name: str, prompt_content: str) -> None:
         prompt_name=prompt_name,
         prompt_content=prompt_content,
     )
-
-
-async def _fetch_news_for_ticker(ticker: str) -> Optional[Dict[str, Any]]:
-    """
-    A2A 서버를 통해 종목 뉴스를 가져옵니다.
-    
-    Args:
-        ticker: 종목 심볼 (예: "AAPL", "005930.KS")
-    
-    Returns:
-        {"news": {...}} 또는 None (오류/비활성화 시)
-    """
-    if not news_a2a_client:
-        print("📰 A2A News Client가 초기화되지 않았습니다 (뉴스 기능 비활성화)")
-        return None
-    
-    try:
-        print(f"\n📰 [Trading Bot] A2A로 뉴스 조회 시작: {ticker}")
-        print(f"   A2A Server URL: {news_a2a_client.base_url}")
-        print(f"   Timeout: {news_a2a_client.timeout}초")
-        
-        news_data = await news_a2a_client.fetch(ticker)
-        
-        print(f"📥 [Trading Bot] A2A 응답 수신: {type(news_data)}")
-        print(f"   응답 내용 (전체): {json.dumps(news_data, ensure_ascii=False, indent=2)}")
-        
-        if news_data and news_data.get("news"):
-            summary = news_data["news"].get("summary", "")
-            print(f"✅ [Trading Bot] 뉴스 조회 완료: {len(summary)} 글자")
-            print(f"   뉴스 전체 내용:\n{summary}")
-            return news_data
-        else:
-            print(f"⚠️  [Trading Bot] 뉴스 데이터가 비어있습니다")
-            return None
-            
-    except Exception as e:
-        print(f"❌ [Trading Bot] 뉴스 조회 실패: {e}")
-        import traceback
-        traceback.print_exc()
-        return None
 
 
 def _emit_approval_request(approval_request: Dict[str, Any]) -> None:
@@ -524,24 +470,11 @@ async def build_agent() -> tuple[MultiServerMCPClient, CompiledStateGraph]:
         checkpointer=memory
     )
 
-    # 7. A2A News Client 초기화 (선택사항)
-    #    - A2A 서버가 실행 중이면 뉴스 기능 활성화
-    #    - 실행되지 않았으면 기존 기능만 사용
-    global agent_graph, mcp_client, news_a2a_client
-    
-    if A2A_AVAILABLE:
-        a2a_url = os.getenv("A2A_SERVER_URL", f"http://localhost:{os.getenv('A2A_SERVER_PORT', '9999')}")
-        try:
-            news_a2a_client = NewsA2AClient(base_url=a2a_url)
-            print(f"📰 A2A News Client 초기화 완료: {a2a_url}")
-        except Exception as e:
-            print(f"⚠️  A2A News Client 초기화 실패: {e}")
-            news_a2a_client = None
-    
-    # 8. 전역 변수에 저장
+    # 7. 전역 변수에 저장
     #    Python 규칙: 함수 내에서 전역 변수에 할당 시 `global` 선언 필수
     #    (읽기만 할 때는 불필요)
     #    용도: trading_api.py와 resume_agent_execution()에서 접근
+    global agent_graph, mcp_client
     agent_graph = agent
     mcp_client = client
     agent_ready.set()  # 초기화 완료 시그널 (API 요청 대기 해제)
@@ -633,28 +566,16 @@ async def run_trading_analysis(
                 prompt_result = await session.get_prompt("neutral_analyst")
                 
                 if prompt_result and prompt_result.messages:
-                    # PromptMessage를 dict로 변환 (role, content)
-                    print(f"📋 MCP Prompt 원본 구조:")
-                    for i, msg in enumerate(prompt_result.messages):
-                        # FastMCP는 문자열을 UserMessage로 변환
-                        # messages는 PromptMessage 객체들의 리스트
-                        content = msg.content.text if hasattr(msg.content, 'text') else str(msg.content)
-                        print(f"   메시지 #{i+1}:")
-                        print(f"     - role: {msg.role}")
-                        print(f"     - content 타입: {type(msg.content)}")
-                        print(f"     - content 길이: {len(content)}")
-                        print(f"     - content 앞 100자: {content[:100]}")
-                        
-                        mcp_prompt_messages.append({
-                            "role": msg.role,
-                            "content": content
-                        })
-                    
+                    mcp_prompt_messages = prompt_result.messages
                     print(f"✅ MCP Prompt 로드 완료: {len(mcp_prompt_messages)}개 메시지")
                     
                     # UI로 프롬프트 정보 전송
-                    first_content = mcp_prompt_messages[0]["content"] if mcp_prompt_messages else ""
-                    _emit_prompt_loaded("neutral_analyst", first_content)
+                    first_message_content = (
+                        prompt_result.messages[0].get("content", "") 
+                        if prompt_result.messages 
+                        else ""
+                    )
+                    _emit_prompt_loaded("neutral_analyst", first_message_content)
                 else:
                     print("⚠️  MCP Prompt 결과가 비어있습니다")
             finally:
@@ -666,21 +587,13 @@ async def run_trading_analysis(
             import traceback
             traceback.print_exc()
     
-    # 4. 뉴스 데이터 조회 (A2A)
-    news_summary = ""
-    news_data = await _fetch_news_for_ticker(ticker)
-    if news_data and news_data.get("news"):
-        news_summary = news_data["news"].get("summary", "")[:500]  # 최대 500자
-        if news_summary:
-            news_summary = f"\n\n📰 **최근 뉴스 요약:**\n{news_summary}\n"
-    
-    # 5. LLM 프롬프트 구성
+    # 4. LLM 프롬프트 구성
     task_instruction = f"""
 {ticker} 종목에 대해 거래 분석을 수행해주세요.
-{news_summary}
+
 다음 단계를 반드시 따라주세요:
 1. analyze_market_trend 도구를 사용해서 {ticker}의 시장 동향을 분석하세요
-2. 위의 뉴스 요약 (있는 경우)과 시장 데이터를 종합하여 BUY/SELL/HOLD 결정을 내리세요
+2. 분석 결과를 바탕으로 BUY/SELL/HOLD 결정을 내리세요
 3. BUY 또는 SELL 추천 시에는 request_human_approval 도구로 사용자 승인을 요청하세요
    (HOLD는 승인 불필요)
 4. 승인을 받으면 execute_trade 도구로 거래를 실행하세요
@@ -688,35 +601,22 @@ async def run_trading_analysis(
 모든 응답은 한국어로 해주세요.
 """.strip()
 
-    # 6. 최종 메시지 구성
+    # 5. 최종 메시지 구성
     #    - MCP Prompt가 있으면 먼저 포함 (Agent 성격/역할 설정)
     #    - 그 다음 task_instruction 추가 (구체적 작업 지시)
     messages = []
     
     if mcp_prompt_messages:
-        # MCP Prompt 메시지 추가
-        print(f"\n🔧 LangChain 메시지 변환:")
+        # MCP Prompt 메시지 추가 (SystemMessage 형태)
+        from langchain_core.messages import SystemMessage
         for msg in mcp_prompt_messages:
-            role = msg.get("role", "")
-            content = msg.get("content", "")
-            
-            # Role에 따라 적절한 LangChain 메시지 타입 선택
-            if role == "user":
-                lc_msg = HumanMessage(content=content)
-                print(f"   user → HumanMessage (길이: {len(content)})")
-            elif role == "assistant":
-                lc_msg = AIMessage(content=content)
-                print(f"   assistant → AIMessage (길이: {len(content)})")
-            else:  # system or unknown
-                lc_msg = SystemMessage(content=content)
-                print(f"   {role} → SystemMessage (길이: {len(content)})")
-            
-            messages.append(lc_msg)
+            if msg.get("role") == "system":
+                messages.append(SystemMessage(content=msg.get("content", "")))
     
     # Task instruction 추가
     messages.append(HumanMessage(content=task_instruction))
     
-    # 7. LangGraph 실행 설정
+    # 6. LangGraph 실행 설정
     config = {"configurable": {"thread_id": thread_id}}
     
     try:
@@ -831,26 +731,7 @@ async def resume_agent_execution(thread_id: str, response: Dict[str, Any]):
         # 완료: 모든 chunk 소진 → Agent 실행 종료
         # ─────────────────────────────────────────────────────────────────
         print(f"✅ Agent 재개 완료: thread_id={thread_id}")
-        
-        # MCP Resource 읽기: 거래 약관
-        # BUY/SELL 승인 후 완료 시점에 약관을 읽어서 사용자에게 안내
-        completion_message = "거래가 성공적으로 처리되었습니다."
-        
-        if response.get("approved"):  # 승인된 경우에만
-            try:
-                async with mcp_client.session("trade") as session:
-                    # MCP Resource 읽기
-                    resource_result = await session.read_resource("trade://terms-and-conditions")
-                    if resource_result and resource_result.contents:
-                        terms_text = resource_result.contents[0].text
-                        # 약관 요약 (간단히 첫 3줄만)
-                        terms_lines = [line for line in terms_text.split('\n') if line.strip()][:3]
-                        terms_summary = '\n'.join(terms_lines)
-                        completion_message += f"\n\n📋 거래 약관:\n{terms_summary}\n(상세 내용은 약관 전문 참조)"
-            except Exception as e:
-                print(f"⚠️  Resource 읽기 실패: {e}")
-        
-        _emit_agent_completed(thread_id, completion_message)
+        _emit_agent_completed(thread_id, "거래가 성공적으로 처리되었습니다.")
         
         return {"status": "completed", "thread_id": thread_id}
         
