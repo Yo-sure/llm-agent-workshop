@@ -616,12 +616,14 @@ async def run_trading_analysis(
     # 5. 최종 메시지 구성
     #    - MCP Prompt가 있으면 먼저 포함 (Agent 성격/역할 설정)
     #    - 그 다음 task_instruction 추가 (구체적 작업 지시)
+    
+    # Import를 조건문 밖으로 이동 (UnboundLocalError 방지)
+    from langchain_core.messages import SystemMessage
+    
     messages = []
     
     if mcp_prompt_messages:
         # MCP Prompt 메시지 추가
-        from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
-        
         print(f"\n🔧 LangChain 메시지 변환:")
         for msg in mcp_prompt_messages:
             role = msg.get("role", "")
