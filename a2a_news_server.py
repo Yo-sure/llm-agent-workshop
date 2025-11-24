@@ -5,7 +5,11 @@ from datetime import datetime, timezone
 
 import httpx
 import uvicorn
+from dotenv import load_dotenv
 from a2a.server.agent_execution import AgentExecutor, RequestContext
+
+# .env 파일 로드 (환경변수 자동 설정)
+load_dotenv()
 from a2a.server.apps import A2AStarletteApplication
 from a2a.server.events import EventQueue
 from a2a.server.request_handlers import DefaultRequestHandler
